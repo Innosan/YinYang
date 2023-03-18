@@ -9,13 +9,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.NavBar
 import com.example.yinyang.ui.theme.YinYangTheme
+import com.example.yinyang.R
 
 @Preview
 @Composable
 fun HomePage(
 ) {
-    val navItems = arrayOf("Menu", "Address", "Notifications")
-
     YinYangTheme(
         darkTheme = true,
     ) {
@@ -26,9 +25,9 @@ fun HomePage(
         ) {
             Column(
             ) {
-                NavBar(navItems = navItems)
+                NavBar()
 
-                SectionHeader(icon = "Wrench", title = "Собери сам")
+                SectionHeader(iconId = R.drawable.ic_food_constructor, title = "Do it Yourself")
             }
         }
     }
