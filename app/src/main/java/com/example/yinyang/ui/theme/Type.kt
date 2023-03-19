@@ -2,9 +2,26 @@ package com.example.yinyang.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.example.yinyang.R
+
+val OverpassFamily = FontFamily(
+    Font(R.font.overpass_black, FontWeight.Black),
+    Font(R.font.overpass_bold, FontWeight.Bold),
+    Font(R.font.overpass_extrabold, FontWeight.ExtraBold),
+    Font(R.font.overpass_regular, FontWeight.Normal),
+)
+
+val OverpassTypo = Typography(
+    bodyLarge = TextStyle(
+        fontFamily = OverpassFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 18.sp
+    )
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(

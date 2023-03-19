@@ -62,7 +62,7 @@ fun YinYangTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = OverpassTypo,
         content = content
     )
 }

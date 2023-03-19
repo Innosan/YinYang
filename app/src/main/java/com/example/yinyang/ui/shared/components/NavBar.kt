@@ -4,9 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.ElevatedButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,13 +18,20 @@ import com.example.yinyang.R
 fun NavBar() {
     val buttonModifier: Modifier = Modifier.background(color = Color.Transparent)
 
+    val buttonColor: ButtonColors = ButtonDefaults.buttonColors(
+        containerColor = Color.Transparent,
+        contentColor = Color.White
+    )
+
     Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
         ElevatedButton(
             modifier = buttonModifier,
+            colors = buttonColor,
+
             onClick = { /*TODO: implement menu opening*/ }
         )
         {
@@ -40,6 +45,8 @@ fun NavBar() {
 
         ElevatedButton(
             modifier = buttonModifier,
+            colors = buttonColor,
+
             onClick = { /*TODO: implement notification menu opening*/ }
         )
         {
