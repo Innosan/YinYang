@@ -1,27 +1,20 @@
 package com.example.yinyang.ui.shared.components
 
-import androidx.compose.animation.core.FastOutSlowInEasing
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.yinyang.ui.shared.modifiers.tabIndicatorOffset
 import com.example.yinyang.ui.theme.OverpassFamily
 
 @Composable
@@ -51,11 +44,10 @@ fun FilterList(
         indicator = { tabPositions ->
             TabRowDefaults.Indicator(
                 modifier = Modifier
-                    .customTabIndicatorOffset(
+                    .tabIndicatorOffset(
                         currentTabPosition = tabPositions[selectedTabIndex],
                         tabWidth = tabWidths[selectedTabIndex]
                     )
-                    .height(4.dp)
                     .clip(RoundedCornerShape(8.dp))
                     .background(
                         color = MaterialTheme.colorScheme.onBackground,
@@ -65,9 +57,27 @@ fun FilterList(
         }
     ) {
         tabs.forEachIndexed { tabIndex, tab ->
+            val selected = selectedTabIndex == tabIndex
+
             Tab(
-                modifier = Modifier.clip(RoundedCornerShape(10.dp)),
-                selected = selectedTabIndex == tabIndex,
+                selected = selected,
+
+                modifier =
+                if (selected)
+                    Modifier
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(
+                            color = MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                else
+                    Modifier
+                        .clip(RoundedCornerShape(24.dp))
+                        .background(
+                            color = Color(303030),
+                            shape = RoundedCornerShape(24.dp)
+                        ),
+
                 onClick = { onTabClick(tabIndex) },
 
                 /**
@@ -93,29 +103,4 @@ fun FilterList(
             )
         }
     }
-}
-
-fun Modifier.customTabIndicatorOffset(
-    currentTabPosition: TabPosition,
-    tabWidth: Dp,
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "customTabIndicatorOffset"
-        value = currentTabPosition
-    }
-) {
-    val currentTabWidth by animateDpAsState(
-        targetValue = tabWidth,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-    )
-
-    val indicatorOffset by animateDpAsState(
-        targetValue = ((currentTabPosition.left + currentTabPosition.right - tabWidth) / 2),
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-    )
-
-    fillMaxWidth()
-        .wrapContentSize(Alignment.BottomStart)
-        .offset(x = indicatorOffset - 5.dp)
-        .width(currentTabWidth + 10.dp)
 }

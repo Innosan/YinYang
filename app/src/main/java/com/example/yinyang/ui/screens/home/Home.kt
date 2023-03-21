@@ -1,11 +1,13 @@
 package com.example.yinyang.ui.screens.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
@@ -18,6 +20,8 @@ import com.example.yinyang.ui.shared.components.SectionContainer
 @Preview
 @Composable
 fun HomePage() {
+    val context = LocalContext.current
+
     ScreenContainer(
     ) {
         Column {
@@ -48,6 +52,8 @@ fun HomePage() {
                     selectedTabIndex = selectedTabIndex,
                 ) { tabIndex ->
                     selectedTabIndex = tabIndex
+
+                    Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
