@@ -20,10 +20,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FoodConstructor(background: Int, title: String) {
+fun FoodConstructor(background: Int, title: String, fraction: Float) {
     Box(
         modifier = Modifier
-            .width(140.dp)
+            .fillMaxWidth(fraction)
             .height(80.dp)
             .clip(RoundedCornerShape(10.dp))
             .clickable {

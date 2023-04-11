@@ -21,7 +21,13 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
-val client = createSupabaseClient(supabaseUrl = "https://liskfjzxdlaenoukvmer.supabase.co", supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2tmanp4ZGxhZW5vdWt2bWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA5NDE2NzgsImV4cCI6MTk5NjUxNzY3OH0.0QqDcjanSHr4T3Rtk2APYryyGkgDlkkQRs5xCn18bcI") {
+val client = createSupabaseClient(
+    supabaseUrl = "https://liskfjzxdlaenoukvmer.supabase.co",
+    supabaseKey =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2tmanp" +
+            "4ZGxhZW5vdWt2bWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA5NDE2NzgsImV4cCI6MTk5NjUxNzY" +
+            "3OH0.0QqDcjanSHr4T3Rtk2APYryyGkgDlkkQRs5xCn18bcI"
+) {
 
     //...
 
@@ -67,8 +73,8 @@ fun HomePage() {
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    FoodConstructor(background = R.drawable.bg_pizza_construct, title = "Pizza")
-                    FoodConstructor(background = R.drawable.bg_wok_construct, title = "Wok")
+                    FoodConstructor(background = R.drawable.bg_pizza_construct, title = "Pizza", fraction = .45f)
+                    FoodConstructor(background = R.drawable.bg_wok_construct, title = "Wok", fraction = .85f)
                 }
             }
 
@@ -83,26 +89,30 @@ fun HomePage() {
                     Text(text = "Update products")
                 }
 
+                FilterList(
+                    tabs = filterWords,
+                    selectedTabIndex = selectedTabIndex,
+                ) { tabIndex ->
+                    selectedTabIndex = tabIndex
+
+                    Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
+                }
+
                 if (products != null) {
                     LazyColumn(
-                        modifier = Modifier.height(420.dp),
+                        modifier = Modifier.height(720.dp).padding(vertical = 20.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
                         item {
-                            FilterList(
-                                tabs = filterWords,
-                                selectedTabIndex = selectedTabIndex,
-                            ) { tabIndex ->
-                                selectedTabIndex = tabIndex
 
-                                Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
-                            }
                         }
 
                         items(products) { product -> ProductCard(product = product)}
                     }
                 }
-
+                else {
+                    Text(text = "Loading...")
+                }
             }
         }
     }
