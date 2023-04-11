@@ -1,24 +1,21 @@
 package com.example.yinyang.ui.screens.home
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
-import com.example.yinyang.ui.shared.components.FilterList
-import com.example.yinyang.ui.shared.components.NavBar
-import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.components.SectionContainer
-import com.example.yinyang.ui.shared.models.Message
+import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.shared.models.Product
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.postgrest
@@ -34,14 +31,10 @@ val client = createSupabaseClient(supabaseUrl = "https://liskfjzxdlaenoukvmer.su
 
 }
 
-suspend fun get(): List<Message> {
-    val result = client.postgrest["messages"]
-        .select {
-            Message::authorId eq "someid"
-            Message::text neq "This is a text!"
-        }
+suspend fun get(): List<Product> {
+    val result = client.postgrest["product"]
+        .select("*, category_id(title)")
 
-    println(result.decodeList<Message>())
     return result.decodeList()
 }
 
@@ -51,13 +44,15 @@ fun HomePage() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val (messages, setMessages) = remember { mutableStateOf<Message?>(null) }
+    val (products, setProducts) = remember { mutableStateOf<List<Product>?>(null) }
 
-    val getMessagesOnClick: () -> Unit = {
+    val getProducts: () -> Unit = {
         coroutineScope.launch {
-            val message = get()
+            setProducts(get())
         }
     }
+
+    getProducts()
 
     ScreenContainer(
     ) {
@@ -84,18 +79,30 @@ fun HomePage() {
                 var selectedTabIndex by remember { mutableStateOf(0) }
                 val filterWords: List<String> = listOf("Sets", "Rolls", "Pizza", "Snacks", "Soups")
 
-                FilterList(
-                    tabs = filterWords,
-                    selectedTabIndex = selectedTabIndex,
-                ) { tabIndex ->
-                    selectedTabIndex = tabIndex
-
-                    Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
+                Button(onClick = getProducts) {
+                    Text(text = "Update products")
                 }
-            }
 
-            Button(onClick = getMessagesOnClick) {
-                Text(text = "Get mess")
+                if (products != null) {
+                    LazyColumn(
+                        modifier = Modifier.height(420.dp),
+                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                    ) {
+                        item {
+                            FilterList(
+                                tabs = filterWords,
+                                selectedTabIndex = selectedTabIndex,
+                            ) { tabIndex ->
+                                selectedTabIndex = tabIndex
+
+                                Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+                        items(products) { product -> ProductCard(product = product)}
+                    }
+                }
+
             }
         }
     }
