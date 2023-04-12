@@ -17,9 +17,18 @@ import com.example.yinyang.ui.screens.home.HomePage
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.yinyang.ui.screens.about.About
+import com.example.yinyang.ui.screens.help.Help
+import com.example.yinyang.ui.screens.profile.Profile
+import com.example.yinyang.ui.screens.settings.Settings
+import com.example.yinyang.ui.screens.signin.SignIn
 import com.example.yinyang.ui.shared.models.navItems
 import com.example.yinyang.ui.theme.YinYangTheme
 import kotlinx.coroutines.launch
+import java.util.*
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +38,8 @@ class MainActivity : ComponentActivity() {
             YinYangTheme(
                 darkTheme = true
             ) {
+                val navController = rememberNavController()
+                
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
 
@@ -53,9 +64,9 @@ class MainActivity : ComponentActivity() {
                                 selected = item == selectedItem.value,
 
                                 onClick = {
+                                    navController.navigate(item.route)
                                     scope.launch { drawerState.close() }
                                     selectedItem.value = item
-                                    println("Close drawer")
                                 }
                             )
                         }
@@ -66,7 +77,28 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .background(MaterialTheme.colorScheme.background)
                         ) {
-                            HomePage(onIconClick = { scope.launch { drawerState.open() } })
+                            NavHost(navController = navController, startDestination = "home") {
+                                composable("home") {
+                                    HomePage(onIconClick = {
+                                        scope.launch { drawerState.open() }
+                                    })
+                                }
+                                composable("sign-in") {
+                                    SignIn()
+                                }
+                                composable("about") {
+                                    About()
+                                }
+                                composable("profile") {
+                                    Profile()
+                                }
+                                composable("settings") {
+                                    Settings()
+                                }
+                                composable("help") {
+                                    Help()
+                                }
+                            }
                         }
                     }
                 )

@@ -82,7 +82,7 @@ fun HomePage(
                 SectionHeader(iconId = R.drawable.ic_bar_menu, title = "Menu")
 
                 var selectedTabIndex by remember { mutableStateOf(0) }
-                val filterWords: List<String> = listOf("Sets", "Rolls", "Pizza", "Snacks", "Soups")
+                val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
 
                 Button(onClick = getProducts) {
                     Text(text = "Update products")
@@ -93,6 +93,7 @@ fun HomePage(
                     selectedTabIndex = selectedTabIndex,
                 ) { tabIndex ->
                     selectedTabIndex = tabIndex
+                    println(filterWords[selectedTabIndex])
 
                     Toast.makeText(context, "Selected $selectedTabIndex tab!", Toast.LENGTH_SHORT).show()
                 }
@@ -108,7 +109,11 @@ fun HomePage(
 
                         }
 
-                        items(products) { product -> ProductCard(product = product)}
+                        items(products.filter {
+                                product -> if (selectedTabIndex == 0) true
+                            else
+                            filterWords[selectedTabIndex] == product.categoryId.getValue("title").toString().removeSurrounding("\"")
+                        }) { product -> ProductCard(product = product) }
                     }
                 }
                 else {

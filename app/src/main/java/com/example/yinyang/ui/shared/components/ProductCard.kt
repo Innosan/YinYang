@@ -16,6 +16,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.yinyang.ui.shared.models.Product
 
 @Composable
@@ -37,10 +38,14 @@ fun ProductCard(product: Product) {
             contentAlignment = Alignment.BottomStart
         ) {
             AsyncImage(
-                model = product.imageUrl,
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.imageUrl)
+                    .crossfade(true)
+                    .build(),
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp)),
+
                 contentScale = ContentScale.Crop,
                 contentDescription = "${product.title} image",
             )
