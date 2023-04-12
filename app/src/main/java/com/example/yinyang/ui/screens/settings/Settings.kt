@@ -7,6 +7,6 @@ import com.example.yinyang.ui.shared.components.ScreenContainer
 @Composable
 fun Settings() {
     ScreenContainer {
-        Text(text = "Sign In")
+        Text(text = "Settings")
     }
 }

@@ -1,5 +1,7 @@
 package com.example.yinyang.ui.shared.models
 
+import com.example.yinyang.ui.screens.home.client
+import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
@@ -17,3 +19,10 @@ data class Product(
     val weight: Int,
     val count: Int,
 )
+
+suspend fun get(): List<Product> {
+    val result = client.postgrest["product"]
+        .select("*, category_id(title)")
+
+    return result.decodeList()
+}

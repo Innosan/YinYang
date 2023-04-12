@@ -17,6 +17,8 @@ import com.example.yinyang.ui.screens.home.HomePage
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -31,6 +33,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 
 class MainActivity : ComponentActivity() {
+    lateinit var navController: NavHostController
     @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
             YinYangTheme(
                 darkTheme = true
             ) {
-                val navController = rememberNavController()
+                navController = rememberNavController()
                 
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
@@ -64,7 +67,7 @@ class MainActivity : ComponentActivity() {
                                 selected = item == selectedItem.value,
 
                                 onClick = {
-                                    navController.navigate(item.route)
+                                    navController.navigate(route = item.route)
                                     scope.launch { drawerState.close() }
                                     selectedItem.value = item
                                 }
@@ -79,9 +82,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             NavHost(navController = navController, startDestination = "home") {
                                 composable("home") {
-                                    HomePage(onIconClick = {
-                                        scope.launch { drawerState.open() }
-                                    })
+                                    HomePage()
                                 }
                                 composable("sign-in") {
                                     SignIn()

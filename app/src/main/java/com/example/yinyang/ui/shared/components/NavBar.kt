@@ -21,7 +21,6 @@ import com.example.yinyang.R
 
 @Composable
 fun NavBar(
-    onIconClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -34,7 +33,6 @@ fun NavBar(
             contentDescription = "Menu Button",
 
             Modifier.clip(RoundedCornerShape(10.dp)).clickable {
-                onIconClick()
             }
         )
 
