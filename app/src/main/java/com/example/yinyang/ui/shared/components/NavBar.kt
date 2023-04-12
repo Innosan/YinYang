@@ -15,14 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 
-@Preview
-@Composable
-fun NavBar() {
 
+@Composable
+fun NavBar(
+    onIconClick: () -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -34,7 +34,7 @@ fun NavBar() {
             contentDescription = "Menu Button",
 
             Modifier.clip(RoundedCornerShape(10.dp)).clickable {
-                /* TODO: implement menu opening */
+                onIconClick()
             }
         )
 

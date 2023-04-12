@@ -9,7 +9,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
@@ -44,9 +43,10 @@ suspend fun get(): List<Product> {
     return result.decodeList()
 }
 
-@Preview
 @Composable
-fun HomePage() {
+fun HomePage(
+    onIconClick: () -> Unit,
+) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
@@ -63,8 +63,7 @@ fun HomePage() {
     ScreenContainer(
     ) {
         Column {
-            NavBar()
-
+            NavBar(onIconClick)
             //DIY section
             SectionContainer {
                 SectionHeader(iconId = R.drawable.ic_food_constructor, title = "Do it Yourself")
@@ -100,7 +99,9 @@ fun HomePage() {
 
                 if (products != null) {
                     LazyColumn(
-                        modifier = Modifier.height(720.dp).padding(vertical = 20.dp),
+                        modifier = Modifier
+                            .height(720.dp)
+                            .padding(vertical = 20.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
                         item {
