@@ -13,22 +13,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import com.example.yinyang.ui.screens.home.HomePage
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.yinyang.ui.screens.about.About
-import com.example.yinyang.ui.screens.help.Help
-import com.example.yinyang.ui.screens.profile.Profile
-import com.example.yinyang.ui.screens.settings.Settings
-import com.example.yinyang.ui.screens.signin.SignIn
+import com.example.yinyang.ui.screens.NavGraphs
+import com.example.yinyang.ui.screens.appCurrentDestinationAsState
+import com.example.yinyang.ui.screens.destinations.Destination
+import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.shared.models.navItems
 import com.example.yinyang.ui.theme.YinYangTheme
+import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.navigation.navigate
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -42,6 +39,9 @@ class MainActivity : ComponentActivity() {
                 darkTheme = true
             ) {
                 navController = rememberNavController()
+
+                val currentDestination: Destination = navController.appCurrentDestinationAsState().value
+                    ?: NavGraphs.root.startAppDestination
                 
                 val drawerState = rememberDrawerState(DrawerValue.Closed)
                 val scope = rememberCoroutineScope()
@@ -64,11 +64,13 @@ class MainActivity : ComponentActivity() {
                                     .padding(10.dp)
                                     .fillMaxWidth(.7f),
                                 label = { Text(text = item.title)},
-                                selected = item == selectedItem.value,
+                                selected = currentDestination == item.destination,
 
                                 onClick = {
-                                    navController.navigate(route = item.route)
                                     scope.launch { drawerState.close() }
+                                    navController.navigate(item.destination) {
+                                        launchSingleTop = true
+                                    }
                                     selectedItem.value = item
                                 }
                             )
@@ -80,26 +82,7 @@ class MainActivity : ComponentActivity() {
                                 .fillMaxSize()
                                 .background(MaterialTheme.colorScheme.background)
                         ) {
-                            NavHost(navController = navController, startDestination = "home") {
-                                composable("home") {
-                                    HomePage()
-                                }
-                                composable("sign-in") {
-                                    SignIn()
-                                }
-                                composable("about") {
-                                    About()
-                                }
-                                composable("profile") {
-                                    Profile()
-                                }
-                                composable("settings") {
-                                    Settings()
-                                }
-                                composable("help") {
-                                    Help()
-                                }
-                            }
+                            DestinationsNavHost(navGraph = NavGraphs.root, navController = navController)
                         }
                     }
                 )

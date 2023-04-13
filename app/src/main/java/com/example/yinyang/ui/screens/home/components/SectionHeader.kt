@@ -3,6 +3,7 @@ package com.example.yinyang.ui.screens.home.components
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ fun SectionHeader(iconId: Int, title: String) {
             modifier = Modifier.padding(horizontal = 10.dp),
             text = title,
             fontSize = 20.sp,
+            color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Black
         )
     }

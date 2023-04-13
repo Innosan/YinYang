@@ -1,7 +1,5 @@
 package com.example.yinyang.ui.screens.home
 
-import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,18 +8,20 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
+import com.example.yinyang.ui.screens.destinations.ProfileDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.models.Product
 import com.example.yinyang.ui.shared.models.get
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
-import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
 val client = createSupabaseClient(
@@ -40,8 +40,11 @@ val client = createSupabaseClient(
 
 }
 
+@RootNavGraph(start = true)
+@Destination
 @Composable
 fun HomePage(
+    navigator: DestinationsNavigator,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -53,13 +56,12 @@ fun HomePage(
         }
     }
 
-    if (products == null) {
-        getProducts()
-    }
+    getProducts()
 
     ScreenContainer {
         Column {
             NavBar()
+
             //DIY section
             SectionContainer {
                 SectionHeader(iconId = R.drawable.ic_food_constructor, title = "Do it Yourself")
@@ -80,8 +82,15 @@ fun HomePage(
                 var selectedTabIndex by remember { mutableStateOf(0) }
                 val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
 
-                Button(onClick = getProducts) {
-                    Text(text = "Update products")
+                Row() {
+                    Button(onClick = {
+                        navigator.navigate(ProfileDestination)
+                    }) {
+                        Text(text = "Goto profile")
+                    }
+                    Button(onClick = getProducts) {
+                        Text(text = "Update products")
+                    }
                 }
 
                 FilterList(
@@ -98,10 +107,6 @@ fun HomePage(
                             .padding(vertical = 20.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
-                        item {
-
-                        }
-
                         items(products.filter {
                                 product ->
                             if (selectedTabIndex == 0) true
