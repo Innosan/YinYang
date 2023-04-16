@@ -11,36 +11,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
-import com.example.yinyang.ui.screens.destinations.ProfileDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.models.Product
 import com.example.yinyang.ui.shared.models.get
+import com.example.yinyang.ui.utils.Screen
 import com.ramcosta.composedestinations.annotation.Destination
-import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import io.github.jan.supabase.createSupabaseClient
-import io.github.jan.supabase.postgrest.Postgrest
 import kotlinx.coroutines.launch
 
-val client = createSupabaseClient(
-    supabaseUrl = "https://liskfjzxdlaenoukvmer.supabase.co",
-    supabaseKey =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxpc2tmanp" +
-            "4ZGxhZW5vdWt2bWVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA5NDE2NzgsImV4cCI6MTk5NjUxNzY" +
-            "3OH0.0QqDcjanSHr4T3Rtk2APYryyGkgDlkkQRs5xCn18bcI"
-) {
-
-    //...
-
-    install(Postgrest) {
-        // settings
-    }
-
-}
-
-@RootNavGraph(start = true)
 @Destination
 @Composable
 fun HomePage(
@@ -84,7 +64,7 @@ fun HomePage(
 
                 Row() {
                     Button(onClick = {
-                        navigator.navigate(ProfileDestination)
+                        navigator.navigate(Screen.Profile.destination)
                     }) {
                         Text(text = "Goto profile")
                     }

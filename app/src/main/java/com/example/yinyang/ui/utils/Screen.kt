@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.shared.models
+package com.example.yinyang.ui.utils
 
 import com.example.yinyang.ui.screens.destinations.*
 
@@ -20,5 +20,8 @@ sealed class Screen(val destination: DirectionDestination) {
     )
     object SignIn: Screen(
         destination = SignInDestination
+    )
+    object SignUp: Screen(
+        destination = SignUpDestination
     )
 }

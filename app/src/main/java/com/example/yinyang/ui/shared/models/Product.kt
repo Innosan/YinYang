@@ -1,6 +1,6 @@
 package com.example.yinyang.ui.shared.models
 
-import com.example.yinyang.ui.screens.home.client
+import com.example.yinyang.ui.utils.client
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
