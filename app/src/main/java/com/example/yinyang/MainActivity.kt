@@ -25,9 +25,11 @@ import com.example.yinyang.ui.screens.destinations.Destination
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.shared.models.navItems
 import com.example.yinyang.ui.theme.YinYangTheme
+import com.example.yinyang.ui.utils.Screen
 import com.example.yinyang.ui.utils.client
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.navigate
+import com.ramcosta.composedestinations.spec.Route
 import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.gotrue
 import kotlinx.coroutines.launch
@@ -45,8 +47,7 @@ class MainActivity : ComponentActivity() {
                 navController = rememberNavController()
 
                 val userState = client.gotrue.sessionStatus.collectAsState();
-
-                val isGesturesEnabled = userState.value is SessionStatus.Authenticated
+                val isUserAuth = userState.value is SessionStatus.Authenticated
 
                 val currentDestination: Destination = navController.appCurrentDestinationAsState().value
                     ?: NavGraphs.root.startAppDestination
@@ -56,9 +57,18 @@ class MainActivity : ComponentActivity() {
 
                 val selectedItem = remember { mutableStateOf(navItems[0]) }
 
+                /**
+                 * To explicitly change start if user is authenticated
+                 */
+                val startRoute: Route = if (isUserAuth) {
+                    Screen.Profile.destination
+                } else {
+                    Screen.SignIn.destination
+                }
+
                 ModalNavigationDrawer(
                     drawerState = drawerState,
-                    gesturesEnabled = isGesturesEnabled,
+                    gesturesEnabled = isUserAuth,
                     drawerContent = {
                         navItems.forEach { item ->
                             NavigationDrawerItem(
@@ -84,17 +94,20 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                         }
-                    },
-                    content = {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .background(MaterialTheme.colorScheme.background)
-                        ) {
-                            DestinationsNavHost(navGraph = NavGraphs.root, navController = navController)
-                        }
                     }
-                )
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.background)
+                    ) {
+                        DestinationsNavHost(
+                            navGraph = NavGraphs.root,
+                            navController = navController,
+                            startRoute = startRoute
+                        )
+                    }
+                }
             }
         }
     }

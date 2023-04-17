@@ -3,21 +3,16 @@ package com.example.yinyang.ui.screens.signin
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
 import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.models.get
 import com.example.yinyang.ui.utils.Screen
 import com.example.yinyang.ui.utils.client
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import kotlinx.coroutines.*
@@ -38,8 +33,6 @@ fun SignIn(
     
     var logInError by remember { mutableStateOf(Exception())}
 
-    val userState = client.gotrue.sessionStatus.collectAsState()
-
     suspend fun logIn() = withContext(Dispatchers.IO) {
         try {
             client.gotrue.loginWith(Email) {
@@ -48,16 +41,6 @@ fun SignIn(
             }
         } catch (error: Exception) {
             logInError = error
-        }
-    }
-
-
-
-    if (userState.value is SessionStatus.Authenticated) {
-        navigator.navigate(Screen.Profile.destination) {
-            popUpTo(Screen.SignIn.destination.route) {
-                inclusive = true
-            }
         }
     }
 
@@ -102,19 +85,13 @@ fun SignIn(
                     )
                 }
             )
-            
+
             Button(onClick = {
                 MainScope().launch(exceptionHandler) {
                     logIn()
                 }
             }) {
                 Text(text = "Sign In")
-            }
-
-            Button(onClick = {
-                println(client.gotrue.sessionStatus.value)
-            }) {
-                Text(text = "Check Session status")
             }
 
             Button(onClick = {
