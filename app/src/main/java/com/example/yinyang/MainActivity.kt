@@ -33,11 +33,9 @@ import com.ramcosta.composedestinations.spec.Route
 import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.gotrue
 import kotlinx.coroutines.launch
-import java.util.*
 
 class MainActivity : ComponentActivity() {
     lateinit var navController: NavHostController
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -70,33 +68,39 @@ class MainActivity : ComponentActivity() {
                     drawerState = drawerState,
                     gesturesEnabled = isUserAuth,
                     drawerContent = {
-                        navItems.forEach { item ->
-                            NavigationDrawerItem(
-                                icon = {
-                                    Icon(
-                                        painter = painterResource(id = item.icon),
+                        ModalDrawerSheet(
+                            Modifier.fillMaxWidth(.8f),
+                        ) {
+                            navItems.forEach { item ->
+                                NavigationDrawerItem(
+                                    icon = {
+                                        Icon(
+                                            painter = painterResource(id = item.icon),
 
-                                        contentDescription = item.title
+                                            contentDescription = item.title
+                                        )
+                                    },
+
+                                    modifier = Modifier
+                                        .padding(10.dp)
+                                        .fillMaxWidth(.7f),
+
+                                    label = { Text(text = item.title)},
+                                    selected = currentDestination == item.destination,
+
+                                    onClick = {
+                                        scope.launch { drawerState.close() }
+                                        navController.navigate(item.destination) {
+                                            launchSingleTop = true
+                                        }
+                                        selectedItem.value = item
+                                    },
+
+                                    colors = NavigationDrawerItemDefaults.colors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.primary
                                     )
-                                },
-                                modifier = Modifier
-                                    .padding(10.dp)
-                                    .fillMaxWidth(.7f),
-                                label = { Text(text = item.title)},
-                                selected = currentDestination == item.destination,
-
-                                onClick = {
-                                    scope.launch { drawerState.close() }
-                                    navController.navigate(item.destination) {
-                                        launchSingleTop = true
-                                    }
-                                    selectedItem.value = item
-                                },
-
-                                colors = NavigationDrawerItemDefaults.colors(
-                                    selectedContainerColor = MaterialTheme.colorScheme.primary
                                 )
-                            )
+                            }
                         }
                     }
                 ) {
