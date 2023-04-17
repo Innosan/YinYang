@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -24,8 +25,11 @@ import com.example.yinyang.ui.screens.destinations.Destination
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.shared.models.navItems
 import com.example.yinyang.ui.theme.YinYangTheme
+import com.example.yinyang.ui.utils.client
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.navigate
+import io.github.jan.supabase.gotrue.SessionStatus
+import io.github.jan.supabase.gotrue.gotrue
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -40,6 +44,10 @@ class MainActivity : ComponentActivity() {
             ) {
                 navController = rememberNavController()
 
+                val userState = client.gotrue.sessionStatus.collectAsState();
+
+                val isGesturesEnabled = userState.value is SessionStatus.Authenticated
+
                 val currentDestination: Destination = navController.appCurrentDestinationAsState().value
                     ?: NavGraphs.root.startAppDestination
                 
@@ -50,6 +58,7 @@ class MainActivity : ComponentActivity() {
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
+                    gesturesEnabled = isGesturesEnabled,
                     drawerContent = {
                         navItems.forEach { item ->
                             NavigationDrawerItem(

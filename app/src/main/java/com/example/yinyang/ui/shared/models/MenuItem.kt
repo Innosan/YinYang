@@ -17,5 +17,4 @@ val navItems = listOf(
     MenuItem(id = 3, title = "Settings", destination = Screen.Settings.destination, icon = R.drawable.ic_settings),
     MenuItem(id = 4, title = "Help", destination = Screen.Help.destination, icon = R.drawable.ic_help),
     MenuItem(id = 5, title = "About", destination = Screen.About.destination, icon = R.drawable.ic_about),
-    MenuItem(id = 6, title = "Sign In", destination = Screen.SignIn.destination, icon = R.drawable.ic_profile),
 )

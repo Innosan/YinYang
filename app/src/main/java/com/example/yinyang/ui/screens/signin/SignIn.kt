@@ -17,6 +17,7 @@ import com.example.yinyang.ui.utils.client
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import kotlinx.coroutines.*
@@ -32,12 +33,12 @@ fun SignIn(
         Log.d(TAG, error.toString())
     }
 
-    val coroutineScope = rememberCoroutineScope()
-
     var userEmail by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
     
     var logInError by remember { mutableStateOf(Exception())}
+
+    val userState = client.gotrue.sessionStatus.collectAsState()
 
     suspend fun logIn() = withContext(Dispatchers.IO) {
         try {
@@ -50,18 +51,20 @@ fun SignIn(
         }
     }
 
-    suspend fun logOut() {
-        client.gotrue.invalidateSession()
-    }
 
-    if (client.gotrue.currentAccessTokenOrNull() != null) {
-        navigator.navigate(Screen.Profile.destination)
+
+    if (userState.value is SessionStatus.Authenticated) {
+        navigator.navigate(Screen.Profile.destination) {
+            popUpTo(Screen.SignIn.destination.route) {
+                inclusive = true
+            }
+        }
     }
 
     ScreenContainer {
         Column {
             Text(text = "Войдите, чтобы\nпродолжить вкушать неизведанное...")
-            
+
             Text(text = logInError.message.toString())
 
             OutlinedTextField(
@@ -115,14 +118,8 @@ fun SignIn(
             }
 
             Button(onClick = {
-                coroutineScope.launch {
-                    logOut()
-                }
+                navigator.navigate(Screen.SignUp.destination)
             }) {
-                Text(text = "Log out")
-            }
-
-            Button(onClick = { navigator.navigate(Screen.SignUp.destination) }) {
                 Text(text = "Sign Up Now!")
             }
         }
