@@ -36,7 +36,7 @@ fun FilterList(
         edgePadding = 0.dp,
 
         divider = {
-            TabRowDefaults.Divider(
+            TabRowDefaults.Indicator(
                 color = Color.Transparent
             )
         },

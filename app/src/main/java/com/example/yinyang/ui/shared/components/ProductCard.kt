@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +42,7 @@ fun ProductCard(product: Product) {
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(product.imageUrl)
                     .crossfade(true)
+                    .placeholder(drawableResId = com.example.yinyang.R.drawable.ic_animated_loader) //TODO: should change to better one
                     .build(),
                 modifier = Modifier
                     .fillMaxWidth()

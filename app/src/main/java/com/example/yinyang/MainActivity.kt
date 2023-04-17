@@ -91,7 +91,11 @@ class MainActivity : ComponentActivity() {
                                         launchSingleTop = true
                                     }
                                     selectedItem.value = item
-                                }
+                                },
+
+                                colors = NavigationDrawerItemDefaults.colors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primary
+                                )
                             )
                         }
                     }

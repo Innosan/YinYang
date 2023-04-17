@@ -62,15 +62,8 @@ fun HomePage(
                 var selectedTabIndex by remember { mutableStateOf(0) }
                 val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
 
-                Row() {
-                    Button(onClick = {
-                        navigator.navigate(Screen.Profile.destination)
-                    }) {
-                        Text(text = "Goto profile")
-                    }
-                    Button(onClick = getProducts) {
-                        Text(text = "Update products")
-                    }
+                Button(onClick = getProducts) {
+                    Text(text = "Update products")
                 }
 
                 FilterList(
@@ -87,7 +80,8 @@ fun HomePage(
                             .padding(vertical = 20.dp),
                         verticalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
-                        items(products.filter {
+                        items(
+                            products.filter {
                                 product ->
                             if (selectedTabIndex == 0) true
                             else
@@ -96,7 +90,10 @@ fun HomePage(
                                             .getValue("title")
                                             .toString()
                                             .removeSurrounding("\"")
-                        }) { product -> ProductCard(product = product) }
+                            },
+
+                            key = {product -> product.id}
+                        ) { product -> ProductCard(product = product) }
                     }
                 }
                 else {

@@ -3,9 +3,16 @@ package com.example.yinyang.ui.screens.signin
 import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.utils.Screen
@@ -30,6 +37,8 @@ fun SignIn(
 
     var userEmail by remember { mutableStateOf("") }
     var userPassword by remember { mutableStateOf("") }
+
+    var passwordVisible by remember { mutableStateOf(false) }
     
     var logInError by remember { mutableStateOf(Exception())}
 
@@ -57,7 +66,7 @@ fun SignIn(
                     Text(text = "E-Mail")
                 },
                 placeholder = {
-                    Text(text = "E-Mail")
+                    Text(text = "Type in your e-mail...")
                 },
                 leadingIcon = {
                     Icon(
@@ -70,20 +79,43 @@ fun SignIn(
 
             OutlinedTextField(
                 value = userPassword,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 onValueChange = { userPassword = it },
                 label = {
                     Text(text = "Password")
                 },
                 placeholder = {
-                    Text(text = "Password")
+                    Text(text = "Type in your password...")
                 },
+                visualTransformation =
+                    if (passwordVisible)
+                        VisualTransformation.None
+                    else
+                        PasswordVisualTransformation(),
+
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_password),
 
                         contentDescription = "Password field"
                     )
+                },
+                trailingIcon = {
+                    val image = if (passwordVisible)
+                        Icons.Filled.VisibilityOff
+                    else Icons.Filled.Visibility
+
+                    IconButton(
+                        onClick = {passwordVisible = !passwordVisible},
+                    ) {
+                        Icon(
+                            imageVector = image,
+
+                            contentDescription = "Password field"
+                        )
+                    }
                 }
+
             )
 
             Button(onClick = {
