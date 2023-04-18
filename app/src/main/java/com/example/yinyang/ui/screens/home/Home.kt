@@ -15,6 +15,7 @@ import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.models.Product
+import com.example.yinyang.ui.shared.models.constructorItems
 import com.example.yinyang.ui.shared.models.get
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -49,8 +50,19 @@ fun HomePage(
                         .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    FoodConstructor(background = R.drawable.bg_pizza_construct, title = "Pizza", fraction = .45f)
-                    FoodConstructor(background = R.drawable.bg_wok_construct, title = "Wok", fraction = .85f)
+                    FoodConstructor(
+                        background = R.drawable.bg_pizza_construct,
+                        title = "Pizza",
+                        fraction = .45f,
+                        constructorItems = constructorItems
+                    )
+
+                    FoodConstructor(
+                        background = R.drawable.bg_wok_construct,
+                        title = "Wok",
+                        fraction = .85f,
+                        constructorItems = constructorItems
+                    )
                 }
             }
 

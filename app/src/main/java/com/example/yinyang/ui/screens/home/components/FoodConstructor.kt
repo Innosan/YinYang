@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,18 +18,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
+import com.example.yinyang.ui.screens.constructor.Constructor
+import com.example.yinyang.ui.shared.models.ConstructorItem
+import com.example.yinyang.ui.utils.CenterPositionProvider
 
 @Composable
-fun FoodConstructor(background: Int, title: String, fraction: Float) {
+fun FoodConstructor(
+    background: Int,
+    title: String,
+    fraction: Float,
+
+    constructorItems: List<ConstructorItem>
+) {
+    var popupControl by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth(fraction)
             .height(80.dp)
             .clip(RoundedCornerShape(10.dp))
             .clickable {
-                /**
-                 * TODO: This should navigate to according constructor
-                 */
+                popupControl = true
             },
 
         contentAlignment = Alignment.BottomEnd,
@@ -39,7 +50,9 @@ fun FoodConstructor(background: Int, title: String, fraction: Float) {
             painter = painterResource(id = background),
             contentDescription = null,
             contentScale = ContentScale.FillBounds,
-            modifier = Modifier.fillMaxSize().clip(RoundedCornerShape(10.dp)),
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(RoundedCornerShape(10.dp)),
         )
         Text(
             /**
@@ -58,5 +71,26 @@ fun FoodConstructor(background: Int, title: String, fraction: Float) {
                 .fillMaxHeight(.5f)
                 .padding(5.dp),
         )
+    }
+
+    if (popupControl) {
+        Popup(
+            onDismissRequest = { popupControl = false },
+            properties = PopupProperties(
+                focusable = true,
+                dismissOnBackPress = true,
+                dismissOnClickOutside = false,
+                excludeFromSystemGesture = true,
+                clippingEnabled = true,
+            ),
+
+            popupPositionProvider = CenterPositionProvider(),
+        ) {
+            Constructor(
+                title = "WOK-лапша",
+                description = "Основа из моркови, болгарского перца,\nгрибов, цукини и стручковой фасоли.",
+                items = constructorItems
+            )
+        }
     }
 }

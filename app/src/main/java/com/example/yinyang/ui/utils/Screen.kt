@@ -2,26 +2,33 @@ package com.example.yinyang.ui.utils
 
 import com.example.yinyang.ui.screens.destinations.*
 
-sealed class Screen(val destination: DirectionDestination) {
+sealed class Screen(val destination: DirectionDestination, screenTitle: String) {
     object Home: Screen(
         destination = HomePageDestination,
+        screenTitle = "Главная"
     )
     object Profile: Screen(
-        destination = ProfileDestination
+        destination = ProfileDestination,
+        screenTitle = "Мой профиль"
     )
     object Settings: Screen(
-        destination = SettingsDestination
+        destination = SettingsDestination,
+        screenTitle = "Настройки"
     )
     object Help: Screen(
-        destination = HelpDestination
+        destination = HelpDestination,
+        screenTitle = "Помощь"
     )
     object About: Screen(
-        destination = AboutDestination
+        destination = AboutDestination,
+        screenTitle = "О приложении"
     )
     object SignIn: Screen(
-        destination = SignInDestination
+        destination = SignInDestination,
+        screenTitle = "Вход"
     )
     object SignUp: Screen(
-        destination = SignUpDestination
+        destination = SignUpDestination,
+        screenTitle = "Регистрация"
     )
 }
