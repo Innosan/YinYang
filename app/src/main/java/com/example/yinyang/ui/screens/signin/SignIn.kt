@@ -7,7 +7,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.utils.Screen
-import com.example.yinyang.ui.utils.signIn
+import com.example.yinyang.ui.utils.UserActions
+import com.example.yinyang.ui.utils.performUserAction
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -26,7 +27,7 @@ fun SignIn(
 
             Form(
                 onFormSubmit = {email, password ->
-                    signIn(email, password, context)
+                    performUserAction(actionType = UserActions.LOGIN, email, password, context)
                 },
 
                 formAction = "Sign In",

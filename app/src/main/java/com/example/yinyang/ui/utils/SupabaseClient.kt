@@ -24,27 +24,38 @@ val client = createSupabaseClient(
     }
 }
 
-suspend fun signUp(userEmail: String, userPassword: String, context: Context) {
-    try {
-        client.gotrue.signUpWith(Email) {
-            email = userEmail
-            password = userPassword
+/**
+ * To perform multiple actions with user data, for example sign in up a new user or modifying.
+ *
+ * @param actionType type of user action, for example signUp or signIn
+ * @param userEmail user's email for registration or sign in
+ * @param userPassword user's password for registration or sign in
+ * @param context used for displaying [Toast] messages
+ */
+suspend fun performUserAction(actionType: UserActions, userEmail: String, userPassword: String, context: Context) {
+    val successfulActionMessage =
+        if (actionType == UserActions.SIGNUP) {
+            "Вы успешно зарегистрировались!"
+        }
+        else {
+            "Вы успешно вошли!"
         }
 
-        Toast.makeText(context, "Вы успешно зарегистрировались!", Toast.LENGTH_SHORT).show()
-    } catch (error: Exception) {
-        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
-    }
-}
-
-suspend fun signIn(userEmail: String, userPassword: String, context: Context) {
     try {
-        client.gotrue.loginWith(Email) {
-            email = userEmail
-            password = userPassword
+        if (actionType == UserActions.SIGNUP) {
+            client.gotrue.signUpWith(Email) {
+                email = userEmail
+                password = userPassword
+            }
+        }
+        else {
+            client.gotrue.loginWith(Email) {
+                email = userEmail
+                password = userPassword
+            }
         }
 
-        Toast.makeText(context, "Вы успешно вошли!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, successfulActionMessage, Toast.LENGTH_SHORT).show()
     } catch (error: Exception) {
         Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
     }
