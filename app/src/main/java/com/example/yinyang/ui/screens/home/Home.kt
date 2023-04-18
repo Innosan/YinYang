@@ -16,7 +16,6 @@ import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.models.Product
 import com.example.yinyang.ui.shared.models.get
-import com.example.yinyang.ui.utils.Screen
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch

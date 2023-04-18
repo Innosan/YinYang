@@ -1,7 +1,11 @@
 package com.example.yinyang.ui.utils
 
+import android.content.Context
+import android.widget.Toast
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue
+import io.github.jan.supabase.gotrue.gotrue
+import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.postgrest.Postgrest
 
 val client = createSupabaseClient(
@@ -17,5 +21,31 @@ val client = createSupabaseClient(
 
     install(GoTrue) {
         // settings
+    }
+}
+
+suspend fun signUp(userEmail: String, userPassword: String, context: Context) {
+    try {
+        client.gotrue.signUpWith(Email) {
+            email = userEmail
+            password = userPassword
+        }
+
+        Toast.makeText(context, "Вы успешно зарегистрировались!", Toast.LENGTH_SHORT).show()
+    } catch (error: Exception) {
+        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+    }
+}
+
+suspend fun signIn(userEmail: String, userPassword: String, context: Context) {
+    try {
+        client.gotrue.loginWith(Email) {
+            email = userEmail
+            password = userPassword
+        }
+
+        Toast.makeText(context, "Вы успешно вошли!", Toast.LENGTH_SHORT).show()
+    } catch (error: Exception) {
+        Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
     }
 }
