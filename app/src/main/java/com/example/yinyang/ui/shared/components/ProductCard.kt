@@ -40,8 +40,7 @@ fun ProductCard(product: Product) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(product.imageUrl)
-                    .crossfade(true)
-                    .placeholder(drawableResId = com.example.yinyang.R.drawable.ic_animated_loader) //TODO: should change to better one
+                    .crossfade(true) //TODO: should change to better one
                     .build(),
                 modifier = Modifier
                     .fillMaxWidth()
