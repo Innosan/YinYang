@@ -4,15 +4,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.navigation.ActivityNavigator
+import androidx.compose.runtime.*
+import com.example.yinyang.R
+import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.models.Product
 import com.example.yinyang.ui.shared.models.User
-import com.example.yinyang.ui.shared.models.getProducts
 import com.example.yinyang.ui.shared.models.getUser
 import com.example.yinyang.ui.utils.Screen
 import com.example.yinyang.ui.utils.client
@@ -40,7 +36,9 @@ fun Profile(
         }
     }
 
-    getUser()
+    LaunchedEffect(Unit) {
+        getUser()
+    }
 
     ScreenContainer {
         Column() {
@@ -57,12 +55,20 @@ fun Profile(
             }
             
             Row() {
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Orders")
-                }
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Favorite")
-                }
+                ProfileNavigationButton(
+                    title = "Orders",
+                    icon = R.drawable.ic_orders,
+                    fraction = .45f,
+                    navigator = navigator,
+                    destination = Screen.About.destination
+                )
+                ProfileNavigationButton(
+                    title = "Favorite",
+                    icon = R.drawable.ic_favorite,
+                    fraction = .85f,
+                    navigator = navigator,
+                    destination = Screen.Settings.destination
+                )
             }
 
             Text(text = "Personal")

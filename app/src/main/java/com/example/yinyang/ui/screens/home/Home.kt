@@ -3,8 +3,6 @@ package com.example.yinyang.ui.screens.home
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -12,29 +10,18 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
-import com.example.yinyang.ui.shared.models.Product
+import com.example.yinyang.ui.shared.models.ProductViewModel
 import com.example.yinyang.ui.shared.models.constructorItems
-import com.example.yinyang.ui.shared.models.getProducts
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import kotlinx.coroutines.launch
 
 @Destination
 @Composable
 fun HomePage(
     navigator: DestinationsNavigator,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-
-    val (products, setProducts) = remember { mutableStateOf<List<Product>?>(null) }
-
-    val getProducts: () -> Unit = {
-        coroutineScope.launch {
-            setProducts(getProducts())
-        }
-    }
-
-    getProducts()
+    val productViewModel = remember { ProductViewModel() }
+    val products by productViewModel.products
 
     ScreenContainer {
         Column {
@@ -71,10 +58,6 @@ fun HomePage(
                 var selectedTabIndex by remember { mutableStateOf(0) }
                 val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
 
-                Button(onClick = getProducts) {
-                    Text(text = "Update products")
-                }
-
                 FilterList(
                     tabs = filterWords,
                     selectedTabIndex = selectedTabIndex,
@@ -82,7 +65,7 @@ fun HomePage(
                     selectedTabIndex = tabIndex
                 }
 
-                if (products != null) {
+                if (products.isNotEmpty()) {
                     LazyColumn(
                         modifier = Modifier
                             .height(720.dp)
