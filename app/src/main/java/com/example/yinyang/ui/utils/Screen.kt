@@ -2,7 +2,7 @@ package com.example.yinyang.ui.utils
 
 import com.example.yinyang.ui.screens.destinations.*
 
-sealed class Screen(val destination: DirectionDestination, screenTitle: String) {
+sealed class Screen(val destination: DirectionDestination, val screenTitle: String) {
     object Home: Screen(
         destination = HomePageDestination,
         screenTitle = "Главная"

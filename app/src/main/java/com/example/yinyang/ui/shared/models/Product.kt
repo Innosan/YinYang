@@ -20,7 +20,7 @@ data class Product(
     val count: Int,
 )
 
-suspend fun get(): List<Product> {
+suspend fun getProducts(): List<Product> {
     val result = client.postgrest["product"]
         .select("*, category_id(title)")
 

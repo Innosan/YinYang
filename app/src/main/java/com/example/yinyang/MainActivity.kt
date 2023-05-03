@@ -59,7 +59,7 @@ class MainActivity : ComponentActivity() {
                  * To explicitly change start if user is authenticated
                  */
                 val startRoute: Route = if (isUserAuth) {
-                    Screen.Profile.destination
+                    Screen.Home.destination
                 } else {
                     Screen.SignIn.destination
                 }

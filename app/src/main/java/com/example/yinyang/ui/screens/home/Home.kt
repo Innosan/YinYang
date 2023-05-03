@@ -7,7 +7,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
@@ -15,7 +14,7 @@ import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.models.Product
 import com.example.yinyang.ui.shared.models.constructorItems
-import com.example.yinyang.ui.shared.models.get
+import com.example.yinyang.ui.shared.models.getProducts
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
@@ -31,7 +30,7 @@ fun HomePage(
 
     val getProducts: () -> Unit = {
         coroutineScope.launch {
-            setProducts(get())
+            setProducts(getProducts())
         }
     }
 
