@@ -1,10 +1,13 @@
 package com.example.yinyang.ui.screens.profile
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
@@ -48,13 +51,17 @@ fun Profile(
                 Text(text = "Image")
                 Column() {
                     if (user != null) {
-                        Text(text = user.firstName + user.lastName)
+                        Text(text = "${user.firstName}\n${user.lastName}")
                         Text(text = user.rating.toString())
                     }
                 }
             }
             
-            Row() {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
                 ProfileNavigationButton(
                     title = "Orders",
                     icon = R.drawable.ic_orders,
