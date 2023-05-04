@@ -6,9 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.utils.Screen
-import com.example.yinyang.ui.utils.UserActions
-import com.example.yinyang.ui.utils.performUserAction
+import com.example.yinyang.ui.utils.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -21,13 +19,15 @@ fun SignIn(
 ) {
     val context = LocalContext.current
 
+    val userActionsHandler = UserActionsHandler(context)
+
     ScreenContainer {
         Column {
             Text(text = "Войдите, чтобы\nпродолжить вкушать неизведанное...")
 
             Form(
                 onFormSubmit = {email, password ->
-                    performUserAction(actionType = UserActions.LOGIN, email, password, context)
+                    userActionsHandler.performUserAction(userAction = UserAction.LOGIN, email, password)
                 },
 
                 formAction = "Sign In",

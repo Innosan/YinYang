@@ -18,13 +18,15 @@ fun SignUp(
 ) {
     val context = LocalContext.current
 
+    val userActionsHandler = UserActionsHandler(context)
+
     ScreenContainer {
         Column {
             Text(text = "Зарегистрируйтесь, чтобы продолжить!")
 
             Form(
                 onFormSubmit = {email, password ->
-                    performUserAction(actionType = UserActions.SIGNUP, email, password, context)
+                    userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password)
                 },
 
                 formAction = "Sign Up",

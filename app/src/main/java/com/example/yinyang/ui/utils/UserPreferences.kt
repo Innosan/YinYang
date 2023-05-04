@@ -1,7 +1,6 @@
 package com.example.yinyang.ui.utils
 
 import android.content.Context
-import androidx.compose.ui.platform.LocalContext
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -10,8 +9,14 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class UserPreferences(context: Context) {
-    private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
+private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "user")
+
+class UserPreferences(private val context: Context) {
+    companion object {
+        private val NAME = stringPreferencesKey("name")
+        private val EMAIL = stringPreferencesKey("email")
+        private val PHONE = stringPreferencesKey("phone")
+    }
 
     val name: Flow<String?> = context.userDataStore.data
         .map { preferences -> preferences[NAME] }
@@ -19,7 +24,7 @@ class UserPreferences(context: Context) {
     val email: Flow<String?> = context.userDataStore.data
         .map { preferences -> preferences[EMAIL] }
 
-    suspend fun setName(name: String, context: Context) {
+    suspend fun setName(name: String) {
         context.userDataStore.edit { preferences ->
             preferences[NAME] = name
         }
@@ -30,7 +35,4 @@ class UserPreferences(context: Context) {
             preferences[EMAIL] = email
         }
     }
-
-    private val NAME = stringPreferencesKey("name")
-    private val EMAIL = stringPreferencesKey("email")
 }
