@@ -29,7 +29,7 @@ fun SignUp(
                     userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password)
                 },
 
-                formAction = "Sign Up",
+                formAction = "Зарегистрироваться",
             )
 
             Button(onClick = {

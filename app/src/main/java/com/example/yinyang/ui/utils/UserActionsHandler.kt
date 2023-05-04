@@ -41,16 +41,21 @@ class UserActionsHandler(private val context: Context) {
         }
     }
 
+    private suspend fun logOut() {
+        client.gotrue.invalidateSession()
+    }
+
     /**
      * Perform a user action.
      * @param userAction The user action to perform.
      * @param userEmail The user's email address.
      * @param userPassword The user's password.
      */
-    suspend fun performUserAction(userAction: UserAction, userEmail: String, userPassword: String) {
+    suspend fun performUserAction(userAction: UserAction, userEmail: String = "", userPassword: String = "") {
         val successfulActionMessage = when (userAction) {
             UserAction.SIGNUP -> "Вы успешно зарегистрировались!"
             UserAction.LOGIN -> "Вы успешно вошли!"
+            UserAction.LOGOUT -> "Вы успешно вышли из аккаунта!"
             //UserAction.UPDATE -> "Информация обновлена!"
         }
 
@@ -58,6 +63,7 @@ class UserActionsHandler(private val context: Context) {
             when (userAction) {
                 UserAction.SIGNUP -> signUp(userEmail, userPassword)
                 UserAction.LOGIN -> logIn(userEmail, userPassword)
+                UserAction.LOGOUT -> logOut()
             }
 
             Toast.makeText(context, successfulActionMessage, Toast.LENGTH_SHORT).show()

@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 
-
 @Composable
 fun NavBar(
 ) {

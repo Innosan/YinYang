@@ -8,13 +8,12 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.models.User
-import com.example.yinyang.ui.shared.models.getUser
-import com.example.yinyang.ui.utils.Screen
-import com.example.yinyang.ui.utils.client
+import com.example.yinyang.ui.shared.models.ProfileViewModel
+import com.example.yinyang.ui.utils.*
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.jan.supabase.gotrue.gotrue
@@ -26,22 +25,12 @@ fun Profile(
     navigator: DestinationsNavigator,
 ) {
     val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    suspend fun logOut() {
-        client.gotrue.invalidateSession()
-    }
+    val userActionsHandler = UserActionsHandler(context)
 
-    val (user, setUser) = remember { mutableStateOf<User?>(null) }
-
-    val getUser: () -> Unit = {
-        coroutineScope.launch {
-            setUser(getUser())
-        }
-    }
-
-    LaunchedEffect(Unit) {
-        getUser()
-    }
+    val profileViewModel = remember { ProfileViewModel() }
+    val userInfo = profileViewModel.userInfo.value
 
     ScreenContainer {
         Column() {
@@ -50,9 +39,9 @@ fun Profile(
             Row() {
                 Text(text = "Image")
                 Column() {
-                    if (user != null) {
-                        Text(text = "${user.firstName}\n${user.lastName}")
-                        Text(text = user.rating.toString())
+                    if (userInfo != null) {
+                        Text(text = "${userInfo.firstName}\n${userInfo.lastName}")
+                        Text(text = getRatingTitle(userInfo.rating).title.uppercase())
                     }
                 }
             }
@@ -88,14 +77,7 @@ fun Profile(
 
             Button(onClick = {
                 coroutineScope.launch {
-                    logOut()
-                }
-
-                navigator.navigate(Screen.SignIn.destination) {
-
-                    popUpTo(Screen.SignIn.destination.route) {
-                        inclusive = true
-                    }
+                    userActionsHandler.performUserAction(UserAction.LOGOUT)
                 }
             }) {
                 Text(text = "Log out")
