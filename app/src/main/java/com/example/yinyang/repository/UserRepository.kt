@@ -36,7 +36,7 @@ class UserRepository(private val client: SupabaseClient) {
     suspend fun getUserAddresses(userId: Int?) : List<DeliveryAddress> {
         return try {
             val result = client.postgrest["delivery_address"]
-                .select() {
+                .select {
                     DeliveryAddress::userId eq userId
                 }
 

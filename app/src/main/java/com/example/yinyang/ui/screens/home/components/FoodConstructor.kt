@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
-import com.example.yinyang.ui.screens.constructor.Constructor
 import com.example.yinyang.models.ConstructorItem
+import com.example.yinyang.ui.screens.constructor.Constructor
 import com.example.yinyang.utils.CenterPositionProvider
 
 @Composable

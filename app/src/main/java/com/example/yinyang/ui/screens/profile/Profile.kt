@@ -1,21 +1,26 @@
 package com.example.yinyang.ui.screens.profile
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.R
+import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.viewmodels.ProfileViewModel
-import com.example.yinyang.repository.UserRepository
-import com.example.yinyang.ui.utils.*
+import com.example.yinyang.network.client
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.utils.UserAction
 import com.example.yinyang.utils.UserActionsHandler
 import com.example.yinyang.utils.getRatingTitle
+import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.jan.supabase.gotrue.gotrue
@@ -42,12 +47,12 @@ fun Profile(
     val userAddresses = profile.userAddresses
 
     ScreenContainer {
-        Column() {
+        Column {
             Text(text = Screen.Profile.screenTitle)
 
-            Row() {
+            Row {
                 Text(text = "Image")
-                Column() {
+                Column {
                     if (userInfo != null) {
                         Text(text = "${userInfo.firstName}\n${userInfo.lastName}")
                         //Text(text = userInfo.id.toString())
@@ -85,7 +90,7 @@ fun Profile(
             }
 
             Text(text = "Addresses")
-            Column() {
+            Column {
                 userAddresses?.forEach { deliveryAddress ->
                     Text(text = deliveryAddress.address)
                 }

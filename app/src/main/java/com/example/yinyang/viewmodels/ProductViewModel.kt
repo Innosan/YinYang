@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yinyang.models.Product
-import com.example.yinyang.ui.utils.client
+import com.example.yinyang.network.client
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 

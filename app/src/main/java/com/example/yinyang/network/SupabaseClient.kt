@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.network
 
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.gotrue.GoTrue

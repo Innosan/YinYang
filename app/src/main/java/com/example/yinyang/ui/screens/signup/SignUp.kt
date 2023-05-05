@@ -1,12 +1,13 @@
 package com.example.yinyang.ui.screens.signup
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.utils.*
+import com.example.yinyang.network.client
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.utils.UserAction
 import com.example.yinyang.utils.UserActionsHandler
