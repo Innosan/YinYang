@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.utils
 
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect

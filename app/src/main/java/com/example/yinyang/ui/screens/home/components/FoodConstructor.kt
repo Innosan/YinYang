@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.ui.screens.constructor.Constructor
-import com.example.yinyang.ui.shared.models.ConstructorItem
-import com.example.yinyang.ui.utils.CenterPositionProvider
+import com.example.yinyang.models.ConstructorItem
+import com.example.yinyang.utils.CenterPositionProvider
 
 @Composable
 fun FoodConstructor(

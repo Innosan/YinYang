@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.utils
 
 /**
  * An enum class representing the available user actions.

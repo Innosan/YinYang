@@ -9,9 +9,13 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.models.user.ProfileViewModel
-import com.example.yinyang.ui.shared.models.user.UserRepository
+import com.example.yinyang.viewmodels.ProfileViewModel
+import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.ui.utils.*
+import com.example.yinyang.utils.Screen
+import com.example.yinyang.utils.UserAction
+import com.example.yinyang.utils.UserActionsHandler
+import com.example.yinyang.utils.getRatingTitle
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.jan.supabase.gotrue.gotrue

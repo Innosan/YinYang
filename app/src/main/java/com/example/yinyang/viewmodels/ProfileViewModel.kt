@@ -1,10 +1,12 @@
-package com.example.yinyang.ui.shared.models.user
+package com.example.yinyang.viewmodels
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.yinyang.ui.shared.models.DeliveryAddress
+import com.example.yinyang.models.DeliveryAddress
+import com.example.yinyang.models.User
+import com.example.yinyang.repository.UserRepository
 import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch

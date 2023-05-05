@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.models.ConstructorItem
+import com.example.yinyang.models.ConstructorItem
 
 @Composable
 fun Constructor(

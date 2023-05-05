@@ -6,7 +6,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.utils.*
+import com.example.yinyang.utils.Screen
+import com.example.yinyang.utils.UserAction
+import com.example.yinyang.utils.UserActionsHandler
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.annotation.RootNavGraph
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator

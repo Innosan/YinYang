@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.shared.models
+package com.example.yinyang.models
 
 data class ConstructorItem(
     val id: Int,

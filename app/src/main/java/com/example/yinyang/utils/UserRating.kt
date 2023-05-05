@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.utils
 
 enum class RatingTitle(val value: Int, val title: String) {
     NEWBIE(1, "Новичок"),

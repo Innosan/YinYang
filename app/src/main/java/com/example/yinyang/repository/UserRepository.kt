@@ -1,6 +1,7 @@
-package com.example.yinyang.ui.shared.models.user
+package com.example.yinyang.repository
 
-import com.example.yinyang.ui.shared.models.DeliveryAddress
+import com.example.yinyang.models.DeliveryAddress
+import com.example.yinyang.models.User
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.user.UserInfo
@@ -9,11 +10,11 @@ import io.github.jan.supabase.postgrest.postgrest
 class UserRepository(private val client: SupabaseClient) {
     suspend fun getUserInfo() : User? {
         return try {
-            val result = com.example.yinyang.ui.utils.client.postgrest["user"]
+            val result = client.postgrest["user"]
                 .select(
                     single = true,
                 ) {
-                    User::userUuid eq com.example.yinyang.ui.utils.client.gotrue.retrieveUserForCurrentSession().id
+                    User::userUuid eq client.gotrue.retrieveUserForCurrentSession().id
                 }
 
             result.decodeAs()
@@ -25,7 +26,7 @@ class UserRepository(private val client: SupabaseClient) {
 
     suspend fun getUserSession(): UserInfo? {
         return try {
-            com.example.yinyang.ui.utils.client.gotrue.retrieveUserForCurrentSession()
+            client.gotrue.retrieveUserForCurrentSession()
         } catch (e: Exception) {
             println(e.message)
             null
@@ -34,7 +35,7 @@ class UserRepository(private val client: SupabaseClient) {
 
     suspend fun getUserAddresses(userId: Int?) : List<DeliveryAddress> {
         return try {
-            val result = com.example.yinyang.ui.utils.client.postgrest["delivery_address"]
+            val result = client.postgrest["delivery_address"]
                 .select() {
                     DeliveryAddress::userId eq userId
                 }

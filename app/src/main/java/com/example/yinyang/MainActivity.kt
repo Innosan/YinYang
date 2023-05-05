@@ -23,9 +23,9 @@ import com.example.yinyang.ui.screens.NavGraphs
 import com.example.yinyang.ui.screens.appCurrentDestinationAsState
 import com.example.yinyang.ui.screens.destinations.Destination
 import com.example.yinyang.ui.screens.startAppDestination
-import com.example.yinyang.ui.shared.models.navItems
+import com.example.yinyang.models.navItems
 import com.example.yinyang.ui.theme.YinYangTheme
-import com.example.yinyang.ui.utils.Screen
+import com.example.yinyang.utils.Screen
 import com.example.yinyang.ui.utils.client
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.navigate
@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 navController = rememberNavController()
 
-                val userState = client.gotrue.sessionStatus.collectAsState();
+                val userState = client.gotrue.sessionStatus.collectAsState()
                 val isUserAuth = userState.value is SessionStatus.Authenticated
 
                 val currentDestination: Destination = navController.appCurrentDestinationAsState().value

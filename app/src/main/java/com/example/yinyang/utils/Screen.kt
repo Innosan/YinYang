@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.utils
 
 import com.example.yinyang.ui.screens.destinations.*
 

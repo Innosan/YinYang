@@ -1,8 +1,8 @@
-package com.example.yinyang.ui.shared.models
+package com.example.yinyang.models
 
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.DirectionDestination
-import com.example.yinyang.ui.utils.Screen
+import com.example.yinyang.utils.Screen
 
 data class MenuItem(
     val id: Int,

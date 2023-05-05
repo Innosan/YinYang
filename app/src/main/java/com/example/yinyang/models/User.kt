@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.shared.models.user
+package com.example.yinyang.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

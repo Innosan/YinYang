@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.yinyang.ui.shared.models.product.Product
+import com.example.yinyang.models.Product
 
 @Composable
 fun ProductCard(product: Product) {

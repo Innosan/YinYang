@@ -1,8 +1,9 @@
-package com.example.yinyang.ui.utils
+package com.example.yinyang.utils
 
 import android.content.Context
 import android.widget.Toast
-import com.example.yinyang.ui.shared.models.user.User
+import com.example.yinyang.models.User
+import com.example.yinyang.ui.utils.client
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserInfo
