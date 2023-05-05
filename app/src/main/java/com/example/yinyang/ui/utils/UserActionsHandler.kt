@@ -2,7 +2,7 @@ package com.example.yinyang.ui.utils
 
 import android.content.Context
 import android.widget.Toast
-import com.example.yinyang.ui.shared.models.User
+import com.example.yinyang.ui.shared.models.user.User
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserInfo
@@ -82,10 +82,11 @@ class UserActionsHandler(private val context: Context) {
             null,
             null,
             null,
+            uuid,
             "Change",
             "Me",
             "sample_url",
-            uuid,
+            null, //should be null to autoincrement work in supabase
             1
         )
 

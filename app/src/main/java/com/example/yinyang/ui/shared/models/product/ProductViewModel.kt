@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.shared.models
+package com.example.yinyang.ui.shared.models.product
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf

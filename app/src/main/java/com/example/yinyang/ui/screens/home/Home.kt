@@ -10,7 +10,7 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.screens.home.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
-import com.example.yinyang.ui.shared.models.ProductViewModel
+import com.example.yinyang.ui.shared.models.product.ProductViewModel
 import com.example.yinyang.ui.shared.models.constructorItems
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
