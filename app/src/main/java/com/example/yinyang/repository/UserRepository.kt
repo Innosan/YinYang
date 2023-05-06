@@ -46,4 +46,8 @@ class UserRepository(private val client: SupabaseClient) {
             emptyList()
         }
     }
+
+    suspend fun deleteAddress(addressId: Int) {
+        client.postgrest["delivery_adresses"].delete { DeliveryAddress::id eq addressId }
+    }
 }

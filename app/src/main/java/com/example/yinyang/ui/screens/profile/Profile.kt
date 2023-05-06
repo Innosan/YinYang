@@ -1,25 +1,26 @@
 package com.example.yinyang.ui.screens.profile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
+import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.network.client
-import com.example.yinyang.utils.Screen
-import com.example.yinyang.utils.UserAction
-import com.example.yinyang.utils.UserActionsHandler
-import com.example.yinyang.utils.getRatingTitle
+import com.example.yinyang.ui.screens.constructor.Constructor
+import com.example.yinyang.ui.shared.components.AddressList
+import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -44,7 +45,9 @@ fun Profile(
     val profile = profileViewModel.profile.value
     val userInfo = profile.userInfo
     val userSession = profile.userSession
-    val userAddresses = profile.userAddresses
+    val userAddresses = profile.userAddresses?.toMutableList()
+
+    var popupControl by remember { mutableStateOf(false) }
 
     ScreenContainer {
         Column {
@@ -90,9 +93,34 @@ fun Profile(
             }
 
             Text(text = "Addresses")
-            Column {
-                userAddresses?.forEach { deliveryAddress ->
-                    Text(text = deliveryAddress.address)
+
+            Row(
+                modifier = Modifier.clickable { popupControl = true }
+            ) {
+                userAddresses?.get(0)?.let { Text(text = it.address) }
+            }
+            
+            if (popupControl) {
+                Popup(
+                    onDismissRequest = { popupControl = false },
+                    properties = PopupProperties(
+                        focusable = true,
+                        dismissOnBackPress = true,
+                        dismissOnClickOutside = false,
+                        excludeFromSystemGesture = true,
+                        clippingEnabled = true,
+                    ),
+
+                    popupPositionProvider = CenterPositionProvider(),
+                ) {
+                    Column {
+                        Button(onClick = { popupControl = false }) {
+                            Text(text = "Close")
+                        }
+                        if (userAddresses != null) {
+                            AddressList(items = userAddresses, userRepository = userRepository)
+                        }
+                    }
                 }
             }
 

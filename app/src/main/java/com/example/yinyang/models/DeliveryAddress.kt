@@ -9,5 +9,6 @@ data class DeliveryAddress(
     val address: String,
     val description: String,
 
-    @SerialName("user_id") val userId: Int
+    @SerialName("user_id") val userId: Int,
+    @SerialName("is_starred") val isStarred: Boolean
 )
