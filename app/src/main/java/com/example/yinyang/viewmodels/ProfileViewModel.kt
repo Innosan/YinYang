@@ -15,11 +15,29 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
     data class Profile(
         val userInfo: User?,
         val userSession: UserInfo?,
-        val userAddresses: List<DeliveryAddress>?,
+        val userAddresses: MutableState<List<DeliveryAddress>>?,
     )
 
     private val _profile = mutableStateOf(Profile(null, null, null))
     val profile: MutableState<Profile> = _profile
+
+    fun deleteAddress(addressId: Int) {
+        viewModelScope.launch {
+            userRepository.deleteAddress(addressId)
+
+            val updatedAddresses = userRepository.getUserAddresses(profile.value.userInfo?.id)
+            _profile.value = profile.value.copy(userAddresses = updatedAddresses)
+        }
+    }
+
+    fun addAddress(addressMessage: String, userId: Int) {
+        viewModelScope.launch {
+            userRepository.addAddress(addressMessage, userId)
+
+            val updatedAddresses = userRepository.getUserAddresses(profile.value.userInfo?.id)
+            _profile.value = profile.value.copy(userAddresses = updatedAddresses)
+        }
+    }
 
     init {
         viewModelScope.launch {

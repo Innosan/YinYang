@@ -45,7 +45,7 @@ fun Profile(
     val profile = profileViewModel.profile.value
     val userInfo = profile.userInfo
     val userSession = profile.userSession
-    val userAddresses = profile.userAddresses?.toMutableList()
+    val userAddresses = profile.userAddresses
 
     var popupControl by remember { mutableStateOf(false) }
 
@@ -97,7 +97,7 @@ fun Profile(
             Row(
                 modifier = Modifier.clickable { popupControl = true }
             ) {
-                userAddresses?.get(0)?.let { Text(text = it.address) }
+                Text(text = "Addresses")
             }
             
             if (popupControl) {
@@ -118,7 +118,7 @@ fun Profile(
                             Text(text = "Close")
                         }
                         if (userAddresses != null) {
-                            AddressList(items = userAddresses, userRepository = userRepository)
+                            AddressList(items = userAddresses.value, userViewModel = profileViewModel)
                         }
                     }
                 }

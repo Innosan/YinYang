@@ -19,12 +19,13 @@ import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.network.client
 import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.utils.SwipeBackground
+import com.example.yinyang.viewmodels.ProfileViewModel
 import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddressList(items: MutableList<DeliveryAddress>, userRepository: UserRepository) {
+fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
     Column {
         Text(text = "Ваши адреса")
 
@@ -32,7 +33,10 @@ fun AddressList(items: MutableList<DeliveryAddress>, userRepository: UserReposit
             val currentItem by rememberUpdatedState(newValue = address)
             val dismissState = rememberDismissState(
                 confirmValueChange = {
-                    items.remove(currentItem)
+                    currentItem.id?.let { it1 ->
+                        println(it1)
+                        userViewModel.deleteAddress(it1)
+                    }
                     true
                 }
             )
