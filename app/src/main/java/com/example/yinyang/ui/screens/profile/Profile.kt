@@ -55,7 +55,6 @@ fun Profile(
             Text(text = Screen.Profile.screenTitle)
 
             Row {
-                Text(text = "Image")
                 Column {
                     if (userInfo != null) {
                         Text(text = "${userInfo.firstName}\n${userInfo.lastName}")
@@ -121,6 +120,12 @@ fun Profile(
                         }
                     }
                 }
+            }
+            
+            Button(onClick = { 
+
+            }) {
+                Text(text = "Edit Profile")
             }
 
             Button(onClick = {

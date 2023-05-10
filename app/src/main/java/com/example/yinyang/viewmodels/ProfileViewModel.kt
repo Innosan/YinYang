@@ -25,7 +25,7 @@ class ProfileViewModel(
     private val _profile = mutableStateOf(Profile(null, null, null))
     val profile: MutableState<Profile> = _profile
 
-    suspend fun updateAddresses() {
+    private suspend fun updateAddresses() {
         val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
         _profile.value = profile.value.copy(userAddresses = updatedAddresses)
     }
@@ -46,9 +46,9 @@ class ProfileViewModel(
         }
     }
 
-    fun updateAddress(userId: Int, newAddress: String) {
+    fun updateAddress(addressId: Int, newAddress: String) {
         viewModelScope.launch {
-            addressRepository.updateAddress(userId, newAddress)
+            addressRepository.updateAddress(addressId, newAddress)
 
             updateAddresses()
         }
@@ -60,7 +60,7 @@ class ProfileViewModel(
                 val userInfoDeffered = async { userRepository.getUserInfo() }
                 val userSessionDeffered = async { userRepository.getUserSession() }
                 val deliveryAddressesDeffered = async {
-                    addressRepository.getUserAddresses(userInfoDeffered.await()?.id)
+                    addressRepository.getUserAddresses(userInfoDeffered.await().id)
                 }
 
                 _profile.value = Profile(

@@ -16,9 +16,11 @@ import com.example.yinyang.viewmodels.ProfileViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
-    var popupControl by remember { mutableStateOf(false) }
+    var newAddressPopUpControl by remember { mutableStateOf(false) }
+    var updateAddressPopUpControl by remember { mutableStateOf(false) }
 
     var newAddress by remember { mutableStateOf("")}
+    var updatedAddress by remember { mutableStateOf("") }
     
     Column {
         Text(text = "Ваши адреса")
@@ -50,7 +52,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     Row {
                         Text(text = address.address)
                         IconButton(onClick = {
-
+                            updateAddressPopUpControl = true
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_settings),
@@ -59,17 +61,66 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             )
                         }
                     }
+
+                    if (updateAddressPopUpControl) {
+                        Popup(
+                            onDismissRequest = { updateAddressPopUpControl = false },
+                            properties = PopupProperties(
+                                focusable = true,
+                                dismissOnBackPress = true,
+                                dismissOnClickOutside = false,
+                                excludeFromSystemGesture = true,
+                                clippingEnabled = true,
+                            ),
+
+                            popupPositionProvider = CenterPositionProvider(),
+                        ) {
+                            Column {
+                                Button(onClick = { updateAddressPopUpControl = false }) {
+                                    Text(text = "Close")
+                                }
+
+                                OutlinedTextField(
+                                    value = updatedAddress,
+                                    onValueChange = { updatedAddress = it },
+                                    label = {
+                                        Text(text = "Address line")
+                                    },
+                                    placeholder = {
+                                        Text(text = "Update address...")
+                                    },
+                                    leadingIcon = {
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.ic_email),
+
+                                            contentDescription = "Address field"
+                                        )
+                                    }
+                                )
+                                
+                                Button(onClick = {
+                                    currentItem.id?.let { it1 ->
+                                        userViewModel.updateAddress(it1, updatedAddress)
+                                    }
+
+                                    updateAddressPopUpControl = false
+                                }) {
+                                    Text(text = "Update")
+                                }
+                            }
+                        }
+                    }
                 }
             )
         }
         
-        Button(onClick = { popupControl = true }) {
+        Button(onClick = { newAddressPopUpControl = true }) {
             Text(text = "Add")
         }
 
-        if (popupControl) {
+        if (newAddressPopUpControl) {
             Popup(
-                onDismissRequest = { popupControl = false },
+                onDismissRequest = { newAddressPopUpControl = false },
                 properties = PopupProperties(
                     focusable = true,
                     dismissOnBackPress = true,
@@ -81,7 +132,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 popupPositionProvider = CenterPositionProvider(),
             ) {
                 Column {
-                    Button(onClick = { popupControl = false }) {
+                    Button(onClick = { newAddressPopUpControl = false }) {
                         Text(text = "Close")
                     }
                     
@@ -89,16 +140,16 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                         value = newAddress,
                         onValueChange = { newAddress = it },
                         label = {
-                            Text(text = "E-Mail")
+                            Text(text = "Address line")
                         },
                         placeholder = {
-                            Text(text = "Type in your e-mail...")
+                            Text(text = "Type in your new address...")
                         },
                         leadingIcon = {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_email),
 
-                                contentDescription = "E-Mail field"
+                                contentDescription = "Address field"
                             )
                         }
                     )
@@ -108,7 +159,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             userViewModel.addAddress(it, newAddress)
                         }
 
-                        popupControl = false
+                        newAddressPopUpControl = false
                     }) {
                         Text(text = "Add new")
                     }
