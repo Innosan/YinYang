@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.User
+import com.example.yinyang.repository.AddressRepository
 import com.example.yinyang.repository.UserRepository
 import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(private val userRepository: UserRepository) : ViewModel() {
+class ProfileViewModel(
+    private val userRepository: UserRepository,
+    private val addressRepository: AddressRepository
+    ) : ViewModel() {
     data class Profile(
         val userInfo: User?,
         val userSession: UserInfo?,
@@ -23,18 +27,18 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
 
     fun deleteAddress(addressId: Int) {
         viewModelScope.launch {
-            userRepository.deleteAddress(addressId)
+            addressRepository.deleteAddress(addressId)
 
-            val updatedAddresses = userRepository.getUserAddresses(profile.value.userInfo?.id)
+            val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
             _profile.value = profile.value.copy(userAddresses = updatedAddresses)
         }
     }
 
     fun addAddress(addressMessage: String, userId: Int) {
         viewModelScope.launch {
-            userRepository.addAddress(addressMessage, userId)
+            addressRepository.addAddress(addressMessage, userId)
 
-            val updatedAddresses = userRepository.getUserAddresses(profile.value.userInfo?.id)
+            val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
             _profile.value = profile.value.copy(userAddresses = updatedAddresses)
         }
     }
@@ -44,7 +48,7 @@ class ProfileViewModel(private val userRepository: UserRepository) : ViewModel()
             val userInfoDeffered = async { userRepository.getUserInfo() }
             val userSessionDeffered = async { userRepository.getUserSession() }
             val deliveryAddressesDeffered = async {
-                userRepository.getUserAddresses(userInfoDeffered.await()?.id)
+                addressRepository.getUserAddresses(userInfoDeffered.await()?.id)
             }
 
             _profile.value = Profile(

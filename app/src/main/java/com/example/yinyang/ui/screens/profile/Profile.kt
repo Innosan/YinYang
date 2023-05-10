@@ -13,12 +13,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
-import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.ui.shared.components.ProfileNavigationButton
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.network.client
-import com.example.yinyang.ui.screens.constructor.Constructor
+import com.example.yinyang.repository.AddressRepository
 import com.example.yinyang.ui.shared.components.AddressList
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
@@ -28,6 +27,7 @@ import io.github.jan.supabase.gotrue.gotrue
 import kotlinx.coroutines.launch
 
 val userRepository = UserRepository(client)
+val addressRepository = AddressRepository(client)
 
 @Destination
 @Composable
@@ -40,7 +40,7 @@ fun Profile(
     val userActionsHandler = UserActionsHandler(context)
 
     val profileViewModel = remember (userRepository) {
-        ProfileViewModel(userRepository)
+        ProfileViewModel(userRepository, addressRepository)
     }
     val profile = profileViewModel.profile.value
     val userInfo = profile.userInfo

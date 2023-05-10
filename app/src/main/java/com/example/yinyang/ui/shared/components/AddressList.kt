@@ -1,36 +1,30 @@
 package com.example.yinyang.ui.shared.components
 
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.window.Popup
+import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
 import com.example.yinyang.models.DeliveryAddress
-import com.example.yinyang.network.client
-import com.example.yinyang.repository.UserRepository
+import com.example.yinyang.utils.CenterPositionProvider
 import com.example.yinyang.utils.SwipeBackground
 import com.example.yinyang.viewmodels.ProfileViewModel
-import io.github.jan.supabase.postgrest.postgrest
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
+    var popupControl by remember { mutableStateOf(false) }
+
+    var newAddress by remember { mutableStateOf("")}
+    
     Column {
         Text(text = "Ваши адреса")
 
         items.forEach {address ->
             val currentItem by rememberUpdatedState(newValue = address)
+            
             val dismissState = rememberDismissState(
                 confirmValueChange = {
                     currentItem.id?.let { it1 ->
@@ -43,33 +37,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             SwipeToDismiss(
                 state = dismissState,
                 background = {
-                    val color by animateColorAsState(
-                        when (dismissState.targetValue) {
-                            DismissValue.Default -> Color.Transparent
-                            DismissValue.DismissedToEnd -> Color.Blue
-                            DismissValue.DismissedToStart -> Color.Red
-                        }
-                    )
-                    val alignment = Alignment.CenterEnd
-                    val icon = Icons.Default.Delete
-
-                    val scale by animateFloatAsState(
-                        if (dismissState.targetValue == DismissValue.Default) 0.75f else 1f
-                    )
-
-                    Box(
-                        Modifier
-                            .fillMaxSize()
-                            .background(color)
-                            .padding(horizontal = Dp(20f)),
-                        contentAlignment = alignment
-                    ) {
-                        Icon(
-                            icon,
-                            contentDescription = "Delete Icon",
-                            modifier = Modifier.scale(scale)
-                        )
-                    }
+                    SwipeBackground(dismissState = dismissState)
                 },
                 dismissContent = {
                     Row {
@@ -86,8 +54,59 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             )
         }
         
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = { popupControl = true }) {
             Text(text = "Add")
+        }
+
+        if (popupControl) {
+            Popup(
+                onDismissRequest = { popupControl = false },
+                properties = PopupProperties(
+                    focusable = true,
+                    dismissOnBackPress = true,
+                    dismissOnClickOutside = false,
+                    excludeFromSystemGesture = true,
+                    clippingEnabled = true,
+                ),
+
+                popupPositionProvider = CenterPositionProvider(),
+            ) {
+                Column {
+                    Button(onClick = { popupControl = false }) {
+                        Text(text = "Close")
+                    }
+                    
+                    OutlinedTextField(
+                        value = newAddress,
+                        onValueChange = { newAddress = it },
+                        label = {
+                            Text(text = "E-Mail")
+                        },
+                        placeholder = {
+                            Text(text = "Type in your e-mail...")
+                        },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_email),
+
+                                contentDescription = "E-Mail field"
+                            )
+                        }
+                    )
+                    
+                    Button(onClick = {
+                        userViewModel.profile.value.userInfo?.id?.let {
+                            userViewModel.addAddress(newAddress,
+                                it
+                            )
+                        }
+
+                        popupControl = false
+                    }) {
+                        Text(text = "Add new")
+                    }
+                }
+            }
         }
     }
 }
