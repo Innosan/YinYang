@@ -1,4 +1,4 @@
-package com.example.yinyang.ui.screens.home.components
+package com.example.yinyang.ui.shared.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding

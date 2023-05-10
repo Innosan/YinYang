@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
-import com.example.yinyang.ui.screens.home.components.SectionHeader
+import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.ramcosta.composedestinations.annotation.Destination

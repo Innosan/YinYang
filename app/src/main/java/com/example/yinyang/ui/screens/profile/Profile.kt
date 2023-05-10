@@ -1,27 +1,23 @@
 package com.example.yinyang.ui.screens.profile
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
 import com.example.yinyang.repository.UserRepository
-import com.example.yinyang.ui.shared.components.ProfileNavigationButton
-import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.network.client
 import com.example.yinyang.repository.AddressRepository
-import com.example.yinyang.ui.shared.components.AddressList
+import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -54,19 +50,29 @@ fun Profile(
     var updatedName by remember { mutableStateOf("")}
     var updatedLastname by remember { mutableStateOf("") }
 
-    var popupControl by remember { mutableStateOf(false) }
     var userInfoPopupControl by remember { mutableStateOf(false) }
 
     ScreenContainer {
         Column {
-            Text(text = Screen.Profile.screenTitle)
+            Text(
+                text = Screen.Profile.screenTitle,
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Black
+            )
 
             Row {
                 Column {
                     if (userInfo != null) {
-                        Text(text = "${userInfo.firstName}\n${userInfo.lastName}")
+                        Text(
+                            text = "${userInfo.firstName}\n${userInfo.lastName}",
+                            fontWeight = FontWeight.Bold
+                        )
                         //Text(text = userInfo.id.toString())
-                        Text(text = getRatingTitle(userInfo.rating).title.uppercase())
+                        Text(
+                            text = getRatingTitle(userInfo.rating).title.uppercase(),
+                            modifier = Modifier
+                                .background(darkColorScheme().secondary, RoundedCornerShape(10.dp))
+                        )
                     }
                 }
             }
@@ -92,41 +98,25 @@ fun Profile(
                 )
             }
 
-            Text(text = "Personal")
-
             if (userSession != null) {
-                userSession.email?.let { Text(text = it) }
-                userSession.phone?.let { Text(text = it.ifEmpty { "No phone provided" }) }
-            }
+                SectionHeader(iconId = R.drawable.ic_profile, title = "Личное")
 
-            Row(
-                modifier = Modifier.clickable { popupControl = true }
-            ) {
-                Text(text = "Addresses")
-            }
-            
-            if (popupControl) {
-                Popup(
-                    onDismissRequest = { popupControl = false },
-                    properties = PopupProperties(
-                        focusable = true,
-                        dismissOnBackPress = true,
-                        dismissOnClickOutside = false,
-                        excludeFromSystemGesture = true,
-                        clippingEnabled = true,
-                    ),
-
-                    popupPositionProvider = CenterPositionProvider(),
-                ) {
-                    Column {
-                        Button(onClick = { popupControl = false }) {
-                            Text(text = "Close")
-                        }
-                        if (userAddresses != null) {
-                            AddressList(items = userAddresses.value, userViewModel = profileViewModel)
-                        }
-                    }
+                userSession.email?.let {
+                    UserInfoFiled(
+                        icon = R.drawable.ic_email,
+                        fieldLabel = it)
                 }
+                userSession.phone?.let {
+                    UserInfoFiled(
+                        icon = R.drawable.ic_phone,
+                        fieldLabel = it.ifEmpty { "No phone provided" })
+                }
+            }
+
+            if (userAddresses != null) {
+                SectionHeader(iconId = R.drawable.ic_location, title = "Ваши адреса")
+
+                AddressList(items = userAddresses.value, userViewModel = profileViewModel)
             }
             
             Button(onClick = { 
@@ -157,16 +147,16 @@ fun Profile(
                             value = updatedName,
                             onValueChange = { updatedName = it },
                             label = {
-                                Text(text = "Address line")
+                                Text(text = "Name")
                             },
                             placeholder = {
-                                Text(text = "Update address...")
+                                Text(text = "Update your name...")
                             },
                             leadingIcon = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_email),
 
-                                    contentDescription = "Address field"
+                                    contentDescription = "Name field"
                                 )
                             }
                         )
@@ -174,16 +164,16 @@ fun Profile(
                             value = updatedLastname,
                             onValueChange = { updatedLastname = it },
                             label = {
-                                Text(text = "Address line")
+                                Text(text = "Last name")
                             },
                             placeholder = {
-                                Text(text = "Update address...")
+                                Text(text = "Update your last name...")
                             },
                             leadingIcon = {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_email),
 
-                                    contentDescription = "Address field"
+                                    contentDescription = "Last name field"
                                 )
                             }
                         )
@@ -195,16 +185,10 @@ fun Profile(
                                 userInfoPopupControl = false
                             }
                         }) {
-                            Text(text = "Update userinfo")
+                            Text(text = "Update")
                         }
                     }
                 }
-            }
-
-            Button(onClick = {
-                println(client.gotrue.sessionStatus.value)
-            }) {
-                Text(text = "Check Session status")
             }
 
             Button(onClick = {

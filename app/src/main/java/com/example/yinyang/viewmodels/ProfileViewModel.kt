@@ -27,9 +27,6 @@ class ProfileViewModel(
 
     fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
         viewModelScope.launch {
-            println(newName)
-            println(newLastname)
-            println(userId)
             userRepository.updateUserInfo(userId, newName, newLastname)
 
             val updatedUserInfo = userRepository.getUserInfo()

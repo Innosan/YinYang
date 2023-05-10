@@ -1,10 +1,15 @@
 package com.example.yinyang.ui.shared.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
@@ -23,8 +28,6 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
     var updatedAddress by remember { mutableStateOf("") }
     
     Column {
-        Text(text = "Ваши адреса")
-
         items.forEach {address ->
             val currentItem by rememberUpdatedState(newValue = address)
             
@@ -49,7 +52,12 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     SwipeBackground(dismissState = dismissState)
                 },
                 dismissContent = {
-                    Row {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(darkColorScheme().secondary, RoundedCornerShape(10.dp))
+
+                    ) {
                         Text(text = address.address)
                         IconButton(onClick = {
                             updateAddressPopUpControl = true
