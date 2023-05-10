@@ -155,7 +155,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     )
                     
                     Button(onClick = {
-                        userViewModel.profile.value.userInfo?.id?.let {
+                        userViewModel.profile.value.userInfo?.value?.id?.let {
                             userViewModel.addAddress(it, newAddress)
                         }
 

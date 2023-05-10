@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
@@ -44,11 +47,15 @@ fun Profile(
     }
 
     val profile = profileViewModel.profile.value
-    val userInfo = profile.userInfo
+    val userInfo = profile.userInfo?.value
     val userSession = profile.userSession
     val userAddresses = profile.userAddresses
 
+    var updatedName by remember { mutableStateOf("")}
+    var updatedLastname by remember { mutableStateOf("") }
+
     var popupControl by remember { mutableStateOf(false) }
+    var userInfoPopupControl by remember { mutableStateOf(false) }
 
     ScreenContainer {
         Column {
@@ -123,9 +130,75 @@ fun Profile(
             }
             
             Button(onClick = { 
-
+                userInfoPopupControl = true
             }) {
                 Text(text = "Edit Profile")
+            }
+
+            if (userInfoPopupControl) {
+                Popup(
+                    onDismissRequest = { userInfoPopupControl = false },
+                    properties = PopupProperties(
+                        focusable = true,
+                        dismissOnBackPress = true,
+                        dismissOnClickOutside = false,
+                        excludeFromSystemGesture = true,
+                        clippingEnabled = true,
+                    ),
+
+                    popupPositionProvider = CenterPositionProvider(),
+                ) {
+                    Column {
+                        Button(onClick = { userInfoPopupControl = false }) {
+                            Text(text = "Close")
+                        }
+
+                        OutlinedTextField(
+                            value = updatedName,
+                            onValueChange = { updatedName = it },
+                            label = {
+                                Text(text = "Address line")
+                            },
+                            placeholder = {
+                                Text(text = "Update address...")
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_email),
+
+                                    contentDescription = "Address field"
+                                )
+                            }
+                        )
+                        OutlinedTextField(
+                            value = updatedLastname,
+                            onValueChange = { updatedLastname = it },
+                            label = {
+                                Text(text = "Address line")
+                            },
+                            placeholder = {
+                                Text(text = "Update address...")
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    painter = painterResource(id = R.drawable.ic_email),
+
+                                    contentDescription = "Address field"
+                                )
+                            }
+                        )
+
+                        Button(onClick = {
+                            if (userInfo != null) {
+                                userInfo.id?.let { profileViewModel.updateUserInfo(it, updatedName, updatedLastname) }
+
+                                userInfoPopupControl = false
+                            }
+                        }) {
+                            Text(text = "Update userinfo")
+                        }
+                    }
+                }
             }
 
             Button(onClick = {

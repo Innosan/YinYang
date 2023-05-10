@@ -17,7 +17,7 @@ class ProfileViewModel(
     private val addressRepository: AddressRepository
     ) : ViewModel() {
     data class Profile(
-        val userInfo: User?,
+        val userInfo: MutableState<User?>?,
         val userSession: UserInfo?,
         val userAddresses: MutableState<List<DeliveryAddress>>?,
     )
@@ -25,8 +25,20 @@ class ProfileViewModel(
     private val _profile = mutableStateOf(Profile(null, null, null))
     val profile: MutableState<Profile> = _profile
 
+    fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
+        viewModelScope.launch {
+            println(newName)
+            println(newLastname)
+            println(userId)
+            userRepository.updateUserInfo(userId, newName, newLastname)
+
+            val updatedUserInfo = userRepository.getUserInfo()
+            _profile.value = profile.value.copy(userInfo = updatedUserInfo)
+        }
+    }
+
     private suspend fun updateAddresses() {
-        val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
+        val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.value?.id)
         _profile.value = profile.value.copy(userAddresses = updatedAddresses)
     }
 
@@ -60,7 +72,7 @@ class ProfileViewModel(
                 val userInfoDeffered = async { userRepository.getUserInfo() }
                 val userSessionDeffered = async { userRepository.getUserSession() }
                 val deliveryAddressesDeffered = async {
-                    addressRepository.getUserAddresses(userInfoDeffered.await().id)
+                    addressRepository.getUserAddresses(userInfoDeffered.await().value?.id)
                 }
 
                 _profile.value = Profile(
