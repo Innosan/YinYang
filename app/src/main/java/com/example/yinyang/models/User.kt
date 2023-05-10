@@ -12,7 +12,6 @@ data class User(
 
     @SerialName("first_name") val firstName: String,
     @SerialName("last_name") val lastName: String,
-    @SerialName("profile_picture_url") val profilePictureUrl: String,
 
     val id: Int? = null,
     val rating: Int,

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Density
 import androidx.compose.ui.window.Popup
 import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
@@ -27,13 +28,19 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             
             val dismissState = rememberDismissState(
                 confirmValueChange = {
-                    currentItem.id?.let { it1 ->
-                        println(it1)
-                        userViewModel.deleteAddress(it1)
+                    when (it) {
+                        DismissValue.DismissedToStart -> {
+                            currentItem.id?.let { it1 ->
+                                println(it1)
+                                userViewModel.deleteAddress(it1)
+                            }
+                            true
+                        }
+                        else -> { false }
                     }
-                    true
                 }
             )
+
             SwipeToDismiss(
                 state = dismissState,
                 background = {
@@ -42,7 +49,9 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 dismissContent = {
                     Row {
                         Text(text = address.address)
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+
+                        }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_settings),
 
@@ -96,9 +105,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     
                     Button(onClick = {
                         userViewModel.profile.value.userInfo?.id?.let {
-                            userViewModel.addAddress(newAddress,
-                                it
-                            )
+                            userViewModel.addAddress(it, newAddress)
                         }
 
                         popupControl = false

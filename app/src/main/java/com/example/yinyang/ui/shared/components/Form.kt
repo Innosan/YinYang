@@ -24,7 +24,6 @@ fun Form(
     onFormSubmit: suspend (email: String, password: String) -> Unit,
 ) {
     val exceptionHandler = CoroutineExceptionHandler { context, error ->
-        // Do what you want with the error
         Log.d(ContentValues.TAG, error.toString())
     }
 

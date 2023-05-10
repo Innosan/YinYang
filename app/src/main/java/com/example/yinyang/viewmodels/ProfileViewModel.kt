@@ -25,37 +25,52 @@ class ProfileViewModel(
     private val _profile = mutableStateOf(Profile(null, null, null))
     val profile: MutableState<Profile> = _profile
 
+    suspend fun updateAddresses() {
+        val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
+        _profile.value = profile.value.copy(userAddresses = updatedAddresses)
+    }
+
     fun deleteAddress(addressId: Int) {
         viewModelScope.launch {
             addressRepository.deleteAddress(addressId)
 
-            val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
-            _profile.value = profile.value.copy(userAddresses = updatedAddresses)
+            updateAddresses()
         }
     }
 
-    fun addAddress(addressMessage: String, userId: Int) {
+    fun addAddress(userId: Int, addressMessage: String) {
         viewModelScope.launch {
-            addressRepository.addAddress(addressMessage, userId)
+            addressRepository.addAddress(userId, addressMessage)
 
-            val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.id)
-            _profile.value = profile.value.copy(userAddresses = updatedAddresses)
+            updateAddresses()
+        }
+    }
+
+    fun updateAddress(userId: Int, newAddress: String) {
+        viewModelScope.launch {
+            addressRepository.updateAddress(userId, newAddress)
+
+            updateAddresses()
         }
     }
 
     init {
         viewModelScope.launch {
-            val userInfoDeffered = async { userRepository.getUserInfo() }
-            val userSessionDeffered = async { userRepository.getUserSession() }
-            val deliveryAddressesDeffered = async {
-                addressRepository.getUserAddresses(userInfoDeffered.await()?.id)
-            }
+            try {
+                val userInfoDeffered = async { userRepository.getUserInfo() }
+                val userSessionDeffered = async { userRepository.getUserSession() }
+                val deliveryAddressesDeffered = async {
+                    addressRepository.getUserAddresses(userInfoDeffered.await()?.id)
+                }
 
-            _profile.value = Profile(
-                userInfoDeffered.await(),
-                userSessionDeffered.await(),
-                deliveryAddressesDeffered.await()
-            )
+                _profile.value = Profile(
+                    userInfoDeffered.await(),
+                    userSessionDeffered.await(),
+                    deliveryAddressesDeffered.await()
+                )
+            } catch (e: Exception) {
+                println(e.message)
+            }
         }
     }
 }

@@ -42,6 +42,7 @@ fun Profile(
     val profileViewModel = remember (userRepository) {
         ProfileViewModel(userRepository, addressRepository)
     }
+
     val profile = profileViewModel.profile.value
     val userInfo = profile.userInfo
     val userSession = profile.userSession
@@ -91,8 +92,6 @@ fun Profile(
                 userSession.email?.let { Text(text = it) }
                 userSession.phone?.let { Text(text = it.ifEmpty { "No phone provided" }) }
             }
-
-            Text(text = "Addresses")
 
             Row(
                 modifier = Modifier.clickable { popupControl = true }

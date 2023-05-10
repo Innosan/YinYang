@@ -80,15 +80,14 @@ class UserActionsHandler(private val context: Context) {
      */
     private suspend fun createUser(uuid: String) {
         val user = User(
-            null,
-            null,
-            null,
-            uuid,
-            "Change",
-            "Me",
-            "sample_url",
-            null, //should be null to autoincrement work in supabase
-            1
+            favouriteId = null,
+            orderId = null,
+            cartId = null,
+            userUuid = uuid,
+            firstName = "Change",
+            lastName = "Me",
+            id = null, //should be null for working autoincrement in supabase
+            rating = 1
         )
 
         try {

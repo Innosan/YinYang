@@ -18,18 +18,16 @@ class AddressRepository(private val client: SupabaseClient) {
 
             addresses.value = result.decodeList()
         } catch (e: Exception) {
-            println(e.message)
+            throw e
         }
 
         return addresses
     }
 
-    suspend fun addAddress(addressMessage: String, userId: Int) {
+    suspend fun addAddress(userId: Int, addressMessage: String) {
         val newAddress = DeliveryAddress(
-            isStarred = false,
             id = null,
             address = addressMessage,
-            description = "some desc",
             userId = userId
         )
 
@@ -45,6 +43,19 @@ class AddressRepository(private val client: SupabaseClient) {
         try {
             client.postgrest["delivery_address"]
                 .delete {
+                    DeliveryAddress::id eq addressId
+                }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+    }
+
+    suspend fun updateAddress(addressId: Int, newAddress: String) {
+        try {
+            client.postgrest["delivery_address"]
+                .update({
+                    DeliveryAddress::address setTo newAddress
+                }) {
                     DeliveryAddress::id eq addressId
                 }
         } catch (e: Exception) {
