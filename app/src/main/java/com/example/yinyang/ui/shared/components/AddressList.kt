@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,6 +52,8 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
 
             SwipeToDismiss(
                 state = dismissState,
+                modifier = Modifier.padding(vertical = 10.dp),
+
                 background = {
                     SwipeBackground(
                         dismissState = dismissState,
@@ -95,7 +98,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                                 Button(
                                     onClick = { updateAddressPopUpControl = false },
                                 ) {
-                                    Text(text = "Close")
+                                    Text(text = stringResource(id = R.string.close_button))
                                 }
 
                                 OutlinedTextField(
@@ -131,9 +134,24 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 }
             )
         }
-        
-        Button(onClick = { newAddressPopUpControl = true }) {
-            Text(text = "Add")
+
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Button(
+                onClick = { newAddressPopUpControl = true },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.White.copy(0.14f),
+                ),
+                shape = RoundedCornerShape(7.dp),
+                modifier = Modifier.padding(horizontal = 10.dp)
+            ) {
+                Text(
+                    text = stringResource(id = R.string.add_button),
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
 
         if (newAddressPopUpControl) {
@@ -142,11 +160,11 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 properties = CustomPopupProperties,
                 popupPositionProvider = CenterPositionProvider(),
             ) {
-                Column {
+                PopupContainer {
                     Button(onClick = { newAddressPopUpControl = false }) {
-                        Text(text = "Close")
+                        Text(text = stringResource(id = R.string.close_button))
                     }
-                    
+
                     OutlinedTextField(
                         value = newAddress,
                         onValueChange = { newAddress = it },
@@ -164,7 +182,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             )
                         }
                     )
-                    
+
                     Button(onClick = {
                         userViewModel.profile.value.userInfo?.value?.id?.let {
                             userViewModel.addAddress(it, newAddress)

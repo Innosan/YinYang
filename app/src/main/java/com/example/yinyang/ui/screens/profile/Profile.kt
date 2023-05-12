@@ -72,15 +72,16 @@ fun Profile(
                 visible = profileLoaded,
                 content = {
                     Column(
-                        verticalArrangement = Arrangement.spacedBy(14.dp)
+                        modifier = Modifier.padding(vertical = 40.dp),
                     ) {
                         Column(
-                            verticalArrangement = Arrangement.spacedBy(14.dp),
+                            verticalArrangement = Arrangement.spacedBy(10.dp),
+
                         ) {
                             if (userInfo != null) {
                                 Text(
                                     text = "${userInfo.firstName}\n${userInfo.lastName}",
-                                    fontWeight = FontWeight.Bold,
+                                    fontWeight = FontWeight.Black,
                                     fontSize = 24.sp,
                                 )
                                 //Text(text = userInfo.id.toString())
@@ -92,7 +93,7 @@ fun Profile(
                                         )
                                         .padding(10.dp),
                                     verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.SpaceBetween
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
                                     Icon(
                                         painter = painterResource(id = R.drawable.ic_rating),
@@ -110,7 +111,8 @@ fun Profile(
 
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth(),
+                                .fillMaxWidth()
+                                .padding(vertical = 28.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             ProfileNavigationButton(
@@ -135,12 +137,19 @@ fun Profile(
                             userSession.email?.let {
                                 UserInfoFiled(
                                     icon = R.drawable.ic_email,
-                                    fieldLabel = it)
+                                    fieldLabel = it,
+                                    spacedBy = 12
+                                )
                             }
+                            
+                            Spacer(modifier = Modifier.size(12.dp))
+                            
                             userSession.phone?.let {
                                 UserInfoFiled(
                                     icon = R.drawable.ic_phone,
-                                    fieldLabel = it.ifEmpty { "No phone provided" })
+                                    fieldLabel = it.ifEmpty { "No phone provided" },
+                                    spacedBy = 12
+                                )
                             }
                         }
 
@@ -150,10 +159,20 @@ fun Profile(
                             AddressList(items = userAddresses.value, userViewModel = profileViewModel)
                         }
 
-                        Button(onClick = {
-                            userInfoPopupControl = true
-                        }) {
-                            Text(text = "Edit Profile")
+                        Button(
+                            onClick = {
+                                userInfoPopupControl = true
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 20.dp),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text(
+                                text = "Edit Profile",
+                                fontWeight = FontWeight.Black,
+                                fontSize = 24.sp,
+                            )
                         }
                         if (userInfoPopupControl) {
                             Popup(

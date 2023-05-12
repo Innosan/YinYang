@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">YinYang</string>
+
+    <!-- Buttons -->
+    <string name="confirm_button">Confirm</string>
+    <string name="add_button">Add</string>
+    <string name="delete_button">Delete</string>
+    <string name="close_button">Close</string>
+    <string name="update_button">Update</string>
+    <string name="logout_button">Log Out</string>
+    <string name="edit_profile_button">Edit profile</string>
+
+    <!-- Navigation buttons -->
+    <string name="orders_button">Orders</string>
+    <string name="favorite_button">Favorite</string>
+    <string name="pizza_constructor_button">Pizza</string>
+    <string name="wok_constructor_button">Wok</string>
+
+    <!-- Screens -->
+    <string name="home_screen">Home</string>
+    <string name="profile_screen">Profile</string>
+    <string name="settings_screen">Settings</string>
+    <string name="help_screen">Help</string>
+    <string name="about_screen">About</string>
+    <string name="sign_in_screen">Sign In</string>
+    <string name="sign_up_screen">Sign Up</string>
+
+    <!-- Sections -->
+    <string name="personal_section">Personal</string>
+    <string name="addresses_section">Your addresses</string>
+    <string name="diy_section">Do It Yourself</string>
+    <string name="menu_section">Menu</string>
 </resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">YinYang</string>
+
+    <!-- Buttons -->
+    <string name="confirm_button">Подтвердить</string>
+    <string name="add_button">Добавить</string>
+    <string name="delete_button">Удалить</string>
+    <string name="close_button">Закрыть</string>
+    <string name="update_button">Обновить</string>
+    <string name="logout_button">Выйти</string>
+    <string name="edit_profile_button">Изменить профиль</string>
+
+    <!-- Navigation buttons -->
+    <string name="orders_button">Заказы</string>
+    <string name="favorite_button">Любимое</string>
+    <string name="pizza_constructor_button">Пицца</string>
+    <string name="wok_constructor_button">Вок</string>
+
+    <!-- Screens -->
+    <string name="home_screen">Главная</string>
+    <string name="profile_screen">Профиль</string>
+    <string name="settings_screen">Настройки</string>
+    <string name="help_screen">Помощь</string>
+    <string name="about_screen">О нас</string>
+    <string name="sign_in_screen">Вход</string>
+    <string name="sign_up_screen">Регистрация</string>
+
+    <!-- Sections -->
+    <string name="personal_section">Личное</string>
+    <string name="addresses_section">Ваши адреса</string>
+    <string name="diy_section">Сделай сам</string>
+    <string name="menu_section">Меню</string>
+</resources>
