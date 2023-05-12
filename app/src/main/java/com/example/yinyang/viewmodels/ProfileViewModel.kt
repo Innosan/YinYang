@@ -12,7 +12,7 @@ import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(
+class ProfileViewModel (
     private val userRepository: UserRepository,
     private val addressRepository: AddressRepository
     ) : ViewModel() {
@@ -63,7 +63,7 @@ class ProfileViewModel(
         }
     }
 
-    init {
+    private fun loadProfile() {
         viewModelScope.launch {
             try {
                 val userInfoDeffered = async { userRepository.getUserInfo() }
@@ -81,5 +81,9 @@ class ProfileViewModel(
                 println(e.message)
             }
         }
+    }
+
+    init {
+        loadProfile()
     }
 }

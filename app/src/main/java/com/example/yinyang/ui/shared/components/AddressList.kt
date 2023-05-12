@@ -16,10 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.example.yinyang.R
 import com.example.yinyang.models.DeliveryAddress
-import com.example.yinyang.utils.CenterPositionProvider
-import com.example.yinyang.utils.CustomPopupProperties
-import com.example.yinyang.utils.PopupContainer
-import com.example.yinyang.utils.SwipeBackground
+import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,10 +132,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             )
         }
 
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier = Modifier.fillMaxWidth()
-        ) {
+        CenteredContainer {
             Button(
                 onClick = { newAddressPopUpControl = true },
                 colors = ButtonDefaults.buttonColors(

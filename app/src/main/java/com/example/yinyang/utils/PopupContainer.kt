@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -18,8 +19,8 @@ fun PopupContainer(content: @Composable () -> Unit) {
             .shadow(
                 elevation = 10.dp,
                 shape = RoundedCornerShape(20.dp),
-                ambientColor = Color.Red,
-                spotColor = Color.Red
+                ambientColor = MaterialTheme.colorScheme.primary,
+                spotColor = Color.Black
             )
             .background(
                 Color.Black,

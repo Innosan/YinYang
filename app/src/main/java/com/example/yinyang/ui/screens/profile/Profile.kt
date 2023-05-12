@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yinyang.R
 import com.example.yinyang.repository.UserRepository
 import com.example.yinyang.network.client
@@ -58,21 +59,17 @@ fun Profile(
 
     ScreenContainer {
         Column {
-            Text(
-                text = Screen.Profile.screenTitle,
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Black
-            )
-
-            if (!profileLoaded) {
-                CircularProgressIndicator()
+            CenteredContainer {
+                if (!profileLoaded) {
+                    CircularProgressIndicator()
+                }
             }
 
             AnimatedVisibility(
                 visible = profileLoaded,
                 content = {
                     Column(
-                        modifier = Modifier.padding(vertical = 40.dp),
+                        modifier = Modifier.padding(vertical = 20.dp),
                     ) {
                         Column(
                             verticalArrangement = Arrangement.spacedBy(10.dp),
