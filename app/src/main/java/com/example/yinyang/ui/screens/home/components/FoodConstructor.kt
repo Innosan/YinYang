@@ -19,10 +19,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.models.ConstructorItem
 import com.example.yinyang.ui.screens.constructor.Constructor
 import com.example.yinyang.utils.CenterPositionProvider
+import com.example.yinyang.utils.CustomPopupProperties
+import com.example.yinyang.utils.PopupContainer
 
 @Composable
 fun FoodConstructor(
@@ -71,26 +72,21 @@ fun FoodConstructor(
                 .fillMaxHeight(.5f)
                 .padding(5.dp),
         )
-    }
 
-    if (popupControl) {
-        Popup(
-            onDismissRequest = { popupControl = false },
-            properties = PopupProperties(
-                focusable = true,
-                dismissOnBackPress = true,
-                dismissOnClickOutside = false,
-                excludeFromSystemGesture = true,
-                clippingEnabled = true,
-            ),
-
-            popupPositionProvider = CenterPositionProvider(),
-        ) {
-            Constructor(
-                title = "WOK-лапша",
-                description = "Основа из моркови, болгарского перца,\nгрибов, цукини и стручковой фасоли.",
-                items = constructorItems
-            )
+        if (popupControl) {
+            Popup(
+                onDismissRequest = { popupControl = false },
+                properties = CustomPopupProperties,
+                popupPositionProvider = CenterPositionProvider(),
+            ) {
+                PopupContainer {
+                    Constructor(
+                        title = "WOK-лапша",
+                        description = "Основа из моркови, болгарского перца,\nгрибов, цукини и стручковой фасоли.",
+                        items = constructorItems
+                    )
+                }
+            }
         }
     }
 }

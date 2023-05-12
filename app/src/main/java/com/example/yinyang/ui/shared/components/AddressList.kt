@@ -5,16 +5,19 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Density
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
 import com.example.yinyang.R
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.utils.CenterPositionProvider
+import com.example.yinyang.utils.CustomPopupProperties
+import com.example.yinyang.utils.PopupContainer
 import com.example.yinyang.utils.SwipeBackground
 import com.example.yinyang.viewmodels.ProfileViewModel
 
@@ -49,21 +52,33 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             SwipeToDismiss(
                 state = dismissState,
                 background = {
-                    SwipeBackground(dismissState = dismissState)
+                    SwipeBackground(
+                        dismissState = dismissState,
+                        dismissColor = Color.Red.copy(.1f),
+                        cornerShapeSize = 10.dp)
                 },
+
                 dismissContent = {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(darkColorScheme().secondary, RoundedCornerShape(10.dp))
+                            .background(Color.White.copy(0.14f), RoundedCornerShape(10.dp)),
 
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Text(text = address.address)
+                        Text(
+                            modifier = Modifier.padding(20.dp),
+                            text = address.address,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 20.sp,
+                        )
+
                         IconButton(onClick = {
                             updateAddressPopUpControl = true
                         }) {
                             Icon(
-                                painter = painterResource(id = R.drawable.ic_settings),
+                                painter = painterResource(id = R.drawable.ic_edit_location),
 
                                 contentDescription = "Edit address"
                             )
@@ -73,18 +88,13 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     if (updateAddressPopUpControl) {
                         Popup(
                             onDismissRequest = { updateAddressPopUpControl = false },
-                            properties = PopupProperties(
-                                focusable = true,
-                                dismissOnBackPress = true,
-                                dismissOnClickOutside = false,
-                                excludeFromSystemGesture = true,
-                                clippingEnabled = true,
-                            ),
-
+                            properties = CustomPopupProperties,
                             popupPositionProvider = CenterPositionProvider(),
                         ) {
-                            Column {
-                                Button(onClick = { updateAddressPopUpControl = false }) {
+                            PopupContainer {
+                                Button(
+                                    onClick = { updateAddressPopUpControl = false },
+                                ) {
                                     Text(text = "Close")
                                 }
 
@@ -99,13 +109,13 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                                     },
                                     leadingIcon = {
                                         Icon(
-                                            painter = painterResource(id = R.drawable.ic_email),
+                                            painter = painterResource(id = R.drawable.ic_location),
 
                                             contentDescription = "Address field"
                                         )
                                     }
                                 )
-                                
+
                                 Button(onClick = {
                                     currentItem.id?.let { it1 ->
                                         userViewModel.updateAddress(it1, updatedAddress)
@@ -129,14 +139,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
         if (newAddressPopUpControl) {
             Popup(
                 onDismissRequest = { newAddressPopUpControl = false },
-                properties = PopupProperties(
-                    focusable = true,
-                    dismissOnBackPress = true,
-                    dismissOnClickOutside = false,
-                    excludeFromSystemGesture = true,
-                    clippingEnabled = true,
-                ),
-
+                properties = CustomPopupProperties,
                 popupPositionProvider = CenterPositionProvider(),
             ) {
                 Column {
