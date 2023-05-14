@@ -1,6 +1,5 @@
 package com.example.yinyang.ui.screens.signup
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,28 +24,26 @@ fun SignUp(
     val userActionsHandler = UserActionsHandler(context)
 
     ScreenContainer {
-        Column {
-            Text(text = "Зарегистрируйтесь, чтобы продолжить!")
+        Text(text = "Зарегистрируйтесь, чтобы продолжить!")
 
-            Form(
-                onFormSubmit = {email, password ->
-                    userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password)
-                },
+        Form(
+            onFormSubmit = {email, password ->
+                userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password)
+            },
 
-                formAction = "Зарегистрироваться",
-            )
+            formAction = "Зарегистрироваться",
+        )
 
-            Button(onClick = {
-                println(client.gotrue.sessionStatus.value)
-            }) {
-                Text(text = "Check Session status")
-            }
+        Button(onClick = {
+            println(client.gotrue.sessionStatus.value)
+        }) {
+            Text(text = "Check Session status")
+        }
 
-            Button(onClick = {
-                navigator.navigate(Screen.SignIn.destination)
-            }) {
-                Text(text = "Sign In, if you already have an account!")
-            }
+        Button(onClick = {
+            navigator.navigate(Screen.SignIn.destination)
+        }) {
+            Text(text = "Sign In, if you already have an account!")
         }
     }
 }

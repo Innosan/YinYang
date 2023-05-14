@@ -24,56 +24,55 @@ fun HomePage(
     val products by productViewModel.products
 
     ScreenContainer {
-        Column {
-            NavBar()
+        NavBar()
 
-            //DIY section
-            SectionContainer {
-                SectionHeader(iconId = R.drawable.ic_food_constructor, title = "Do it Yourself")
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    FoodConstructor(
-                        background = R.drawable.bg_pizza_construct,
-                        title = "Pizza",
-                        fraction = .45f,
-                        constructorItems = constructorItems
-                    )
+        //DIY section
+        SectionContainer {
+            SectionHeader(iconId = R.drawable.ic_food_constructor, title = "Do it Yourself")
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                FoodConstructor(
+                    background = R.drawable.bg_pizza_construct,
+                    title = "Pizza",
+                    fraction = .45f,
+                    constructorItems = constructorItems
+                )
 
-                    FoodConstructor(
-                        background = R.drawable.bg_wok_construct,
-                        title = "Wok",
-                        fraction = .85f,
-                        constructorItems = constructorItems
-                    )
-                }
+                FoodConstructor(
+                    background = R.drawable.bg_wok_construct,
+                    title = "Wok",
+                    fraction = .85f,
+                    constructorItems = constructorItems
+                )
+            }
+        }
+
+        //Main menu section
+        SectionContainer {
+            SectionHeader(iconId = R.drawable.ic_bar_menu, title = "Menu")
+
+            var selectedTabIndex by remember { mutableStateOf(0) }
+            val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
+
+            FilterList(
+                tabs = filterWords,
+                selectedTabIndex = selectedTabIndex,
+            ) { tabIndex ->
+                selectedTabIndex = tabIndex
             }
 
-            //Main menu section
-            SectionContainer {
-                SectionHeader(iconId = R.drawable.ic_bar_menu, title = "Menu")
-
-                var selectedTabIndex by remember { mutableStateOf(0) }
-                val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
-
-                FilterList(
-                    tabs = filterWords,
-                    selectedTabIndex = selectedTabIndex,
-                ) { tabIndex ->
-                    selectedTabIndex = tabIndex
-                }
-
-                if (products.isNotEmpty()) {
-                    LazyColumn(
-                        modifier = Modifier
-                            .height(720.dp)
-                            .padding(vertical = 20.dp),
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
-                    ) {
-                        items(
-                            products.filter {
+            if (products.isNotEmpty()) {
+                LazyColumn(
+                    modifier = Modifier
+                        .height(720.dp)
+                        .padding(vertical = 20.dp),
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                ) {
+                    items(
+                        products.filter {
                                 product ->
                             if (selectedTabIndex == 0) true
                             else
@@ -82,15 +81,14 @@ fun HomePage(
                                             .getValue("title")
                                             .toString()
                                             .removeSurrounding("\"")
-                            },
+                        },
 
-                            key = {product -> product.id}
-                        ) { product -> ProductCard(product = product) }
-                    }
+                        key = {product -> product.id}
+                    ) { product -> ProductCard(product = product) }
                 }
-                else {
-                    GifImage(image = R.drawable.im_loader, contentDescription = "Loading...")
-                }
+            }
+            else {
+                GifImage(image = R.drawable.im_loader, contentDescription = "Loading...")
             }
         }
     }

@@ -17,13 +17,17 @@ import com.example.yinyang.ui.screens.destinations.DirectionDestination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
-fun ProfileNavigationButton(title: String, icon: Int, fraction: Float, navigator: DestinationsNavigator, destination: DirectionDestination) {
+fun ProfileNavigationButton(
+    title: String,
+    icon: Int, fraction: Float,
+    onNavigation: () -> Unit,
+) {
     Button(
         modifier = Modifier
             .fillMaxWidth(fraction)
             .clip(RoundedCornerShape(10.dp)),
 
-        onClick = { navigator.navigate(destination) },
+        onClick = { onNavigation() },
 
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.White.copy(0.14f)
