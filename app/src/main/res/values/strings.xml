@@ -52,4 +52,9 @@
     <!-- Info -->
     <string name="exit_note">Are you sure you want to log out?</string>
     <string name="no_phone_note">No phone number provided</string>
+    <string name="update_address_note">Update address</string>
+    <string name="add_address_note">Add new address</string>
+    <string name="update_user_note">Update your name and last name</string>
+    <string name="sign_up_note">Create a new account to proceed!</string>
+    <string name="sign_in_note">Sign in your existing account!</string>
 </resources>

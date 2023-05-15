@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
@@ -20,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun Form(
-    formAction: String,
+    formAction: Int,
     onFormSubmit: suspend (email: String, password: String) -> Unit,
 ) {
     val exceptionHandler = CoroutineExceptionHandler { context, error ->
@@ -96,7 +97,7 @@ fun Form(
                 onFormSubmit(email, password)
             }
         }) {
-            Text(text = formAction)
+            Text(text = stringResource(id = formAction))
         }
     }
 }

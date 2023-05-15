@@ -18,12 +18,13 @@ import com.example.yinyang.R
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
-    var newAddressPopUpControl by remember { mutableStateOf(false) }
-    var updateAddressPopUpControl by remember { mutableStateOf(false) }
+    val updateAddressDialogControl = remember { mutableStateOf(false)  }
+    val newAddressDialogControl = remember { mutableStateOf(false)  }
 
     var newAddress by remember { mutableStateOf("")}
     var updatedAddress by remember { mutableStateOf("") }
@@ -75,7 +76,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                         )
 
                         IconButton(onClick = {
-                            updateAddressPopUpControl = true
+                            updateAddressDialogControl.value = true
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_edit_location),
@@ -85,19 +86,15 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                         }
                     }
 
-                    if (updateAddressPopUpControl) {
-                        Popup(
-                            onDismissRequest = { updateAddressPopUpControl = false },
-                            properties = CustomPopupProperties,
-                            popupPositionProvider = CenterPositionProvider(),
-                        ) {
-                            PopupContainer {
-                                Button(
-                                    onClick = { updateAddressPopUpControl = false },
-                                ) {
-                                    Text(text = stringResource(id = R.string.close_button))
-                                }
-
+                    if (updateAddressDialogControl.value) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                updateAddressDialogControl.value = false
+                            },
+                            title = {
+                                Text(text = stringResource(id = R.string.update_address_note))
+                            },
+                            text = {
                                 OutlinedTextField(
                                     value = updatedAddress,
                                     onValueChange = { updatedAddress = it },
@@ -115,18 +112,27 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                                         )
                                     }
                                 )
-
+                            },
+                            confirmButton = {
                                 Button(onClick = {
                                     currentItem.id?.let { it1 ->
                                         userViewModel.updateAddress(it1, updatedAddress)
                                     }
 
-                                    updateAddressPopUpControl = false
+                                    updateAddressDialogControl.value = false
                                 }) {
                                     Text(text = stringResource(id = R.string.update_button))
                                 }
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = {
+                                        updateAddressDialogControl.value = false
+                                    }) {
+                                    Text(text = stringResource(id = R.string.close_button))
+                                }
                             }
-                        }
+                        )
                     }
                 }
             )
@@ -134,7 +140,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
 
         CenteredContainer {
             Button(
-                onClick = { newAddressPopUpControl = true },
+                onClick = { newAddressDialogControl.value = true },
                 colors = ButtonDefaults.buttonColors(
                     containerColor = Color.White.copy(0.14f),
                 ),
@@ -148,17 +154,15 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
             }
         }
 
-        if (newAddressPopUpControl) {
-            Popup(
-                onDismissRequest = { newAddressPopUpControl = false },
-                properties = CustomPopupProperties,
-                popupPositionProvider = CenterPositionProvider(),
-            ) {
-                PopupContainer {
-                    Button(onClick = { newAddressPopUpControl = false }) {
-                        Text(text = stringResource(id = R.string.close_button))
-                    }
-
+        if (newAddressDialogControl.value) {
+            AlertDialog(
+                onDismissRequest = {
+                    newAddressDialogControl.value = false
+                },
+                title = {
+                    Text(text = stringResource(id = R.string.add_address_note))
+                },
+                text = {
                     OutlinedTextField(
                         value = newAddress,
                         onValueChange = { newAddress = it },
@@ -176,18 +180,27 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             )
                         }
                     )
-
+                },
+                confirmButton = {
                     Button(onClick = {
                         userViewModel.profile.value.userInfo?.value?.id?.let {
                             userViewModel.addAddress(it, newAddress)
                         }
 
-                        newAddressPopUpControl = false
+                        newAddressDialogControl.value = false
                     }) {
                         Text(text = stringResource(id = R.string.add_button))
                     }
+                },
+                dismissButton = {
+                    Button(
+                        onClick = {
+                            newAddressDialogControl.value = false
+                        }) {
+                        Text(text = stringResource(id = R.string.close_button))
+                    }
                 }
-            }
+            )
         }
     }
 }

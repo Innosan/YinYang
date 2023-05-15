@@ -4,15 +4,15 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.network.client
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.utils.UserAction
 import com.example.yinyang.utils.UserActionsHandler
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import io.github.jan.supabase.gotrue.gotrue
 
 @Destination
 @Composable
@@ -24,26 +24,20 @@ fun SignUp(
     val userActionsHandler = UserActionsHandler(context)
 
     ScreenContainer {
-        Text(text = "Зарегистрируйтесь, чтобы продолжить!")
+        Text(text = stringResource(id = R.string.sign_up_note))
 
         Form(
             onFormSubmit = {email, password ->
                 userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password)
             },
 
-            formAction = "Зарегистрироваться",
+            formAction = R.string.sign_up_screen,
         )
-
-        Button(onClick = {
-            println(client.gotrue.sessionStatus.value)
-        }) {
-            Text(text = "Check Session status")
-        }
 
         Button(onClick = {
             navigator.navigate(Screen.SignIn.destination)
         }) {
-            Text(text = "Sign In, if you already have an account!")
+            Text(text = stringResource(id = R.string.sign_in_screen))
         }
     }
 }

@@ -48,8 +48,8 @@ fun Profile(
     var updatedName by remember { mutableStateOf("")}
     var updatedLastname by remember { mutableStateOf("") }
 
-    var userInfoPopupControl by remember { mutableStateOf(false) }
-    val dialogControl = remember { mutableStateOf(false)  }
+    val userInfoDialogControl = remember { mutableStateOf(false) }
+    val logOutDialogControl = remember { mutableStateOf(false)  }
 
     ScreenContainer {
         CenteredContainer {
@@ -158,7 +158,7 @@ fun Profile(
 
                     Button(
                         onClick = {
-                            userInfoPopupControl = true
+                            userInfoDialogControl.value = true
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -171,76 +171,86 @@ fun Profile(
                             fontSize = 24.sp,
                         )
                     }
-                    if (userInfoPopupControl) {
-                        Popup(
-                            onDismissRequest = { userInfoPopupControl = false },
-                            properties = CustomPopupProperties,
-                            popupPositionProvider = CenterPositionProvider(),
-                        ) {
-                            PopupContainer {
-                                Button(onClick = { userInfoPopupControl = false }) {
-                                    Text(text = stringResource(id = R.string.close_button))
+
+                    if (userInfoDialogControl.value) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                userInfoDialogControl.value = false
+                            },
+                            title = {
+                                Text(text = stringResource(id = R.string.update_user_note))
+                            },
+                            text = {
+                                Column() {
+                                    OutlinedTextField(
+                                        value = updatedName,
+                                        onValueChange = { updatedName = it },
+                                        label = {
+                                            Text(text = stringResource(id = R.string.update_name_field_label))
+                                        },
+                                        placeholder = {
+                                            Text(text = stringResource(id = R.string.update_name_field_placeholder))
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_email),
+
+                                                contentDescription = "Name field"
+                                            )
+                                        }
+                                    )
+
+                                    OutlinedTextField(
+                                        value = updatedLastname,
+                                        onValueChange = { updatedLastname = it },
+                                        label = {
+                                            Text(text = stringResource(id = R.string.update_last_name_field_label))
+                                        },
+                                        placeholder = {
+                                            Text(text = stringResource(id = R.string.update_last_name_field_placeholder))
+                                        },
+                                        leadingIcon = {
+                                            Icon(
+                                                painter = painterResource(id = R.drawable.ic_email),
+
+                                                contentDescription = "Last name field"
+                                            )
+                                        }
+                                    )
                                 }
-
-                                OutlinedTextField(
-                                    value = updatedName,
-                                    onValueChange = { updatedName = it },
-                                    label = {
-                                        Text(text = stringResource(id = R.string.update_name_field_label))
-                                    },
-                                    placeholder = {
-                                        Text(text = stringResource(id = R.string.update_name_field_placeholder))
-                                    },
-                                    leadingIcon = {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_email),
-
-                                            contentDescription = "Name field"
-                                        )
-                                    }
-                                )
-
-                                OutlinedTextField(
-                                    value = updatedLastname,
-                                    onValueChange = { updatedLastname = it },
-                                    label = {
-                                        Text(text = stringResource(id = R.string.update_last_name_field_label))
-                                    },
-                                    placeholder = {
-                                        Text(text = stringResource(id = R.string.update_last_name_field_placeholder))
-                                    },
-                                    leadingIcon = {
-                                        Icon(
-                                            painter = painterResource(id = R.drawable.ic_email),
-
-                                            contentDescription = "Last name field"
-                                        )
-                                    }
-                                )
-
+                            },
+                            confirmButton = {
                                 Button(onClick = {
                                     if (userInfo != null) {
                                         userInfo.id?.let {
                                             viewModel.updateUserInfo(it, updatedName, updatedLastname)
                                         }
 
-                                        userInfoPopupControl = false
+                                        userInfoDialogControl.value = false
                                     }
                                 }) {
                                     Text(text = stringResource(id = R.string.update_button))
                                 }
+                            },
+                            dismissButton = {
+                                Button(
+                                    onClick = {
+                                        userInfoDialogControl.value = false
+                                    }) {
+                                    Text(text = stringResource(id = R.string.close_button))
+                                }
                             }
-                        }
+                        )
                     }
 
-                    Button(onClick = { dialogControl.value = true }) {
+                    Button(onClick = { logOutDialogControl.value = true }) {
                         Text(text = stringResource(id = R.string.logout_button))
                     }
 
-                    if (dialogControl.value) {
+                    if (logOutDialogControl.value) {
                         AlertDialog(
                             onDismissRequest = {
-                                dialogControl.value = false
+                                logOutDialogControl.value = false
                             },
                             title = {
                                 Text(text = stringResource(id = R.string.logout_button))
@@ -260,7 +270,7 @@ fun Profile(
                             dismissButton = {
                                 Button(
                                     onClick = {
-                                        dialogControl.value = false
+                                        logOutDialogControl.value = false
                                     }) {
                                     Text(text = stringResource(id = R.string.no_button))
                                 }

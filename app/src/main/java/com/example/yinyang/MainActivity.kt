@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
@@ -78,7 +79,7 @@ class MainActivity : ComponentActivity() {
                                         Icon(
                                             painter = painterResource(id = item.icon),
 
-                                            contentDescription = item.title
+                                            contentDescription = stringResource(id = item.title)
                                         )
                                     },
 
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity() {
                                         .padding(10.dp)
                                         .fillMaxWidth(.7f),
 
-                                    label = { Text(text = item.title)},
+                                    label = { Text(text = stringResource(id = item.title))},
                                     selected = currentDestination == item.destination,
 
                                     onClick = {

@@ -4,6 +4,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import com.example.yinyang.R
 import com.example.yinyang.ui.shared.components.Form
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.utils.Screen
@@ -24,20 +26,20 @@ fun SignIn(
     val userActionsHandler = UserActionsHandler(context)
 
     ScreenContainer {
-        Text(text = "Войдите, чтобы\nпродолжить вкушать неизведанное...")
+        Text(text = stringResource(id = R.string.sign_in_note))
 
         Form(
             onFormSubmit = {email, password ->
                 userActionsHandler.performUserAction(userAction = UserAction.LOGIN, email, password)
             },
 
-            formAction = "Sign In",
+            formAction = R.string.sign_in_screen,
         )
 
         Button(onClick = {
             navigator.navigate(Screen.SignUp.destination)
         }) {
-            Text(text = "Sign Up Now!")
+            Text(text = stringResource(id = R.string.sign_up_screen))
         }
     }
 }

@@ -6,15 +6,15 @@ import com.example.yinyang.utils.Screen
 
 data class MenuItem(
     val id: Int,
-    val title: String,
+    val title: Int,
     val destination: DirectionDestination,
     val icon: Int,
 )
 
 val navItems = listOf(
-    MenuItem(id = 1, title = "Home", destination = Screen.Home.destination, icon = R.drawable.ic_home),
-    MenuItem(id = 2, title = "Profile", destination = Screen.Profile.destination, icon = R.drawable.ic_profile),
-    MenuItem(id = 3, title = "Settings", destination = Screen.Settings.destination, icon = R.drawable.ic_settings),
-    MenuItem(id = 4, title = "Help", destination = Screen.Help.destination, icon = R.drawable.ic_help),
-    MenuItem(id = 5, title = "About", destination = Screen.About.destination, icon = R.drawable.ic_about),
+    MenuItem(id = 1, title = R.string.home_screen, destination = Screen.Home.destination, icon = R.drawable.ic_home),
+    MenuItem(id = 2, title = R.string.profile_screen, destination = Screen.Profile.destination, icon = R.drawable.ic_profile),
+    MenuItem(id = 3, title = R.string.settings_screen, destination = Screen.Settings.destination, icon = R.drawable.ic_settings),
+    MenuItem(id = 4, title = R.string.help_screen, destination = Screen.Help.destination, icon = R.drawable.ic_help),
+    MenuItem(id = 5, title = R.string.about_screen, destination = Screen.About.destination, icon = R.drawable.ic_about),
 )
