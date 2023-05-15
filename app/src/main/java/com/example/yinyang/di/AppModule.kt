@@ -1,6 +1,7 @@
 package com.example.yinyang.di
 
 import com.example.yinyang.repository.AddressRepository
+import com.example.yinyang.repository.FavoriteRepository
 import com.example.yinyang.repository.ProductRepository
 import com.example.yinyang.repository.UserRepository
 import dagger.Module
@@ -54,5 +55,11 @@ object AppModule {
     @Singleton
     fun provideProductRepository(client: SupabaseClient): ProductRepository {
         return ProductRepository(client)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFavoriteRepository(client: SupabaseClient): FavoriteRepository {
+        return FavoriteRepository(client)
     }
 }

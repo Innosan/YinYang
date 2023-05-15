@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.yinyang.models.navItems
@@ -27,6 +28,7 @@ import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.theme.YinYangTheme
 import com.example.yinyang.network.client
 import com.example.yinyang.utils.Screen
+import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.Route
@@ -37,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    lateinit var navController: NavHostController
+    private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -58,7 +60,7 @@ class MainActivity : ComponentActivity() {
                 val selectedItem = remember { mutableStateOf(navItems[0]) }
 
                 /**
-                 * To explicitly change start if user is authenticated
+                 * To explicitly change start route if user is authenticated
                  */
                 val startRoute: Route = if (isUserAuth) {
                     Screen.Home.destination
@@ -94,6 +96,7 @@ class MainActivity : ComponentActivity() {
                                         scope.launch { drawerState.close() }
                                         navController.navigate(item.destination) {
                                             launchSingleTop = true
+                                            popUpTo(item.destination.route)
                                         }
                                         selectedItem.value = item
                                     },

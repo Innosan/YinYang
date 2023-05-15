@@ -45,4 +45,9 @@
     <string name="update_address_label">Адрес</string>
     <string name="update_address_placeholder">Обновите адрес…</string>
     <string name="new_address_placeholder">Введите новый адрес…</string>
+    <string name="update_address_note">Обновление адреса</string>
+    <string name="add_address_note">Добавление нового адреса</string>
+    <string name="update_user_note">Обновление данных пользователя</string>
+    <string name="sign_up_note">Создайте новый аккаунт, чтобы продолжить!</string>
+    <string name="sign_in_note">Войдите в существующий аккаунт, чтобы продолжить!</string>
 </resources>

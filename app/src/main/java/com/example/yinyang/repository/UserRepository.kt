@@ -17,7 +17,7 @@ class UserRepository(private val client: SupabaseClient) {
                 .select(
                     single = true,
                 ) {
-                    User::userUuid eq client.gotrue.retrieveUserForCurrentSession().id
+                    User::userUuid eq client.gotrue.currentSessionOrNull()?.user?.id
                 }
 
             userInfo.value = result.decodeAs()
