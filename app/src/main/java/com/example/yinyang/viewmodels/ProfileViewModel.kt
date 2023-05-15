@@ -8,11 +8,14 @@ import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.User
 import com.example.yinyang.repository.AddressRepository
 import com.example.yinyang.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProfileViewModel (
+@HiltViewModel
+class ProfileViewModel @Inject constructor (
     private val userRepository: UserRepository,
     private val addressRepository: AddressRepository
     ) : ViewModel() {

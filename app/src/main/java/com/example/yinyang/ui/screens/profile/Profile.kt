@@ -15,39 +15,29 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.yinyang.R
-import com.example.yinyang.repository.UserRepository
-import com.example.yinyang.network.client
-import com.example.yinyang.repository.AddressRepository
 import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
-import com.example.yinyang.ui.screens.destinations.SettingsDestination
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import com.ramcosta.composedestinations.navigation.navigate
 import kotlinx.coroutines.launch
-
-val userRepository = UserRepository(client)
-val addressRepository = AddressRepository(client)
 
 @Destination
 @Composable
 fun Profile(
     navigator: DestinationsNavigator,
+    viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val userActionsHandler = UserActionsHandler(context)
 
-    val profileViewModel = remember (userRepository) {
-        ProfileViewModel(userRepository, addressRepository)
-    }
-
-    val profile = profileViewModel.profile.value
+    val profile = viewModel.profile.value
     val userInfo = profile.userInfo?.value
     val userSession = profile.userSession
     val userAddresses = profile.userAddresses
@@ -162,7 +152,7 @@ fun Profile(
                     if (userAddresses != null) {
                         SectionHeader(iconId = R.drawable.ic_location, title = "Ваши адреса")
 
-                        AddressList(items = userAddresses.value, userViewModel = profileViewModel)
+                        AddressList(items = userAddresses.value, userViewModel = viewModel)
                     }
 
                     Button(
@@ -230,7 +220,7 @@ fun Profile(
                                 Button(onClick = {
                                     if (userInfo != null) {
                                         userInfo.id?.let {
-                                            profileViewModel.updateUserInfo(it, updatedName, updatedLastname)
+                                            viewModel.updateUserInfo(it, updatedName, updatedLastname)
                                         }
 
                                         userInfoPopupControl = false
