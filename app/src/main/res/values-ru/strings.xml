@@ -9,6 +9,8 @@
     <string name="close_button">Закрыть</string>
     <string name="update_button">Обновить</string>
     <string name="logout_button">Выйти</string>
+    <string name="yes_button">Да</string>
+    <string name="no_button">Нет</string>
     <string name="edit_profile_button">Изменить профиль</string>
 
     <!-- Navigation buttons -->
@@ -31,4 +33,16 @@
     <string name="addresses_section">Ваши адреса</string>
     <string name="diy_section">Сделай сам</string>
     <string name="menu_section">Меню</string>
+    <string name="update_name_field_label">Имя</string>
+    <string name="update_name_field_placeholder">Введите новое имя...</string>
+    <string name="update_last_name_field_label">Фамилия</string>
+    <string name="update_last_name_field_placeholder">"Введите новую фамилию... "</string>
+    <string name="newbie_rating">Новичок</string>
+    <string name="often_uses_rating">Частый покупатель</string>
+    <string name="master_rating">Мастер</string>
+    <string name="exit_note">Вы точно хотите выйти?</string>
+    <string name="no_phone_note">Номер телефона не предоставлен</string>
+    <string name="update_address_label">Адрес</string>
+    <string name="update_address_placeholder">Обновите адрес...</string>
+    <string name="new_address_placeholder">Введите новый адрес...</string>
 </resources>

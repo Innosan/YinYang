@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -90,7 +91,7 @@ fun Profile(
                                 )
 
                                 Text(
-                                    text = getRatingTitle(userInfo.rating).title.uppercase(),
+                                    text = stringResource(id = getRatingTitle(userInfo.rating).title).uppercase(),
                                     fontWeight = FontWeight.Black,
                                     fontSize = 12.sp
                                 )
@@ -105,7 +106,7 @@ fun Profile(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         ProfileNavigationButton(
-                            title = "Orders",
+                            title = R.string.orders_button,
                             icon = R.drawable.ic_orders,
                             fraction = .45f,
                             onNavigation = {
@@ -116,7 +117,7 @@ fun Profile(
                         )
 
                         ProfileNavigationButton(
-                            title = "Favorite",
+                            title = R.string.favorite_button,
                             icon = R.drawable.ic_favorite,
                             fraction = .85f,
                             onNavigation = {
@@ -128,7 +129,7 @@ fun Profile(
                     }
 
                     if (userSession != null) {
-                        SectionHeader(iconId = R.drawable.ic_profile, title = "Личное")
+                        SectionHeader(iconId = R.drawable.ic_profile, title = R.string.personal_section)
 
                         userSession.email?.let {
                             UserInfoFiled(
@@ -143,14 +144,14 @@ fun Profile(
                         userSession.phone?.let {
                             UserInfoFiled(
                                 icon = R.drawable.ic_phone,
-                                fieldLabel = it.ifEmpty { "No phone provided" },
+                                fieldLabel = it.ifEmpty { stringResource(id = R.string.no_phone_note) },
                                 spacedBy = 12
                             )
                         }
                     }
 
                     if (userAddresses != null) {
-                        SectionHeader(iconId = R.drawable.ic_location, title = "Ваши адреса")
+                        SectionHeader(iconId = R.drawable.ic_location, title = R.string.addresses_section)
 
                         AddressList(items = userAddresses.value, userViewModel = viewModel)
                     }
@@ -165,7 +166,7 @@ fun Profile(
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Text(
-                            text = "Edit Profile",
+                            text = stringResource(id = R.string.edit_profile_button),
                             fontWeight = FontWeight.Black,
                             fontSize = 24.sp,
                         )
@@ -178,17 +179,17 @@ fun Profile(
                         ) {
                             PopupContainer {
                                 Button(onClick = { userInfoPopupControl = false }) {
-                                    Text(text = "Close")
+                                    Text(text = stringResource(id = R.string.close_button))
                                 }
 
                                 OutlinedTextField(
                                     value = updatedName,
                                     onValueChange = { updatedName = it },
                                     label = {
-                                        Text(text = "Name")
+                                        Text(text = stringResource(id = R.string.update_name_field_label))
                                     },
                                     placeholder = {
-                                        Text(text = "Update your name...")
+                                        Text(text = stringResource(id = R.string.update_name_field_placeholder))
                                     },
                                     leadingIcon = {
                                         Icon(
@@ -203,10 +204,10 @@ fun Profile(
                                     value = updatedLastname,
                                     onValueChange = { updatedLastname = it },
                                     label = {
-                                        Text(text = "Last name")
+                                        Text(text = stringResource(id = R.string.update_last_name_field_label))
                                     },
                                     placeholder = {
-                                        Text(text = "Update your last name...")
+                                        Text(text = stringResource(id = R.string.update_last_name_field_placeholder))
                                     },
                                     leadingIcon = {
                                         Icon(
@@ -226,14 +227,14 @@ fun Profile(
                                         userInfoPopupControl = false
                                     }
                                 }) {
-                                    Text(text = "Update")
+                                    Text(text = stringResource(id = R.string.update_button))
                                 }
                             }
                         }
                     }
 
                     Button(onClick = { dialogControl.value = true }) {
-                        Text(text = "Log out")
+                        Text(text = stringResource(id = R.string.logout_button))
                     }
 
                     if (dialogControl.value) {
@@ -242,10 +243,10 @@ fun Profile(
                                 dialogControl.value = false
                             },
                             title = {
-                                Text(text = "Log out")
+                                Text(text = stringResource(id = R.string.logout_button))
                             },
                             text = {
-                                Text("Are you sure\nyou want to log out?")
+                                Text(text = stringResource(id = R.string.exit_note))
                             },
                             confirmButton = {
                                 Button(onClick = {
@@ -253,7 +254,7 @@ fun Profile(
                                         userActionsHandler.performUserAction(UserAction.LOGOUT)
                                     }
                                 }) {
-                                    Text(text = "Yes\n(pussy aura)")
+                                    Text(text = stringResource(id = R.string.yes_button))
                                 }
                             },
                             dismissButton = {
@@ -261,7 +262,7 @@ fun Profile(
                                     onClick = {
                                         dialogControl.value = false
                                     }) {
-                                    Text("Nah, maybe later\n(strong aura)")
+                                    Text(text = stringResource(id = R.string.no_button))
                                 }
                             }
                         )

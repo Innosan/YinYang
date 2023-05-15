@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,7 +29,7 @@ import com.example.yinyang.utils.PopupContainer
 @Composable
 fun FoodConstructor(
     background: Int,
-    title: String,
+    title: Int,
     fraction: Float,
 
     constructorItems: List<ConstructorItem>
@@ -61,7 +62,7 @@ fun FoodConstructor(
              */
 
             color = MaterialTheme.colorScheme.onTertiary,
-            text = title,
+            text = stringResource(id = title),
             fontSize = 20.sp,
             fontWeight = FontWeight.Black,
             textAlign = TextAlign.Start,

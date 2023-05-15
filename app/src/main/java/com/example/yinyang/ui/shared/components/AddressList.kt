@@ -102,10 +102,10 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                                     value = updatedAddress,
                                     onValueChange = { updatedAddress = it },
                                     label = {
-                                        Text(text = "Address line")
+                                        Text(text = stringResource(id = R.string.update_address_label))
                                     },
                                     placeholder = {
-                                        Text(text = "Update address...")
+                                        Text(text = stringResource(id = R.string.update_address_placeholder))
                                     },
                                     leadingIcon = {
                                         Icon(
@@ -123,7 +123,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
 
                                     updateAddressPopUpControl = false
                                 }) {
-                                    Text(text = "Update")
+                                    Text(text = stringResource(id = R.string.update_button))
                                 }
                             }
                         }
@@ -163,10 +163,10 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                         value = newAddress,
                         onValueChange = { newAddress = it },
                         label = {
-                            Text(text = "Address line")
+                            Text(text = stringResource(id = R.string.update_address_label))
                         },
                         placeholder = {
-                            Text(text = "Type in your new address...")
+                            Text(text = stringResource(id = R.string.new_address_placeholder))
                         },
                         leadingIcon = {
                             Icon(
@@ -184,7 +184,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
 
                         newAddressPopUpControl = false
                     }) {
-                        Text(text = "Add new")
+                        Text(text = stringResource(id = R.string.add_button))
                     }
                 }
             }

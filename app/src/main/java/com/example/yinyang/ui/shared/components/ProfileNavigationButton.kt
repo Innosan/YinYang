@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.ui.screens.destinations.DirectionDestination
@@ -18,7 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Composable
 fun ProfileNavigationButton(
-    title: String,
+    title: Int,
     icon: Int, fraction: Float,
     onNavigation: () -> Unit,
 ) {
@@ -45,7 +46,7 @@ fun ProfileNavigationButton(
                 contentDescription = "Go To $title",
             )
             Text(
-                text = title.uppercase(),
+                text = stringResource(id = title).uppercase(),
                 fontWeight = FontWeight.ExtraBold
             )
         }

@@ -9,12 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun SectionHeader(iconId: Int, title: String) {
+fun SectionHeader(iconId: Int, title: Int) {
     Row(
         Modifier.padding(vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -22,11 +23,11 @@ fun SectionHeader(iconId: Int, title: String) {
         Icon(
             painter = painterResource(id = iconId),
 
-            contentDescription = title
+            contentDescription = stringResource(id = title)
         )
         Text(
             modifier = Modifier.padding(horizontal = 10.dp),
-            text = title,
+            text = stringResource(id = title),
             fontSize = 20.sp,
             color = MaterialTheme.colorScheme.onBackground,
             fontWeight = FontWeight.Black

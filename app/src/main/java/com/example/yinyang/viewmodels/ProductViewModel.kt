@@ -5,24 +5,22 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yinyang.models.Product
-import com.example.yinyang.network.client
-import io.github.jan.supabase.postgrest.postgrest
+import com.example.yinyang.repository.ProductRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ProductViewModel : ViewModel() {
+@HiltViewModel
+class ProductViewModel @Inject constructor (
+    private val productRepository: ProductRepository,
+    ) :
+    ViewModel()  {
     private val _products = mutableStateOf(emptyList<Product>())
     val products: State<List<Product>> = _products
 
-    private suspend fun getProducts(): List<Product> {
-        val result = client.postgrest["product"]
-            .select("*, category_id(title)")
-
-        return result.decodeList()
-    }
-
     init {
         viewModelScope.launch {
-            _products.value = getProducts()
+            _products.value = productRepository.getProducts()
         }
     }
 }

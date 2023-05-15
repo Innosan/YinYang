@@ -8,6 +8,8 @@
     <string name="close_button">Close</string>
     <string name="update_button">Update</string>
     <string name="logout_button">Log Out</string>
+    <string name="yes_button">Yes</string>
+    <string name="no_button">No</string>
     <string name="edit_profile_button">Edit profile</string>
 
     <!-- Navigation buttons -->
@@ -30,4 +32,24 @@
     <string name="addresses_section">Your addresses</string>
     <string name="diy_section">Do It Yourself</string>
     <string name="menu_section">Menu</string>
+
+    <!-- Profile -->
+    <string name="update_name_field_label">Name</string>
+    <string name="update_name_field_placeholder">Update your name…</string>
+    <string name="update_last_name_field_label">Last name</string>
+    <string name="update_last_name_field_placeholder">Update your last name…</string>
+
+    <!-- Address -->
+    <string name="update_address_label">Address line</string>
+    <string name="update_address_placeholder">Update address…</string>
+    <string name="new_address_placeholder">Type in your new address…</string>
+
+    <!-- Ratings -->
+    <string name="newbie_rating">Newbie</string>
+    <string name="often_uses_rating">Often Uses</string>
+    <string name="master_rating">Master</string>
+
+    <!-- Info -->
+    <string name="exit_note">Are you sure you want to log out?</string>
+    <string name="no_phone_note">No phone number provided</string>
 </resources>

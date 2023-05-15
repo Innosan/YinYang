@@ -1,9 +1,11 @@
 package com.example.yinyang.utils
 
-enum class RatingTitle(val value: Int, val title: String) {
-    NEWBIE(1, "Новичок"),
-    OFTEN_USES(2, "Частый гость"),
-    MASTER(3, "Уважаемый покупатель")
+import com.example.yinyang.R
+
+enum class RatingTitle(val value: Int, val title: Int) {
+    NEWBIE(1, R.string.newbie_rating),
+    OFTEN_USES(2, R.string.often_uses_rating),
+    MASTER(3, R.string.master_rating)
 }
 
 fun getRatingTitle(ratingValue: Int) : RatingTitle {
