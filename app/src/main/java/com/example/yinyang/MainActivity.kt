@@ -3,6 +3,7 @@ package com.example.yinyang
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.yinyang.models.navItems
@@ -27,9 +27,16 @@ import com.example.yinyang.ui.screens.destinations.Destination
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.theme.YinYangTheme
 import com.example.yinyang.network.client
+import com.example.yinyang.ui.screens.cart.Cart
+import com.example.yinyang.ui.screens.destinations.CartDestination
+import com.example.yinyang.ui.screens.destinations.FavoriteDestination
+import com.example.yinyang.ui.screens.destinations.ProfileDestination
+import com.example.yinyang.ui.screens.favorite.Favorite
+import com.example.yinyang.ui.screens.profile.Profile
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
+import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.navigation.navigate
 import com.ramcosta.composedestinations.spec.Route
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,6 +47,8 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
+    private val profileViewModel: ProfileViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -117,8 +126,25 @@ class MainActivity : ComponentActivity() {
                         DestinationsNavHost(
                             navGraph = NavGraphs.root,
                             navController = navController,
-                            startRoute = startRoute
-                        )
+                            startRoute = startRoute,
+                        ) {
+                            composable(ProfileDestination) {
+                                Profile(
+                                    navigator = destinationsNavigator,
+                                    viewModel = profileViewModel
+                                )
+                            }
+                            composable(FavoriteDestination) {
+                                Favorite(
+                                    profileViewModel = profileViewModel
+                                )
+                            }
+                            composable(CartDestination) {
+                                Cart(
+                                    profileViewModel = profileViewModel
+                                )
+                            }
+                        }
                     }
                 }
             }

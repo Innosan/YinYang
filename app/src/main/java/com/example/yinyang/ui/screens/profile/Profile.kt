@@ -15,8 +15,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
@@ -31,7 +29,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Profile(
     navigator: DestinationsNavigator,
-    viewModel: ProfileViewModel = hiltViewModel(),
+    viewModel: ProfileViewModel,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -111,7 +109,7 @@ fun Profile(
                             fraction = .45f,
                             onNavigation = {
                                 if (userInfo != null) {
-                                    navigator.navigate(FavoriteDestination(userId = userInfo.id))
+                                    navigator.navigate(CartDestination())
                                 }
                             }
                         )
@@ -122,7 +120,7 @@ fun Profile(
                             fraction = .85f,
                             onNavigation = {
                                 if (userInfo != null) {
-                                    navigator.navigate(CartDestination(userId = userInfo.id))
+                                    navigator.navigate(FavoriteDestination())
                                 }
                             }
                         )

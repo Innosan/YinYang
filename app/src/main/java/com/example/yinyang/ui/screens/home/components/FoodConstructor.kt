@@ -51,7 +51,7 @@ fun FoodConstructor(
         Image(
             painter = painterResource(id = background),
             contentDescription = null,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(10.dp)),

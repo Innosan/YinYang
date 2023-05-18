@@ -26,6 +26,8 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
     val updateAddressDialogControl = remember { mutableStateOf(false)  }
     val newAddressDialogControl = remember { mutableStateOf(false)  }
 
+    val currentId = remember { mutableStateOf(0)}
+
     var newAddress by remember { mutableStateOf("")}
     var updatedAddress by remember { mutableStateOf("") }
     
@@ -77,6 +79,8 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
 
                         IconButton(onClick = {
                             updateAddressDialogControl.value = true
+                            currentId.value = address.id!!
+                            println(currentId.value)
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_edit_location),
@@ -115,9 +119,9 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             },
                             confirmButton = {
                                 Button(onClick = {
-                                    currentItem.id?.let { it1 ->
-                                        userViewModel.updateAddress(it1, updatedAddress)
-                                    }
+                                    userViewModel.updateAddress(currentId.value, updatedAddress)
+
+                                    // TODO: stop using viewmodels instance
 
                                     updateAddressDialogControl.value = false
                                 }) {
