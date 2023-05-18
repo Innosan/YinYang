@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,13 +57,20 @@ fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: Profi
                     SwipeBackground(
                         dismissState = dismissState,
                         dismissColor = Color.Red.copy(.1f),
-                        cornerShapeSize = 10.dp)
+                        cornerShapeSize = 10.dp
+                    )
                 },
 
                 dismissContent = {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .shadow(
+                                4.dp,
+                                RoundedCornerShape(10.dp),
+                                ambientColor = Color.Black,
+                                spotColor = Color.Black
+                            )
                             .background(Color.White.copy(0.14f), RoundedCornerShape(10.dp)),
 
                         horizontalArrangement = Arrangement.SpaceBetween,

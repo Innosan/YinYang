@@ -3,12 +3,8 @@ package com.example.yinyang.ui.screens.profile
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.pullrefresh.PullRefreshIndicator
-import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,12 +21,14 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
 import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.ui.theme.OverpassFamily
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
+import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Destination
@@ -173,8 +171,7 @@ fun Profile(
                     ) {
                         Text(
                             text = stringResource(id = R.string.edit_profile_button).uppercase(),
-                            fontFamily = OverpassFamily,
-                            fontWeight = FontWeight.Black,
+                            style = buttonTextStyle,
                             fontSize = 24.sp,
                         )
                     }
@@ -279,7 +276,10 @@ fun Profile(
                                     onClick = {
                                         logOutDialogControl.value = false
                                     }) {
-                                    Text(text = stringResource(id = R.string.no_button))
+                                    Text(
+                                        text = stringResource(id = R.string.no_button),
+                                        style = buttonTextStyle
+                                    )
                                 }
                             }
                         )

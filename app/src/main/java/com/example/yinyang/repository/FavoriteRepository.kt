@@ -2,23 +2,32 @@ package com.example.yinyang.repository
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.yinyang.models.Favorite
-import com.example.yinyang.models.FavoriteAdd
+import com.example.yinyang.models.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 
+
 class FavoriteRepository(val client: SupabaseClient) {
     suspend fun getFavorites(userId: Int?): MutableState<List<Favorite>> {
+        val gson = Gson()
+
+        val favoriteListType = object : TypeToken<List<Favorite>>() {}.type
         val favorites = mutableStateOf(emptyList<Favorite>())
 
         try {
-            val result = client.postgrest["favorite"].select("*, product_id(*)") {
-                if (userId != null) {
-                    eq("user_id", userId)
+            val result = client
+                .postgrest["favorite"]
+                .select("*, product_id(*, category_id(title))") {
+                    if (userId != null) {
+                        eq("user_id", userId)
+                    }
                 }
-            }
 
-            favorites.value = result.decodeList()
+            favorites.value = gson.fromJson(result.body.toString(), favoriteListType)
+
+            println(favorites.value)
         } catch (e: Exception) {
             println(e.message)
         }

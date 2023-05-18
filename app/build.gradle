@@ -78,6 +78,8 @@ dependencies {
     implementation "io.github.raamcosta.compose-destinations:animations-core:$nav_comp_dest_v"
     ksp "io.github.raamcosta.compose-destinations:ksp:$nav_comp_dest_v"
 
+    implementation 'com.google.code.gson:gson:2.10.1'
+
     /**
      * Backend
      */

@@ -76,11 +76,7 @@ fun HomePage(
                                 product ->
                             if (selectedTabIndex == 0) true
                             else
-                                filterWords[selectedTabIndex] ==
-                                        product.categoryId
-                                            .getValue("title")
-                                            .toString()
-                                            .removeSurrounding("\"")
+                                filterWords[selectedTabIndex] == product.category_id.title
                         },
 
                         key = {product -> product.id}

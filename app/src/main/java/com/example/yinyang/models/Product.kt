@@ -1,14 +1,9 @@
 package com.example.yinyang.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
-
-@Serializable
 data class Product(
-    @SerialName("created_at") val createdAt: String?,
-    @SerialName("category_id") val categoryId: JsonObject,
-    @SerialName("image_url") val imageUrl: String,
+    val created_at: String?,
+    val category_id: Category,
+    val image_url: String,
 
     val id: Int,
     val title: String,
@@ -16,4 +11,8 @@ data class Product(
     val price: Int,
     val weight: Int,
     val count: Int,
+)
+
+data class Category(
+    val title: String,
 )

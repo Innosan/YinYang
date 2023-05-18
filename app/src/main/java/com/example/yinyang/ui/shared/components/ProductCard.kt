@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.yinyang.models.Product
-import com.example.yinyang.ui.theme.OverpassFamily
+import com.example.yinyang.ui.shared.styles.buttonTextStyle
 
 @Composable
 fun ProductCard(product: Product) {
@@ -40,7 +40,7 @@ fun ProductCard(product: Product) {
         ) {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(product.imageUrl)
+                    .data(product.image_url)
                     .crossfade(true) //TODO: should change to better one
                     .build(),
                 modifier = Modifier
@@ -66,7 +66,7 @@ fun ProductCard(product: Product) {
                         .padding(7.dp),
                 )
                 Text(
-                    text = product.categoryId.getValue("title").toString(),
+                    text = product.category_id.title,
                     fontWeight = FontWeight.Black,
                     modifier = Modifier
                         .background(Color(27, 27, 27, 200), RoundedCornerShape(10.dp))
@@ -107,7 +107,10 @@ fun ProductCard(product: Product) {
 
                 Modifier.fillMaxWidth(.45f)
             ) {
-                Text(text = "${product.price} ₽", fontFamily = OverpassFamily)
+                Text(
+                    text = "${product.price} ₽",
+                    style = buttonTextStyle
+                )
             }
 
             Button(
@@ -121,7 +124,10 @@ fun ProductCard(product: Product) {
                 },
                 Modifier.fillMaxWidth(.85f)
             ) {
-                Text(text = "Add")
+                Text(
+                    text = "Add",
+                    style = buttonTextStyle
+                )
             }
         }
     }

@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.yinyang.ui.theme.OverpassFamily
+import com.example.yinyang.ui.shared.styles.buttonTextStyle
 
 @Composable
 fun ProfileNavigationButton(
@@ -25,6 +25,12 @@ fun ProfileNavigationButton(
     Button(
         modifier = Modifier
             .fillMaxWidth(fraction)
+            .shadow(
+                4.dp,
+                RoundedCornerShape(10.dp),
+                ambientColor = Color.Black,
+                spotColor = Color.Black
+            )
             .clip(RoundedCornerShape(10.dp)),
 
         onClick = { onNavigation() },
@@ -46,8 +52,7 @@ fun ProfileNavigationButton(
             )
             Text(
                 text = stringResource(id = title).uppercase(),
-                fontFamily = OverpassFamily,
-                fontWeight = FontWeight.ExtraBold
+                style = buttonTextStyle
             )
         }
     }
