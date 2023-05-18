@@ -3,7 +3,13 @@ package com.example.yinyang.ui.screens.profile
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,18 +25,23 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
 import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.theme.OverpassFamily
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Destination
 @Composable
 fun Profile(
     navigator: DestinationsNavigator,
     viewModel: ProfileViewModel,
 ) {
+    val refreshing by viewModel.isRefreshing.collectAsState()
+    val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
+
     val coroutineScope = rememberCoroutineScope()
     val context = LocalContext.current
 
@@ -49,13 +60,10 @@ fun Profile(
     val userInfoDialogControl = remember { mutableStateOf(false) }
     val logOutDialogControl = remember { mutableStateOf(false)  }
 
-    ScreenContainer {
-        CenteredContainer {
-            if (!profileLoaded) {
-                CircularProgressIndicator()
-            }
-        }
-
+    RefreshableScreenContainer(
+        refreshing = refreshing,
+        pullRefreshState = pullRefreshState
+    ) {
         AnimatedVisibility(
             visible = profileLoaded,
             content = {
@@ -130,7 +138,7 @@ fun Profile(
                         SectionHeader(iconId = R.drawable.ic_profile, title = R.string.personal_section)
 
                         userSession.email?.let {
-                            UserInfoFiled(
+                            UserInfoField(
                                 icon = R.drawable.ic_email,
                                 fieldLabel = it,
                                 spacedBy = 12
@@ -140,7 +148,7 @@ fun Profile(
                         Spacer(modifier = Modifier.size(12.dp))
 
                         userSession.phone?.let {
-                            UserInfoFiled(
+                            UserInfoField(
                                 icon = R.drawable.ic_phone,
                                 fieldLabel = it.ifEmpty { stringResource(id = R.string.no_phone_note) },
                                 spacedBy = 12
@@ -151,7 +159,7 @@ fun Profile(
                     if (userAddresses != null) {
                         SectionHeader(iconId = R.drawable.ic_location, title = R.string.addresses_section)
 
-                        AddressList(items = userAddresses.value, userViewModel = viewModel)
+                        AddressList(items = userAddresses, userViewModel = viewModel)
                     }
 
                     Button(
@@ -164,7 +172,8 @@ fun Profile(
                         shape = RoundedCornerShape(10.dp)
                     ) {
                         Text(
-                            text = stringResource(id = R.string.edit_profile_button),
+                            text = stringResource(id = R.string.edit_profile_button).uppercase(),
+                            fontFamily = OverpassFamily,
                             fontWeight = FontWeight.Black,
                             fontSize = 24.sp,
                         )

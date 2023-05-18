@@ -15,6 +15,9 @@ import com.example.yinyang.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,6 +33,10 @@ class ProfileViewModel @Inject constructor (
         val userAddresses: MutableState<List<DeliveryAddress>>?,
         val userFavorite: MutableState<List<Favorite>>?,
     )
+
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean>
+        get() = _isRefreshing.asStateFlow()
 
     private val _profile = mutableStateOf(Profile(null, null, null, null))
     val profile: MutableState<Profile> = _profile
@@ -49,9 +56,11 @@ class ProfileViewModel @Inject constructor (
         }
     }
 
-    private fun loadProfile() {
+    fun refresh() {
         viewModelScope.launch {
             try {
+                _isRefreshing.emit(true)
+
                 val userInfoDeferred = async { userRepository.getUserInfo() }
                 val userSessionDeferred = async { userRepository.getUserSession() }
                 val deliveryAddressesDeferred = async {
@@ -70,10 +79,12 @@ class ProfileViewModel @Inject constructor (
             } catch (e: Exception) {
                 println(e.message)
             }
+
+            _isRefreshing.emit(false)
         }
     }
 
     init {
-        loadProfile()
+        refresh()
     }
 }

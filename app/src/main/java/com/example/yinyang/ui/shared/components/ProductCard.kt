@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.yinyang.models.Product
+import com.example.yinyang.ui.theme.OverpassFamily
 
 @Composable
 fun ProductCard(product: Product) {
@@ -106,7 +107,7 @@ fun ProductCard(product: Product) {
 
                 Modifier.fillMaxWidth(.45f)
             ) {
-                Text(text = "${product.price} ₽")
+                Text(text = "${product.price} ₽", fontFamily = OverpassFamily)
             }
 
             Button(

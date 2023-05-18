@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun UserInfoFiled(icon: Int, fieldLabel: String, spacedBy: Int) {
+fun UserInfoField(icon: Int, fieldLabel: String, spacedBy: Int) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(spacedBy.dp)
     ) {

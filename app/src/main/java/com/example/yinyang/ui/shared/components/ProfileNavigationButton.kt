@@ -14,8 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.yinyang.ui.screens.destinations.DirectionDestination
-import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import com.example.yinyang.ui.theme.OverpassFamily
 
 @Composable
 fun ProfileNavigationButton(
@@ -47,6 +46,7 @@ fun ProfileNavigationButton(
             )
             Text(
                 text = stringResource(id = title).uppercase(),
+                fontFamily = OverpassFamily,
                 fontWeight = FontWeight.ExtraBold
             )
         }

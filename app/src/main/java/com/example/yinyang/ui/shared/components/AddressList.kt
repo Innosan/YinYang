@@ -13,16 +13,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.Popup
 import com.example.yinyang.R
 import com.example.yinyang.models.DeliveryAddress
+import com.example.yinyang.ui.theme.OverpassFamily
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
+fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: ProfileViewModel) {
     val updateAddressDialogControl = remember { mutableStateOf(false)  }
     val newAddressDialogControl = remember { mutableStateOf(false)  }
 
@@ -32,7 +31,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
     var updatedAddress by remember { mutableStateOf("") }
     
     Column {
-        items.forEach {address ->
+        items.value.forEach {address ->
             val currentItem by rememberUpdatedState(newValue = address)
             
             val dismissState = rememberDismissState(
@@ -40,7 +39,6 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                     when (it) {
                         DismissValue.DismissedToStart -> {
                             currentItem.id?.let { it1 ->
-                                println(it1)
                                 userViewModel.addressManager.deleteAddress(it1)
                             }
                             true
@@ -121,7 +119,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                                 Button(onClick = {
                                     userViewModel.addressManager.updateAddress(currentId.value, updatedAddress)
 
-                                    // TODO: stop using viewmodels instance
+                                    // TODO: stop using viewmodel instance
 
                                     updateAddressDialogControl.value = false
                                 }) {
@@ -152,7 +150,8 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 modifier = Modifier.padding(horizontal = 10.dp)
             ) {
                 Text(
-                    text = stringResource(id = R.string.add_button),
+                    text = stringResource(id = R.string.add_button).uppercase(),
+                    fontFamily = OverpassFamily,
                     fontWeight = FontWeight.Bold
                 )
             }

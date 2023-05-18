@@ -62,21 +62,9 @@ fun FilterList(
             Tab(
                 selected = selected,
 
-                modifier =
-                if (selected)
-                    Modifier
-                        .clip(RoundedCornerShape(24.dp))
-                        .background(
-                            color = MaterialTheme.colorScheme.primary,
-                            shape = RoundedCornerShape(24.dp)
-                        )
-                else
-                    Modifier
-                        .clip(RoundedCornerShape(24.dp))
-                        .background(
-                            color = Color(303030),
-                            shape = RoundedCornerShape(24.dp)
-                        ),
+                modifier = Modifier
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(shape = RoundedCornerShape(24.dp), color = Color.Transparent),
 
                 onClick = { onTabClick(tabIndex) },
 
