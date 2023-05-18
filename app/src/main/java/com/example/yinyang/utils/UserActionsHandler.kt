@@ -80,7 +80,6 @@ class UserActionsHandler(private val context: Context) {
      */
     private suspend fun createUser(uuid: String) {
         val user = User(
-            favouriteId = null,
             orderId = null,
             cartId = null,
             userUuid = uuid,

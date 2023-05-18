@@ -4,6 +4,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.yinyang.managers.AddressManager
+import com.example.yinyang.managers.FavoriteManager
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.Favorite
 import com.example.yinyang.models.User
@@ -32,44 +34,18 @@ class ProfileViewModel @Inject constructor (
     private val _profile = mutableStateOf(Profile(null, null, null, null))
     val profile: MutableState<Profile> = _profile
 
+    val addressManager: AddressManager =
+        AddressManager(viewModelScope, addressRepository, profile)
+
+    val favoriteManager: FavoriteManager =
+        FavoriteManager(viewModelScope, favoriteRepository, profile)
+
     fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
         viewModelScope.launch {
             userRepository.updateUserInfo(userId, newName, newLastname)
 
             val updatedUserInfo = userRepository.getUserInfo()
             _profile.value = profile.value.copy(userInfo = updatedUserInfo)
-        }
-    }
-
-    private suspend fun updateAddresses() {
-        val updatedAddresses = addressRepository.getUserAddresses(profile.value.userInfo?.value?.id)
-        _profile.value = profile.value.copy(userAddresses = updatedAddresses)
-    }
-
-    fun deleteAddress(addressId: Int) {
-        viewModelScope.launch {
-            addressRepository.deleteAddress(addressId)
-
-            updateAddresses()
-        }
-    }
-
-    fun addAddress(userId: Int, addressMessage: String) {
-        viewModelScope.launch {
-            addressRepository.addAddress(userId, addressMessage)
-
-            updateAddresses()
-        }
-    }
-
-    fun updateAddress(addressId: Int, newAddress: String) {
-        println(addressId)
-        println(newAddress)
-
-        viewModelScope.launch {
-            addressRepository.updateAddress(addressId, newAddress)
-
-            updateAddresses()
         }
     }
 

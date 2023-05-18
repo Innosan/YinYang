@@ -11,3 +11,13 @@ data class Favorite(
     @SerialName("user_id") val userId: Int,
     @SerialName("product_id") val productId: JsonObject,
 )
+
+/**
+ * Workaround for adding new favorite items
+ */
+data class FavoriteAdd(
+    val id: Int? = null,
+
+    @SerialName("user_id") val userId: Int,
+    @SerialName("product_id") val productId: Int,
+)

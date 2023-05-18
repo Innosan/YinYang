@@ -23,17 +23,16 @@ import androidx.navigation.compose.rememberNavController
 import com.example.yinyang.models.navItems
 import com.example.yinyang.ui.screens.NavGraphs
 import com.example.yinyang.ui.screens.appCurrentDestinationAsState
-import com.example.yinyang.ui.screens.destinations.Destination
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.theme.YinYangTheme
 import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.cart.Cart
-import com.example.yinyang.ui.screens.destinations.CartDestination
-import com.example.yinyang.ui.screens.destinations.FavoriteDestination
-import com.example.yinyang.ui.screens.destinations.ProfileDestination
+import com.example.yinyang.ui.screens.destinations.*
 import com.example.yinyang.ui.screens.favorite.Favorite
+import com.example.yinyang.ui.screens.home.HomePage
 import com.example.yinyang.ui.screens.profile.Profile
 import com.example.yinyang.utils.Screen
+import com.example.yinyang.viewmodels.ProductViewModel
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
@@ -47,7 +46,9 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
+
     private val profileViewModel: ProfileViewModel by viewModels()
+    private val productViewModel: ProductViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -103,10 +104,11 @@ class MainActivity : ComponentActivity() {
 
                                     onClick = {
                                         scope.launch { drawerState.close() }
+
                                         navController.navigate(item.destination) {
                                             launchSingleTop = true
-                                            popUpTo(item.destination.route)
                                         }
+
                                         selectedItem.value = item
                                     },
 
@@ -128,6 +130,12 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             startRoute = startRoute,
                         ) {
+                            composable(HomePageDestination) {
+                                HomePage(
+                                    navigator = destinationsNavigator,
+                                    viewModel = productViewModel
+                                )
+                            }
                             composable(ProfileDestination) {
                                 Profile(
                                     navigator = destinationsNavigator,

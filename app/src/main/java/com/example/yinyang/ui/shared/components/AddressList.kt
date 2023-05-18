@@ -41,7 +41,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                         DismissValue.DismissedToStart -> {
                             currentItem.id?.let { it1 ->
                                 println(it1)
-                                userViewModel.deleteAddress(it1)
+                                userViewModel.addressManager.deleteAddress(it1)
                             }
                             true
                         }
@@ -119,7 +119,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                             },
                             confirmButton = {
                                 Button(onClick = {
-                                    userViewModel.updateAddress(currentId.value, updatedAddress)
+                                    userViewModel.addressManager.updateAddress(currentId.value, updatedAddress)
 
                                     // TODO: stop using viewmodels instance
 
@@ -188,7 +188,7 @@ fun AddressList(items: List<DeliveryAddress>, userViewModel: ProfileViewModel) {
                 confirmButton = {
                     Button(onClick = {
                         userViewModel.profile.value.userInfo?.value?.id?.let {
-                            userViewModel.addAddress(it, newAddress)
+                            userViewModel.addressManager.addAddress(it, newAddress)
                         }
 
                         newAddressDialogControl.value = false

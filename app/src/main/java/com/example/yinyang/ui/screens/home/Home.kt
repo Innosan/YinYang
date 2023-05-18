@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
@@ -20,7 +19,7 @@ import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 @Composable
 fun HomePage(
     navigator: DestinationsNavigator,
-    viewModel: ProductViewModel = hiltViewModel(),
+    viewModel: ProductViewModel,
 ) {
     val products by viewModel.products
 
