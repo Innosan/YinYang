@@ -65,12 +65,6 @@ fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: Profi
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .shadow(
-                                4.dp,
-                                RoundedCornerShape(10.dp),
-                                ambientColor = Color.Black,
-                                spotColor = Color.Black
-                            )
                             .background(Color.White.copy(0.14f), RoundedCornerShape(10.dp)),
 
                         horizontalArrangement = Arrangement.SpaceBetween,

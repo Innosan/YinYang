@@ -25,12 +25,6 @@ fun ProfileNavigationButton(
     Button(
         modifier = Modifier
             .fillMaxWidth(fraction)
-            .shadow(
-                4.dp,
-                RoundedCornerShape(10.dp),
-                ambientColor = Color.Black,
-                spotColor = Color.Black
-            )
             .clip(RoundedCornerShape(10.dp)),
 
         onClick = { onNavigation() },

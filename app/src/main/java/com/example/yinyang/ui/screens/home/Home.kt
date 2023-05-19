@@ -8,23 +8,25 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
-import com.example.yinyang.models.Product
 import com.example.yinyang.models.constructorItems
+import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
@@ -32,6 +34,8 @@ import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import io.github.jan.supabase.gotrue.gotrue
+import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
@@ -124,6 +128,7 @@ fun HomePage(
             Box(
                 modifier = Modifier
                     .pullRefresh(pullRefreshState)
+                    .fillMaxWidth()
                     .height(460.dp)
 
             ) {
@@ -153,16 +158,42 @@ fun HomePage(
                     ) { product -> ProductCard(product = product) }
                 }
 
-                AnimatedVisibility(visible = showButton) {
-                    Button(
-                        onClick = {
-                            scope.launch {
-                                scrollState.animateScrollToItem(0)
-                            }
-                        },
-                        modifier = Modifier.align(Alignment.BottomEnd)
+                IconButton(
+                    onClick = {
+                        scope.launch {
+                            scrollState.animateScrollToItem(0)
+                        }
+                    },
+
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(6.dp)
+                        .height(120.dp)
+
+                ) {
+                    AnimatedVisibility(
+                        visible = showButton,
+                        enter = slideInHorizontally(
+                            initialOffsetX = { 160 }
+                        ) + fadeIn(
+                            initialAlpha = 0f
+                        ),
+                        exit = slideOutHorizontally(
+                            targetOffsetX = { 160 }
+                        ) + fadeOut(
+                            targetAlpha = 0f
+                        )
                     ) {
-                        Text("Back to top")
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_to_top),
+
+                            contentDescription = "Go to top product",
+                            modifier = Modifier
+                                .background(Color.Black.copy(0.8f), RoundedCornerShape(20.dp))
+                                .padding(10.dp)
+                                .height(120.dp)
+
+                        )
                     }
                 }
 
