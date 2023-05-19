@@ -13,7 +13,6 @@ fun Favorite(
 ) {
     val favorite = profileViewModel.profile.value.userFavorite
 
-    println(favorite)
     ScreenContainer {
         Text(text = "Favorite")
     }

@@ -11,8 +11,6 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun Cart(
     profileViewModel: ProfileViewModel
 ) {
-    println(profileViewModel.profile.value.userFavorite)
-
     ScreenContainer {
         Text(text = "Cart")
     }

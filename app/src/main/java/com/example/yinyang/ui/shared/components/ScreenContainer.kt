@@ -22,7 +22,7 @@ fun ScreenContainer(content: @Composable () -> Unit) {
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth(.9f)
+                .fillMaxWidth(.95f)
                 .padding(16.dp)
 
         ) {

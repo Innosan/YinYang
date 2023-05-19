@@ -1,6 +1,7 @@
 package com.example.yinyang.ui.shared.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -33,7 +34,9 @@ fun FilterList(
     }
     ScrollableTabRow(
         selectedTabIndex = selectedTabIndex,
-        edgePadding = 0.dp,
+        edgePadding = 4.dp,
+        modifier = Modifier
+            .fillMaxWidth(.8f),
 
         divider = {
             TabRowDefaults.Indicator(
@@ -78,7 +81,7 @@ fun FilterList(
                     Text(
                         fontFamily = OverpassFamily,
                         fontWeight = FontWeight.Black,
-                        fontSize = 16.sp,
+                        fontSize = 14.sp,
                         text = tab,
                         color = MaterialTheme.colorScheme.onBackground,
 

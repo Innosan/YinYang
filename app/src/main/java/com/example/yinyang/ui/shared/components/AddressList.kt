@@ -86,7 +86,6 @@ fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: Profi
                         IconButton(onClick = {
                             updateAddressDialogControl.value = true
                             currentId.value = address.id!!
-                            println(currentId.value)
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_edit_location),

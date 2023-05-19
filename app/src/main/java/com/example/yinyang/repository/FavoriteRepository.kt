@@ -26,8 +26,6 @@ class FavoriteRepository(val client: SupabaseClient) {
                 }
 
             favorites.value = gson.fromJson(result.body.toString(), favoriteListType)
-
-            println(favorites.value)
         } catch (e: Exception) {
             println(e.message)
         }

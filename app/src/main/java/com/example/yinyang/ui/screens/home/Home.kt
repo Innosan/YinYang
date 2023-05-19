@@ -1,27 +1,63 @@
 package com.example.yinyang.ui.screens.home
 
+import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.Button
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
+import com.example.yinyang.models.Product
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterialApi::class)
 @Destination
 @Composable
 fun HomePage(
     navigator: DestinationsNavigator,
     viewModel: ProductViewModel,
 ) {
-    val products by viewModel.products
+    val scope = rememberCoroutineScope()
+    val products by viewModel.products.collectAsState()
+
+    val refreshing by viewModel.isRefreshing.collectAsState()
+    val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
+
+    var showButton by remember { mutableStateOf(false) }
+    val scrollState = rememberLazyListState()
+
+    LaunchedEffect(scrollState) {
+        snapshotFlow { scrollState.firstVisibleItemIndex }
+            .distinctUntilChanged()
+            .collect { index ->
+                showButton = index >= 3
+            }
+    }
 
     ScreenContainer {
         NavBar()
@@ -57,34 +93,84 @@ fun HomePage(
             var selectedTabIndex by remember { mutableStateOf(0) }
             val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
 
-            FilterList(
-                tabs = filterWords,
-                selectedTabIndex = selectedTabIndex,
-            ) { tabIndex ->
-                selectedTabIndex = tabIndex
+            val filteredProducts = products.filter {
+                    product ->
+                if (selectedTabIndex == 0) {true}
+                else filterWords[selectedTabIndex] == product.category_id.title
             }
 
-            if (products.isNotEmpty()) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                FilterList(
+                    tabs = filterWords,
+                    selectedTabIndex = selectedTabIndex,
+                ) { tabIndex ->
+                    selectedTabIndex = tabIndex
+                }
+                Text(
+                    text = "${filteredProducts.size} / ${products.size}",
+                    style = buttonTextStyle,
+
+                    modifier = Modifier
+                        .background(Color.White.copy(0.14f), RoundedCornerShape(4.dp))
+                        .padding(10.dp)
+                )
+            }
+
+            Box(
+                modifier = Modifier
+                    .pullRefresh(pullRefreshState)
+                    .height(460.dp)
+
+            ) {
                 LazyColumn(
                     modifier = Modifier
-                        .height(720.dp)
-                        .padding(vertical = 20.dp),
+                        .padding(vertical = 10.dp),
+
                     verticalArrangement = Arrangement.spacedBy(20.dp),
+                    state = scrollState
                 ) {
+                    item {
+                        AnimatedVisibility(
+                            visible = filteredProducts.isEmpty(),
+                        ) {
+                            Text(
+                                text = stringResource(R.string.no_products_note),
+                                style = buttonTextStyle,
+                                fontSize = 26.sp,
+                                modifier = Modifier.align(Alignment.TopCenter)
+                            )
+                        }
+                    }
                     items(
-                        products.filter {
-                                product ->
-                            if (selectedTabIndex == 0) true
-                            else
-                                filterWords[selectedTabIndex] == product.category_id.title
-                        },
+                        filteredProducts,
 
                         key = {product -> product.id}
                     ) { product -> ProductCard(product = product) }
                 }
-            }
-            else {
-                GifImage(image = R.drawable.im_loader, contentDescription = "Loading...")
+
+                AnimatedVisibility(visible = showButton) {
+                    Button(
+                        onClick = {
+                            scope.launch {
+                                scrollState.animateScrollToItem(0)
+                            }
+                        },
+                        modifier = Modifier.align(Alignment.BottomEnd)
+                    ) {
+                        Text("Back to top")
+                    }
+                }
+
+                PullRefreshIndicator(
+                    refreshing = refreshing,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter)
+                )
             }
         }
     }

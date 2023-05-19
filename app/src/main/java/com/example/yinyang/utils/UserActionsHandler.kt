@@ -92,8 +92,8 @@ class UserActionsHandler(private val context: Context) {
         try {
             client.postgrest["user"]
                 .insert(user)
-        } catch (error: Exception) {
-            println(error.message)
+        } catch (e: Exception) {
+            println(e.message)
         }
     }
 }

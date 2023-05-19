@@ -57,4 +57,5 @@
     <string name="update_user_note">Update your name and last name</string>
     <string name="sign_up_note">Create a new account to proceed!</string>
     <string name="sign_in_note">Sign in your existing account!</string>
+    <string name="no_products_note">Sadly, there is now foodi for you ): Come back later!</string>
 </resources>
