@@ -1,6 +1,7 @@
 package com.example.yinyang.models
 
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 data class Favorite(
     val id: Int? = null,
@@ -12,6 +13,7 @@ data class Favorite(
 /**
  * Workaround for adding new favorite items
  */
+@Serializable
 data class FavoriteAdd(
     val id: Int? = null,
 

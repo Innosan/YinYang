@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Columns
 
 
 class FavoriteRepository(val client: SupabaseClient) {
@@ -19,7 +20,7 @@ class FavoriteRepository(val client: SupabaseClient) {
         try {
             val result = client
                 .postgrest["favorite"]
-                .select("*, product_id(*, category_id(title))") {
+                .select(Columns.raw("*, product_id(*, category_id(title))")) {
                     if (userId != null) {
                         eq("user_id", userId)
                     }

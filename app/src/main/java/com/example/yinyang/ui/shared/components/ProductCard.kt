@@ -19,10 +19,25 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.yinyang.models.Product
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
+import com.example.yinyang.viewmodels.ProfileViewModel
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(
+    product: Product,
+    viewModel: ProfileViewModel
+) {
     val context = LocalContext.current
+
+    val userFavorites = viewModel.profile.value.userFavorite?.value
+    var isNotInFavorite = true
+    var favoriteId = 0
+
+    userFavorites?.forEach {favoriteItem ->
+        if (favoriteItem.product_id.id == product.id) {
+            isNotInFavorite = false
+            favoriteId = favoriteItem.id!!
+        }
+    }
 
     Column(
         Modifier.fillMaxWidth(),
@@ -55,7 +70,9 @@ fun ProductCard(product: Product) {
              * Product tags
              */
             Row(
-                Modifier.padding(18.dp).fillMaxWidth(),
+                Modifier
+                    .padding(18.dp)
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Text(
@@ -87,6 +104,7 @@ fun ProductCard(product: Product) {
                 text = "${product.weight} гр.",
                 fontWeight = FontWeight.Black,
             )
+            Text(text = favoriteId.toString())
         }
 
         Text(text = product.description)
@@ -116,16 +134,29 @@ fun ProductCard(product: Product) {
             Button(
                 onClick =
                 {
+                    if (isNotInFavorite) {
+                        viewModel.profile.value.userInfo?.value?.id?.let {
+                            viewModel.favoriteManager.addFavorite(
+                                it,
+                                product.id
+                            )
+                        }
+                    } else {
+                        viewModel.favoriteManager.deleteFavorite(
+                            favoriteId
+                        )
+                    }
+
                     Toast.makeText(
                         context,
                         "Added ${product.title} in favourite!",
                         Toast.LENGTH_SHORT
                     ).show()
                 },
-                Modifier.fillMaxWidth(.85f)
+                modifier = Modifier.fillMaxWidth(.85f)
             ) {
                 Text(
-                    text = "Add",
+                    text = if (isNotInFavorite) "Add" else "Delete",
                     style = buttonTextStyle
                 )
             }

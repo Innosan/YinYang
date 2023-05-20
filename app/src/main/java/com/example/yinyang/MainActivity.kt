@@ -52,6 +52,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val activityKiller: () -> Unit = {
+            this.finishAndRemoveTask()
+        }
+
         setContent {
             YinYangTheme(
                 darkTheme = true
@@ -133,13 +138,15 @@ class MainActivity : ComponentActivity() {
                             composable(HomePageDestination) {
                                 HomePage(
                                     navigator = destinationsNavigator,
-                                    viewModel = productViewModel
+                                    productViewModel = productViewModel,
+                                    profileViewModel = profileViewModel
                                 )
                             }
                             composable(ProfileDestination) {
                                 Profile(
                                     navigator = destinationsNavigator,
-                                    viewModel = profileViewModel
+                                    viewModel = profileViewModel,
+                                    onLogout = activityKiller
                                 )
                             }
                             composable(FavoriteDestination) {

@@ -22,13 +22,11 @@ import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
-import com.example.yinyang.ui.theme.OverpassFamily
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import kotlinx.coroutines.launch
-import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterialApi::class)
 @Destination
@@ -36,6 +34,7 @@ import java.time.format.TextStyle
 fun Profile(
     navigator: DestinationsNavigator,
     viewModel: ProfileViewModel,
+    onLogout: () -> Unit
 ) {
     val refreshing by viewModel.isRefreshing.collectAsState()
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
@@ -267,6 +266,8 @@ fun Profile(
                                     coroutineScope.launch {
                                         userActionsHandler.performUserAction(UserAction.LOGOUT)
                                     }
+
+                                    onLogout()
                                 }) {
                                     Text(text = stringResource(id = R.string.yes_button))
                                 }

@@ -47,6 +47,7 @@ class UserRepository(private val client: SupabaseClient) {
     }
 
     suspend fun getUserSession(): UserInfo {
+        println(client.gotrue.sessionStatus.value)
         return try {
             client.gotrue.retrieveUserForCurrentSession()
         } catch (e: Exception) {

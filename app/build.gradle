@@ -52,7 +52,7 @@ android {
 
 dependencies {
     def nav_comp_dest_v = "1.8.39-beta"
-    def supabase_kt_v = "0.8.5"
+    def supabase_kt_v = "0.9.5"
     def coil_v = "2.3.0"
 
     /**

@@ -56,6 +56,10 @@ class ProfileViewModel @Inject constructor (
         }
     }
 
+    fun getUserId(): Int? {
+        return profile.value.userInfo?.value?.id
+    }
+
     fun refresh() {
         viewModelScope.launch {
             try {

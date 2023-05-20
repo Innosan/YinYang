@@ -13,12 +13,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,16 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
-import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.viewmodels.ProductViewModel
+import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import io.github.jan.supabase.gotrue.gotrue
-import io.github.jan.supabase.postgrest.postgrest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 
@@ -44,13 +40,14 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomePage(
     navigator: DestinationsNavigator,
-    viewModel: ProductViewModel,
+    productViewModel: ProductViewModel,
+    profileViewModel: ProfileViewModel,
 ) {
     val scope = rememberCoroutineScope()
-    val products by viewModel.products.collectAsState()
+    val products by productViewModel.products.collectAsState()
 
-    val refreshing by viewModel.isRefreshing.collectAsState()
-    val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
+    val refreshing by productViewModel.isRefreshing.collectAsState()
+    val pullRefreshState = rememberPullRefreshState(refreshing, { productViewModel.refresh() })
 
     var showButton by remember { mutableStateOf(false) }
     val scrollState = rememberLazyListState()
@@ -155,7 +152,12 @@ fun HomePage(
                         filteredProducts,
 
                         key = {product -> product.id}
-                    ) { product -> ProductCard(product = product) }
+                    ) { product ->
+                        ProductCard(
+                            product = product,
+                            profileViewModel
+                        )
+                    }
                 }
 
                 IconButton(
