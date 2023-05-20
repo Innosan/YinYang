@@ -31,13 +31,11 @@ import com.example.yinyang.ui.screens.destinations.*
 import com.example.yinyang.ui.screens.favorite.Favorite
 import com.example.yinyang.ui.screens.home.HomePage
 import com.example.yinyang.ui.screens.profile.Profile
-import com.example.yinyang.utils.Screen
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
 import com.ramcosta.composedestinations.manualcomposablecalls.composable
 import com.ramcosta.composedestinations.navigation.navigate
-import com.ramcosta.composedestinations.spec.Route
 import dagger.hilt.android.AndroidEntryPoint
 import io.github.jan.supabase.gotrue.SessionStatus
 import io.github.jan.supabase.gotrue.gotrue
@@ -77,11 +75,6 @@ class MainActivity : ComponentActivity() {
                 /**
                  * To explicitly change start route if user is authenticated
                  */
-                val startRoute: Route = if (isUserAuth) {
-                    Screen.Home.destination
-                } else {
-                    Screen.SignIn.destination
-                }
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
@@ -133,7 +126,6 @@ class MainActivity : ComponentActivity() {
                         DestinationsNavHost(
                             navGraph = NavGraphs.root,
                             navController = navController,
-                            startRoute = startRoute,
                         ) {
                             composable(HomePageDestination) {
                                 HomePage(
