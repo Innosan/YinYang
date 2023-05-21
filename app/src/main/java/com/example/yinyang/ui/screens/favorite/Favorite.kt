@@ -7,6 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.yinyang.ui.screens.favorite.components.FavoriteCard
 import com.example.yinyang.ui.shared.components.ProductCard
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.viewmodels.ProfileViewModel
@@ -31,7 +32,7 @@ fun Favorite(
 
                     key = {favorite -> favorite.product_id.id}
                 ) { product ->
-                    ProductCard(
+                    FavoriteCard(
                         product = product.product_id,
                         profileViewModel
                     )

@@ -7,7 +7,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -22,14 +21,25 @@ import com.example.yinyang.viewmodels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: ProfileViewModel) {
+fun AddressList(
+    items: MutableState<List<DeliveryAddress>>,
+    userViewModel: ProfileViewModel
+) {
     val updateAddressDialogControl = remember { mutableStateOf(false)  }
     val newAddressDialogControl = remember { mutableStateOf(false)  }
 
-    val currentId = remember { mutableStateOf(0)}
+    var showMessage by remember { mutableStateOf(false) }
 
-    var newAddress by remember { mutableStateOf("")}
+    val currentId = remember { mutableStateOf(0) }
+
+    var newAddress by remember { mutableStateOf("") }
     var updatedAddress by remember { mutableStateOf("") }
+
+    DisplayMessage(
+        message = R.string.max_addresses_note,
+        showMessage = showMessage,
+        onDismiss = { showMessage = false }
+    )
     
     Column {
         items.value.forEach {address ->
@@ -187,8 +197,12 @@ fun AddressList(items: MutableState<List<DeliveryAddress>>, userViewModel: Profi
                 },
                 confirmButton = {
                     Button(onClick = {
-                        userViewModel.profile.value.userInfo?.value?.id?.let {
-                            userViewModel.addressManager.addAddress(it, newAddress)
+                        if (items.value.size <= 2) {
+                            userViewModel.profile.value.userInfo?.value?.id?.let {
+                                userViewModel.addressManager.addAddress(it, newAddress)
+                            }
+                        } else {
+                            showMessage = true
                         }
 
                         newAddressDialogControl.value = false

@@ -29,6 +29,8 @@ import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
+import com.example.yinyang.utils.setHorizontalEnter
+import com.example.yinyang.utils.setHorizontalExit
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -177,16 +179,8 @@ fun HomePage(
                 ) {
                     AnimatedVisibility(
                         visible = showButton,
-                        enter = slideInHorizontally(
-                            initialOffsetX = { 160 }
-                        ) + fadeIn(
-                            initialAlpha = 0f
-                        ),
-                        exit = slideOutHorizontally(
-                            targetOffsetX = { 160 }
-                        ) + fadeOut(
-                            targetAlpha = 0f
-                        )
+                        enter = setHorizontalEnter(),
+                        exit = setHorizontalExit()
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_to_top),

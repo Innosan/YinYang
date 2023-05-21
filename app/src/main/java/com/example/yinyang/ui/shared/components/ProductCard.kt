@@ -1,12 +1,17 @@
 package com.example.yinyang.ui.shared.components
 
 import android.widget.Toast
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.HeartBroken
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -118,12 +123,12 @@ fun ProductCard(
                 {
                     Toast.makeText(
                         context,
-                    "Bought ${product.title} for ${product.price}",
+                        "Bought ${product.title} for ${product.price}",
                         Toast.LENGTH_SHORT
                     ).show()
                 },
 
-                Modifier.fillMaxWidth(.45f)
+                Modifier.fillMaxWidth(.70f)
             ) {
                 Text(
                     text = "${product.price} ₽",
@@ -155,10 +160,17 @@ fun ProductCard(
                 },
                 modifier = Modifier.fillMaxWidth(.85f)
             ) {
-                Text(
-                    text = if (isNotInFavorite) "Add" else "Delete",
-                    style = buttonTextStyle
-                )
+                Crossfade(targetState = isNotInFavorite) {targetIsNotInFavorite ->
+                    val icon =
+                        if (targetIsNotInFavorite) Icons.Outlined.Favorite
+                        else Icons.Default.HeartBroken
+
+                    Icon(
+                        imageVector = icon,
+
+                        contentDescription = "Toggle icon"
+                    )
+                }
             }
         }
     }
