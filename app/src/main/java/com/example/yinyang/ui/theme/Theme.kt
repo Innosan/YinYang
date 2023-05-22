@@ -23,20 +23,23 @@ private val DarkColorScheme = darkColorScheme(
     onTertiary = Color.White,
     onBackground = Color(0xFFFFFFFF),
     onSurface = Color(0xFFFFFFFF),
+    onSurfaceVariant = Color.White.copy(0.14f),
+    outlineVariant = Color.White.copy(0.05f),
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = MainAccent,
     secondary = PurpleGrey40,
     tertiary = Pink40,
-
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+    background = Color(0xFFFFFFFF),
+    surface = Color(0xFFFFFFFF),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
+    onBackground = Color(0xFF000000),
+    onSurface = Color(0xFF000000),
+    onSurfaceVariant = Color.Black.copy(0.10f),
+    outlineVariant = Color.Black.copy(0.07f)
 )
 
 @Composable
@@ -57,7 +60,7 @@ fun YinYangTheme(
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
-            (view.context as Activity).window.statusBarColor = Color.Transparent.toArgb()
+            (view.context as Activity).window.statusBarColor = colorScheme.primary.toArgb()
             ViewCompat.getWindowInsetsController(view)?.isAppearanceLightStatusBars = darkTheme
         }
     }

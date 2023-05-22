@@ -2,7 +2,8 @@ package com.example.yinyang.repository
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
-import com.example.yinyang.models.*
+import com.example.yinyang.models.Favorite
+import com.example.yinyang.models.FavoriteAdd
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient

@@ -75,7 +75,7 @@ fun AddressList(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White.copy(0.14f), RoundedCornerShape(10.dp)),
+                            .background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(10.dp)),
 
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -155,7 +155,7 @@ fun AddressList(
             Button(
                 onClick = { newAddressDialogControl.value = true },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.White.copy(0.14f),
+                    containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 ),
                 shape = RoundedCornerShape(7.dp),
                 modifier = Modifier.padding(horizontal = 10.dp)

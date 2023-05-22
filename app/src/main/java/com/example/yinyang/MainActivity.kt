@@ -21,16 +21,16 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.yinyang.models.navItems
+import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.NavGraphs
 import com.example.yinyang.ui.screens.appCurrentDestinationAsState
-import com.example.yinyang.ui.screens.startAppDestination
-import com.example.yinyang.ui.theme.YinYangTheme
-import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.cart.Cart
 import com.example.yinyang.ui.screens.destinations.*
 import com.example.yinyang.ui.screens.favorite.Favorite
 import com.example.yinyang.ui.screens.home.HomePage
 import com.example.yinyang.ui.screens.profile.Profile
+import com.example.yinyang.ui.screens.startAppDestination
+import com.example.yinyang.ui.theme.YinYangTheme
 import com.example.yinyang.viewmodels.ProductViewModel
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.DestinationsNavHost
@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             YinYangTheme(
-                darkTheme = true
+                dynamicColor = false
             ) {
                 navController = rememberNavController()
 
@@ -111,7 +111,12 @@ class MainActivity : ComponentActivity() {
                                     },
 
                                     colors = NavigationDrawerItemDefaults.colors(
-                                        selectedContainerColor = MaterialTheme.colorScheme.primary
+                                        selectedContainerColor = MaterialTheme.colorScheme.primary,
+                                        selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                                        selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+
+                                        unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+                                        unselectedTextColor = MaterialTheme.colorScheme.onBackground,
                                     )
                                 )
                             }
@@ -143,6 +148,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(FavoriteDestination) {
                                 Favorite(
+                                    navigator = destinationsNavigator,
                                     profileViewModel = profileViewModel
                                 )
                             }

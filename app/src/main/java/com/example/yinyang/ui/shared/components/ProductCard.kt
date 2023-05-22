@@ -2,26 +2,27 @@ package com.example.yinyang.ui.shared.components
 
 import android.widget.Toast
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HeartBroken
-import androidx.compose.material.icons.outlined.Favorite
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.yinyang.R
 import com.example.yinyang.models.Product
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.viewmodels.ProfileViewModel
@@ -83,6 +84,7 @@ fun ProductCard(
                 Text(
                     text = "${product.count} шт.",
                     fontWeight = FontWeight.Black,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .background(Color(27, 27, 27, 200), RoundedCornerShape(10.dp))
                         .padding(7.dp),
@@ -90,6 +92,7 @@ fun ProductCard(
                 Text(
                     text = product.category_id.title,
                     fontWeight = FontWeight.Black,
+                    color = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .background(Color(27, 27, 27, 200), RoundedCornerShape(10.dp))
                         .padding(7.dp),
@@ -104,12 +107,13 @@ fun ProductCard(
             Text(
                 text = product.title,
                 fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
                 text = "${product.weight} гр.",
                 fontWeight = FontWeight.Black,
+                color = MaterialTheme.colorScheme.onSurface,
             )
-            Text(text = favoriteId.toString())
         }
 
         Text(text = product.description)
@@ -132,9 +136,18 @@ fun ProductCard(
             ) {
                 Text(
                     text = "${product.price} ₽",
-                    style = buttonTextStyle
+                    style = buttonTextStyle,
+                    fontSize = 20.sp
                 )
             }
+
+            val favButtonWidth: Float by animateFloatAsState(if (isNotInFavorite) 0.75f else 0.85f)
+            val buttonContainerColor by animateColorAsState(
+                if (isNotInFavorite)
+                    MaterialTheme.colorScheme.primary.copy(0.7f)
+                else
+                    MaterialTheme.colorScheme.primary
+            )
 
             Button(
                 onClick =
@@ -158,15 +171,18 @@ fun ProductCard(
                         Toast.LENGTH_SHORT
                     ).show()
                 },
-                modifier = Modifier.fillMaxWidth(.85f)
+                modifier = Modifier.fillMaxWidth(favButtonWidth),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = buttonContainerColor
+                ),
             ) {
-                Crossfade(targetState = isNotInFavorite) {targetIsNotInFavorite ->
+                Crossfade(targetState = isNotInFavorite) { targetIsNotInFavorite ->
                     val icon =
-                        if (targetIsNotInFavorite) Icons.Outlined.Favorite
-                        else Icons.Default.HeartBroken
+                        if (targetIsNotInFavorite) R.drawable.ic_favorite
+                        else R.drawable.ic_unfavorite
 
                     Icon(
-                        imageVector = icon,
+                        painter = painterResource(id = icon),
 
                         contentDescription = "Toggle icon"
                     )

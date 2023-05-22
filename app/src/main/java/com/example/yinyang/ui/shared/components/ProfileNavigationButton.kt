@@ -9,8 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +28,8 @@ fun ProfileNavigationButton(
         onClick = { onNavigation() },
 
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.White.copy(0.14f)
+            containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            contentColor = MaterialTheme.colorScheme.onBackground
         ),
 
         shape = RoundedCornerShape(7.dp)

@@ -2,13 +2,9 @@ package com.example.yinyang.ui.screens.favorite.components
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.HeartBroken
-import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -19,15 +15,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.yinyang.R
 import com.example.yinyang.models.Product
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
-import com.example.yinyang.utils.setHorizontalEnter
-import com.example.yinyang.utils.setHorizontalExit
 import com.example.yinyang.viewmodels.ProfileViewModel
 
 @Composable
@@ -38,12 +34,10 @@ fun FavoriteCard(
     val context = LocalContext.current
 
     val userFavorites = viewModel.profile.value.userFavorite?.value
-    var isNotInFavorite = true
     var favoriteId = 0
 
     userFavorites?.forEach {favoriteItem ->
         if (favoriteItem.product_id.id == product.id) {
-            isNotInFavorite = false
             favoriteId = favoriteItem.id!!
         }
     }
@@ -52,6 +46,7 @@ fun FavoriteCard(
 
     val onUnfavorite = {
         isUnfavoriting = true
+
         viewModel.favoriteManager.deleteFavorite(
             favoriteId
         )
@@ -145,36 +140,21 @@ fun FavoriteCard(
                     Button(
                         onClick =
                         {
-                            if (isNotInFavorite) {
-                                viewModel.profile.value.userInfo?.value?.id?.let {
-                                    viewModel.favoriteManager.addFavorite(
-                                        it,
-                                        product.id
-                                    )
-                                }
-                            } else {
-                                onUnfavorite()
-                            }
+                            onUnfavorite()
 
                             Toast.makeText(
                                 context,
-                                "Added ${product.title} in favourite!",
+                                "Deleted ${product.title} from favorite!",
                                 Toast.LENGTH_SHORT
                             ).show()
                         },
                         modifier = Modifier.fillMaxWidth(.85f)
                     ) {
-                        Crossfade(targetState = isNotInFavorite) {targetIsNotInFavorite ->
-                            val icon =
-                                if (targetIsNotInFavorite) Icons.Outlined.Favorite
-                                else Icons.Default.HeartBroken
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_unfavorite),
 
-                            Icon(
-                                imageVector = icon,
-
-                                contentDescription = "Toggle icon"
-                            )
-                        }
+                            contentDescription = "Toggle icon"
+                        )
                     }
                 }
             }

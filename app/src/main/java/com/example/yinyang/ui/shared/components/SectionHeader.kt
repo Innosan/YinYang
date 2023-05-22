@@ -29,7 +29,7 @@ fun SectionHeader(iconId: Int, title: Int) {
             modifier = Modifier.padding(horizontal = 10.dp),
             text = stringResource(id = title),
             fontSize = 20.sp,
-            color = MaterialTheme.colorScheme.onBackground,
+            color = MaterialTheme.colorScheme.onSurface,
             fontWeight = FontWeight.Black
         )
     }

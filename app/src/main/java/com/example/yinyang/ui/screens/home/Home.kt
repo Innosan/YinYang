@@ -14,6 +14,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
-import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.setHorizontalEnter
@@ -59,7 +59,7 @@ fun HomePage(
         snapshotFlow { scrollState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect { index ->
-                showButton = index >= 3
+                showButton = index >= 10
             }
     }
 
@@ -77,7 +77,7 @@ fun HomePage(
                 FoodConstructor(
                     background = R.drawable.bg_pizza_construct,
                     title = R.string.pizza_constructor_button,
-                    fraction = .45f,
+                    fraction = .35f,
                     constructorItems = constructorItems
                 )
 
@@ -118,9 +118,10 @@ fun HomePage(
                 Text(
                     text = "${filteredProducts.size} / ${products.size}",
                     style = buttonTextStyle,
+                    color = MaterialTheme.colorScheme.onBackground,
 
                     modifier = Modifier
-                        .background(Color.White.copy(0.14f), RoundedCornerShape(4.dp))
+                        .background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(4.dp))
                         .padding(10.dp)
                 )
             }
@@ -129,7 +130,7 @@ fun HomePage(
                 modifier = Modifier
                     .pullRefresh(pullRefreshState)
                     .fillMaxWidth()
-                    .height(460.dp)
+                    .height(666.dp)
 
             ) {
                 LazyColumn(
@@ -190,7 +191,6 @@ fun HomePage(
                                 .background(Color.Black.copy(0.8f), RoundedCornerShape(20.dp))
                                 .padding(10.dp)
                                 .height(120.dp)
-
                         )
                     }
                 }

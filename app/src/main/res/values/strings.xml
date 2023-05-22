@@ -21,6 +21,7 @@
     <!-- Screens -->
     <string name="home_screen">Home</string>
     <string name="profile_screen">Profile</string>
+    <string name="favorite_screen">Favorite</string>
     <string name="settings_screen">Settings</string>
     <string name="help_screen">Help</string>
     <string name="about_screen">About</string>

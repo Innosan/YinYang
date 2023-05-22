@@ -10,7 +10,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -81,7 +80,7 @@ fun Profile(
                             Row(
                                 modifier = Modifier
                                     .background(
-                                        Color.White.copy(0.14f),
+                                        MaterialTheme.colorScheme.onSurfaceVariant,
                                         RoundedCornerShape(10.dp)
                                     )
                                     .padding(10.dp),
