@@ -56,6 +56,7 @@
     <string name="update_address_note">Update address</string>
     <string name="add_address_note">Add new address</string>
     <string name="update_user_note">Update your name and last name</string>
+    <string name="add_to_cart_note">Add product to cart</string>
     <string name="sign_up_note">Create a new account to proceed!</string>
     <string name="sign_in_note">Sign in your existing account!</string>
     <string name="max_addresses_note">You can add up to 3 addresses!</string>

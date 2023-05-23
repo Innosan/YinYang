@@ -5,11 +5,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.yinyang.managers.AddressManager
+import com.example.yinyang.managers.CartManager
 import com.example.yinyang.managers.FavoriteManager
+import com.example.yinyang.models.CartItem
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.Favorite
 import com.example.yinyang.models.User
 import com.example.yinyang.repository.AddressRepository
+import com.example.yinyang.repository.CartRepository
 import com.example.yinyang.repository.FavoriteRepository
 import com.example.yinyang.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,20 +28,22 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor (
     private val userRepository: UserRepository,
     private val addressRepository: AddressRepository,
-    private val favoriteRepository: FavoriteRepository
+    private val favoriteRepository: FavoriteRepository,
+    private val cartRepository: CartRepository,
     ) : ViewModel() {
     data class Profile(
         val userInfo: MutableState<User?>?,
         val userSession: UserInfo?,
         val userAddresses: MutableState<List<DeliveryAddress>>?,
         val userFavorite: MutableState<List<Favorite>>?,
+        val userCart: MutableState<List<CartItem>>?,
     )
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
-    private val _profile = mutableStateOf(Profile(null, null, null, null))
+    private val _profile = mutableStateOf(Profile(null, null, null, null, null))
     val profile: MutableState<Profile> = _profile
 
     val addressManager: AddressManager =
@@ -46,6 +51,9 @@ class ProfileViewModel @Inject constructor (
 
     val favoriteManager: FavoriteManager =
         FavoriteManager(viewModelScope, favoriteRepository, profile)
+
+    val cartManager: CartManager =
+        CartManager(viewModelScope, cartRepository, profile)
 
     fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
         viewModelScope.launch {
@@ -73,12 +81,16 @@ class ProfileViewModel @Inject constructor (
                 val favoriteDeferred = async {
                     favoriteRepository.getFavorites(userInfoDeferred.await().value?.id)
                 }
+                val cartDeferred = async {
+                    cartRepository.getCart(userInfoDeferred.await().value?.id)
+                }
 
                 _profile.value = Profile(
                     userInfoDeferred.await(),
                     userSessionDeferred.await(),
                     deliveryAddressesDeferred.await(),
-                    favoriteDeferred.await()
+                    favoriteDeferred.await(),
+                    cartDeferred.await(),
                 )
             } catch (e: Exception) {
                 println(e.message)

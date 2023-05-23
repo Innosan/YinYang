@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class User(
-    @SerialName("order_id") val orderId: Int?,
-    @SerialName("cart_id") val cartId: Int?,
     @SerialName("user_uuid") val userUuid: String,
 
     @SerialName("first_name") val firstName: String,

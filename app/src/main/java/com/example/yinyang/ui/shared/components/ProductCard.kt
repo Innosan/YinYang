@@ -10,6 +10,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -17,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,6 +40,8 @@ fun ProductCard(
     val userFavorites = viewModel.profile.value.userFavorite?.value
     var isNotInFavorite = true
     var favoriteId = 0
+
+    val addToCartController = remember { mutableStateOf(false) }
 
     userFavorites?.forEach {favoriteItem ->
         if (favoriteItem.product_id.id == product.id) {
@@ -125,11 +130,7 @@ fun ProductCard(
             Button(
                 onClick =
                 {
-                    Toast.makeText(
-                        context,
-                        "Bought ${product.title} for ${product.price}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    addToCartController.value = true
                 },
 
                 Modifier.fillMaxWidth(.70f)
@@ -187,6 +188,62 @@ fun ProductCard(
                         contentDescription = "Toggle icon"
                     )
                 }
+            }
+
+            if (addToCartController.value) {
+                val quantity = remember { mutableStateOf(1) }
+
+                AlertDialog(
+                    onDismissRequest = {
+                        addToCartController.value = false
+                    },
+                    title = {
+                        Text(text = stringResource(id = R.string.add_to_cart_note))
+                    },
+                    text = {
+                        Row() {
+                            Button(onClick = { quantity.value-- }) {
+                                Text(text = "-")
+                            }
+
+                            Text(text = quantity.value.toString())
+
+                            Button(onClick = { quantity.value++ }) {
+                                Text(text = "+")
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        Button(onClick = {
+                            viewModel.getUserId()
+                                ?.let {
+                                    viewModel.cartManager.addToCart(
+                                        it,
+                                        product.id,
+                                        quantity = quantity.value
+                                    )
+                                }
+
+                            addToCartController.value = false
+
+                            Toast.makeText(
+                                context,
+                                "Added to cart",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }) {
+                            Text(text = stringResource(id = R.string.add_button))
+                        }
+                    },
+                    dismissButton = {
+                        Button(
+                            onClick = {
+                                addToCartController.value = false
+                            }) {
+                            Text(text = stringResource(id = R.string.close_button))
+                        }
+                    }
+                )
             }
         }
     }
