@@ -87,7 +87,6 @@ class MainActivity : ComponentActivity() {
                         ModalDrawerSheet(
                             Modifier.fillMaxWidth(.8f),
                         ) {
-                            Text(text = "Yin Yang")
                             navItems.forEach { item ->
                                 NavigationDrawerItem(
                                     icon = {

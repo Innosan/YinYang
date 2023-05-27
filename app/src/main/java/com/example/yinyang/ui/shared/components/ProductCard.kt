@@ -38,8 +38,13 @@ fun ProductCard(
     val context = LocalContext.current
 
     val userFavorites = viewModel.profile.value.userFavorite?.value
+    val userCart = viewModel.profile.value.userCart?.value
+
     var isNotInFavorite = true
+    var isNotInCart = true
+
     var favoriteId = 0
+    var cartItemId = 0
 
     val addToCartController = remember { mutableStateOf(false) }
 
@@ -50,9 +55,16 @@ fun ProductCard(
         }
     }
 
+    userCart?.forEach {cartItem ->
+        if (cartItem.product_id.id == product.id) {
+            isNotInCart = false
+            cartItemId = cartItem.id!!
+        }
+    }
+
     Column(
         Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(18.dp)
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
 
         /**
@@ -117,11 +129,14 @@ fun ProductCard(
             Text(
                 text = "${product.weight} гр.",
                 fontWeight = FontWeight.Black,
-                color = MaterialTheme.colorScheme.onSurface,
+                color = MaterialTheme.colorScheme.onSurface.copy(.85f),
             )
         }
 
-        Text(text = product.description)
+        Text(
+            text = product.description,
+            color = MaterialTheme.colorScheme.onSurface.copy(.7f),
+        )
 
         Row(
             Modifier.fillMaxWidth(),
@@ -133,7 +148,8 @@ fun ProductCard(
                     addToCartController.value = true
                 },
 
-                Modifier.fillMaxWidth(.70f)
+                enabled = isNotInCart,
+                modifier = Modifier.fillMaxWidth(.70f)
             ) {
                 Text(
                     text = "${product.price} ₽",
@@ -141,6 +157,7 @@ fun ProductCard(
                     fontSize = 20.sp
                 )
             }
+
 
             val favButtonWidth: Float by animateFloatAsState(if (isNotInFavorite) 0.75f else 0.85f)
             val buttonContainerColor by animateColorAsState(

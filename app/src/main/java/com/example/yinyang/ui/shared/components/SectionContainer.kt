@@ -13,7 +13,7 @@ fun SectionContainer(content: @Composable () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 26.dp)
+            .padding(vertical = 16.dp)
     ) {
         Column {
             content()

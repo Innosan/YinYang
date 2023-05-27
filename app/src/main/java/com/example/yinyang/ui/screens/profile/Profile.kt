@@ -155,7 +155,10 @@ fun Profile(
                     if (userAddresses != null) {
                         SectionHeader(iconId = R.drawable.ic_location, title = R.string.addresses_section)
 
-                        AddressList(addresses = userAddresses, userViewModel = viewModel)
+                        AddressList(
+                            addresses = userAddresses,
+                            userViewModel = viewModel
+                        )
                     }
 
                     Button(

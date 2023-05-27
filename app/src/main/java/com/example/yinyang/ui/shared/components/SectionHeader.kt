@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun SectionHeader(iconId: Int, title: Int) {
     Row(
-        Modifier.padding(vertical = 15.dp),
+        Modifier.padding(vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(

@@ -30,6 +30,7 @@ import com.example.yinyang.ui.screens.cart.components.CartItemCard
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
+import com.example.yinyang.utils.Total
 import com.example.yinyang.utils.setHorizontalEnter
 import com.example.yinyang.utils.setHorizontalExit
 import com.example.yinyang.viewmodels.ProductViewModel
@@ -63,6 +64,14 @@ fun HomePage(
     val scrollState = rememberLazyListState()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
+    val total = cart?.fold(Total(0, 0, 0)) { acc, cartItem ->
+        Total(
+            price = acc.price + (cartItem.product_id.price * cartItem.quantity),
+            weight = acc.weight + (cartItem.product_id.weight * cartItem.quantity),
+            quantity = acc.quantity + (cartItem.quantity)
+        )
+    }
+
     LaunchedEffect(scrollState) {
         snapshotFlow { scrollState.firstVisibleItemIndex }
             .distinctUntilChanged()
@@ -75,6 +84,11 @@ fun HomePage(
         scaffoldState = scaffoldState,
 
         sheetContent = {
+            SectionHeader(
+                iconId = R.drawable.ic_cart,
+                title = R.string.cart_screen
+            )
+
             if (cart != null) {
                 LazyColumn(
                     modifier = Modifier
@@ -100,7 +114,18 @@ fun HomePage(
                     }
                 }
                 
-                Button(onClick = { /*TODO*/ }) {
+                Row() {
+                    Text(text = "${total?.quantity} шт.")
+                    Text(text = "${total?.weight} гр.")
+                }
+
+                Text(text = "${total?.price} ₽")
+
+
+
+                Button(onClick = {
+
+                }) {
                     Text(text = stringResource(id = R.string.order_screen).uppercase())
                 }
             }
@@ -110,9 +135,10 @@ fun HomePage(
         sheetShadowElevation = 20.dp
     ) {
         ScreenContainer {
-            NavBar()
 
-            //DIY section
+            /**
+             * DIY Section
+             */
             SectionContainer {
                 SectionHeader(iconId = R.drawable.ic_food_constructor, title = R.string.diy_section)
 
@@ -137,7 +163,9 @@ fun HomePage(
                 }
             }
 
-            //Main menu section
+            /**
+             * DIY Section
+             */
             SectionContainer {
                 SectionHeader(iconId = R.drawable.ic_bar_menu, title = R.string.menu_section)
 
@@ -150,6 +178,9 @@ fun HomePage(
                     else filterWords[selectedTabIndex] == product.category_id.title
                 }
 
+                /**
+                 * Filtering tab
+                 */
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -176,11 +207,14 @@ fun HomePage(
                     )
                 }
 
+                /**
+                 * Products list
+                 */
                 Box(
                     modifier = Modifier
                         .pullRefresh(pullRefreshState)
                         .fillMaxWidth()
-                        .height(666.dp)
+                        .height(460.dp)
 
                 ) {
                     LazyColumn(
@@ -188,7 +222,7 @@ fun HomePage(
                             .padding(vertical = 10.dp)
                             .clip(RoundedCornerShape(20.dp)),
 
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                        verticalArrangement = Arrangement.spacedBy(40.dp),
                         state = scrollState
                     ) {
                         item {
@@ -248,7 +282,8 @@ fun HomePage(
                     PullRefreshIndicator(
                         refreshing = refreshing,
                         state = pullRefreshState,
-                        modifier = Modifier.align(Alignment.TopCenter)
+                        modifier = Modifier.align(Alignment.TopCenter),
+                        backgroundColor = MaterialTheme.colorScheme.primary
                     )
                 }
             }
