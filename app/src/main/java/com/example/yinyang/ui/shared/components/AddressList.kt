@@ -2,6 +2,8 @@ package com.example.yinyang.ui.shared.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -22,7 +24,7 @@ import com.example.yinyang.viewmodels.ProfileViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddressList(
-    items: MutableState<List<DeliveryAddress>>,
+    addresses: MutableState<List<DeliveryAddress>>,
     userViewModel: ProfileViewModel
 ) {
     val updateAddressDialogControl = remember { mutableStateOf(false)  }
@@ -40,16 +42,23 @@ fun AddressList(
         showMessage = showMessage,
         onDismiss = { showMessage = false }
     )
-    
-    Column {
-        items.value.forEach {address ->
+
+    LazyColumn(
+        modifier = Modifier.height(addresses.value.size.dp * 100),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
+    ) {
+        items(
+            addresses.value,
+
+            key = {address -> address.id}
+        ) { address ->
             val currentItem by rememberUpdatedState(newValue = address)
-            
+
             val dismissState = rememberDismissState(
                 confirmValueChange = {
                     when (it) {
                         DismissValue.DismissedToStart -> {
-                            currentItem.id?.let { it1 ->
+                            currentItem.id.let { it1 ->
                                 userViewModel.addressManager.deleteAddress(it1)
                             }
                             true
@@ -89,7 +98,7 @@ fun AddressList(
 
                         IconButton(onClick = {
                             updateAddressDialogControl.value = true
-                            currentId.value = address.id!!
+                            currentId.value = address.id
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_edit_location),
@@ -150,75 +159,75 @@ fun AddressList(
                 }
             )
         }
+    }
 
-        CenteredContainer {
-            Button(
-                onClick = { newAddressDialogControl.value = true },
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                ),
-                shape = RoundedCornerShape(7.dp),
-                modifier = Modifier.padding(horizontal = 10.dp)
-            ) {
-                Text(
-                    text = stringResource(id = R.string.add_button).uppercase(),
-                    fontFamily = OverpassFamily,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-        }
-
-        if (newAddressDialogControl.value) {
-            AlertDialog(
-                onDismissRequest = {
-                    newAddressDialogControl.value = false
-                },
-                title = {
-                    Text(text = stringResource(id = R.string.add_address_note))
-                },
-                text = {
-                    OutlinedTextField(
-                        value = newAddress,
-                        onValueChange = { newAddress = it },
-                        label = {
-                            Text(text = stringResource(id = R.string.update_address_label))
-                        },
-                        placeholder = {
-                            Text(text = stringResource(id = R.string.new_address_placeholder))
-                        },
-                        leadingIcon = {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_email),
-
-                                contentDescription = "Address field"
-                            )
-                        }
-                    )
-                },
-                confirmButton = {
-                    Button(onClick = {
-                        if (items.value.size <= 2) {
-                            userViewModel.profile.value.userInfo?.value?.id?.let {
-                                userViewModel.addressManager.addAddress(it, newAddress)
-                            }
-                        } else {
-                            showMessage = true
-                        }
-
-                        newAddressDialogControl.value = false
-                    }) {
-                        Text(text = stringResource(id = R.string.add_button))
-                    }
-                },
-                dismissButton = {
-                    Button(
-                        onClick = {
-                            newAddressDialogControl.value = false
-                        }) {
-                        Text(text = stringResource(id = R.string.close_button))
-                    }
-                }
+    CenteredContainer {
+        Button(
+            onClick = { newAddressDialogControl.value = true },
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
+            shape = RoundedCornerShape(7.dp),
+            modifier = Modifier.padding(horizontal = 10.dp)
+        ) {
+            Text(
+                text = stringResource(id = R.string.add_button).uppercase(),
+                fontFamily = OverpassFamily,
+                fontWeight = FontWeight.Bold
             )
         }
+    }
+
+    if (newAddressDialogControl.value) {
+        AlertDialog(
+            onDismissRequest = {
+                newAddressDialogControl.value = false
+            },
+            title = {
+                Text(text = stringResource(id = R.string.add_address_note))
+            },
+            text = {
+                OutlinedTextField(
+                    value = newAddress,
+                    onValueChange = { newAddress = it },
+                    label = {
+                        Text(text = stringResource(id = R.string.update_address_label))
+                    },
+                    placeholder = {
+                        Text(text = stringResource(id = R.string.new_address_placeholder))
+                    },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_email),
+
+                            contentDescription = "Address field"
+                        )
+                    }
+                )
+            },
+            confirmButton = {
+                Button(onClick = {
+                    if (addresses.value.size <= 2) {
+                        userViewModel.profile.value.userInfo?.value?.id?.let {
+                            userViewModel.addressManager.addAddress(it, newAddress)
+                        }
+                    } else {
+                        showMessage = true
+                    }
+
+                    newAddressDialogControl.value = false
+                }) {
+                    Text(text = stringResource(id = R.string.add_button))
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        newAddressDialogControl.value = false
+                    }) {
+                    Text(text = stringResource(id = R.string.close_button))
+                }
+            }
+        )
     }
 }

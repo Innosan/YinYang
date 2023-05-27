@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.cart.components.CartItemCard
-import com.example.yinyang.ui.screens.favorite.components.FavoriteCard
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
@@ -68,7 +67,7 @@ fun HomePage(
         snapshotFlow { scrollState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect { index ->
-                showButton = index >= products.size / 2
+                showButton = index >= 7
             }
     }
 
@@ -102,7 +101,7 @@ fun HomePage(
                 }
                 
                 Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Order".uppercase())
+                    Text(text = stringResource(id = R.string.order_screen).uppercase())
                 }
             }
         },

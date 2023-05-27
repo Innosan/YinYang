@@ -3,6 +3,7 @@ package com.example.yinyang.repository
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.yinyang.models.DeliveryAddress
+import com.example.yinyang.models.DeliveryAddressAdd
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 
@@ -25,7 +26,7 @@ class AddressRepository(private val client: SupabaseClient) {
     }
 
     suspend fun addAddress(userId: Int, addressMessage: String) {
-        val newAddress = DeliveryAddress(
+        val newAddress = DeliveryAddressAdd(
             id = null,
             address = addressMessage,
             userId = userId
