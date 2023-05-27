@@ -7,14 +7,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.yinyang.managers.AddressManager
 import com.example.yinyang.managers.CartManager
 import com.example.yinyang.managers.FavoriteManager
+import com.example.yinyang.managers.OrderManager
 import com.example.yinyang.models.CartItem
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.Favorite
 import com.example.yinyang.models.User
-import com.example.yinyang.repository.AddressRepository
-import com.example.yinyang.repository.CartRepository
-import com.example.yinyang.repository.FavoriteRepository
-import com.example.yinyang.repository.UserRepository
+import com.example.yinyang.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.user.UserInfo
 import kotlinx.coroutines.async
@@ -30,6 +28,7 @@ class ProfileViewModel @Inject constructor (
     private val addressRepository: AddressRepository,
     private val favoriteRepository: FavoriteRepository,
     private val cartRepository: CartRepository,
+    private val orderRepository: OrderRepository,
     ) : ViewModel() {
     data class Profile(
         val userInfo: MutableState<User?>?,
@@ -54,6 +53,9 @@ class ProfileViewModel @Inject constructor (
 
     val cartManager: CartManager =
         CartManager(viewModelScope, cartRepository, profile)
+
+    val orderManager: OrderManager =
+        OrderManager(viewModelScope, orderRepository, cartManager)
 
     fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
         viewModelScope.launch {

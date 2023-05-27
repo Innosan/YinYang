@@ -2,7 +2,6 @@
 <resources>
     <string name="app_name">YinYang</string>
 
-    <!-- Buttons -->
     <string name="confirm_button">Подтвердить</string>
     <string name="add_button">Добавить</string>
     <string name="delete_button">Удалить</string>
@@ -12,23 +11,20 @@
     <string name="yes_button">Да</string>
     <string name="no_button">Нет</string>
     <string name="edit_profile_button">Изменить профиль</string>
-
-    <!-- Navigation buttons -->
     <string name="orders_button">Заказы</string>
     <string name="favorite_button">Любимое</string>
     <string name="pizza_constructor_button">Пицца</string>
     <string name="wok_constructor_button">Вок</string>
-
-    <!-- Screens -->
     <string name="home_screen">Главная</string>
     <string name="profile_screen">Профиль</string>
+    <string name="favorite_screen">Любимое</string>
+    <string name="cart_screen">Корзина</string>
+    <string name="order_screen">Заказ</string>
     <string name="settings_screen">Настройки</string>
     <string name="help_screen">Помощь</string>
     <string name="about_screen">О нас</string>
     <string name="sign_in_screen">Вход</string>
     <string name="sign_up_screen">Регистрация</string>
-
-    <!-- Sections -->
     <string name="personal_section">Личное</string>
     <string name="addresses_section">Ваши адреса</string>
     <string name="diy_section">Сделай сам</string>
@@ -48,6 +44,15 @@
     <string name="update_address_note">Обновление адреса</string>
     <string name="add_address_note">Добавление нового адреса</string>
     <string name="update_user_note">Обновление данных пользователя</string>
+    <string name="add_to_cart_note">Добавить в корзину</string>
     <string name="sign_up_note">Создайте новый аккаунт, чтобы продолжить!</string>
     <string name="sign_in_note">Войдите в существующий аккаунт, чтобы продолжить!</string>
+    <string name="max_addresses_note">Вы не можете добавить больше трех адресов!</string>
+    <string name="no_products_note">К сожалению, пока ничего нет. Возввращайтесь позднее.</string>
+    <string name="weight">гр.</string>
+    <string name="quantity">шт.</string>
+    <string name="email_field_label">Почта</string>
+    <string name="password_field_label">Пароль</string>
+    <string name="email_field_placeholder">Введите свою почту…</string>
+    <string name="password_field_placeholder">Введите свою пароль…</string>
 </resources>

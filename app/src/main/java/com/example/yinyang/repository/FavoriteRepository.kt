@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.postgrest.query.Returning
 
 
 class FavoriteRepository(val client: SupabaseClient) {
@@ -43,7 +44,11 @@ class FavoriteRepository(val client: SupabaseClient) {
         )
 
         try {
-            client.postgrest["favorite"].insert(favoriteItem)
+            client.postgrest["favorite"]
+                .insert(
+                    value = favoriteItem,
+                    returning = Returning.MINIMAL
+                )
         } catch (e: Exception) {
             println(e.message)
         }
@@ -52,7 +57,9 @@ class FavoriteRepository(val client: SupabaseClient) {
     suspend fun deleteFromFavorite(favoriteId: Int) {
         try {
             client.postgrest["favorite"]
-                .delete {
+                .delete(
+                    returning = Returning.MINIMAL
+                ) {
                     Favorite::id eq favoriteId
                 }
         } catch (e: Exception) {

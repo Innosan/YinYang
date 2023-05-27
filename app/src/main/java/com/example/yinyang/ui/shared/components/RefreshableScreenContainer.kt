@@ -34,8 +34,8 @@ fun RefreshableScreenContainer(
     ) {
         Surface(
             modifier = Modifier
-                .fillMaxWidth(.95f)
-                .padding(16.dp)
+                .fillMaxWidth()
+                .padding(24.dp)
 
         ) {
             Column {

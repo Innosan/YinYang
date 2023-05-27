@@ -6,6 +6,7 @@ import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.models.DeliveryAddressAdd
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Returning
 
 class AddressRepository(private val client: SupabaseClient) {
     suspend fun getUserAddresses(userId: Int?) : MutableState<List<DeliveryAddress>> {
@@ -27,14 +28,16 @@ class AddressRepository(private val client: SupabaseClient) {
 
     suspend fun addAddress(userId: Int, addressMessage: String) {
         val newAddress = DeliveryAddressAdd(
-            id = null,
             address = addressMessage,
             userId = userId
         )
 
         try {
             client.postgrest["delivery_address"]
-                .insert(newAddress)
+                .insert(
+                    value = newAddress,
+                    returning = Returning.MINIMAL
+                )
         } catch (e: Exception) {
             println(e.message)
         }
@@ -43,7 +46,9 @@ class AddressRepository(private val client: SupabaseClient) {
     suspend fun deleteAddress(addressId: Int) {
         try {
             client.postgrest["delivery_address"]
-                .delete {
+                .delete(
+                    returning = Returning.MINIMAL
+                ) {
                     DeliveryAddress::id eq addressId
                 }
         } catch (e: Exception) {
@@ -54,9 +59,14 @@ class AddressRepository(private val client: SupabaseClient) {
     suspend fun updateAddress(addressId: Int, newAddress: String) {
         try {
             client.postgrest["delivery_address"]
-                .update({
-                    DeliveryAddress::address setTo newAddress
-                }) {
+                .update(
+                    update = {
+                        DeliveryAddress::address setTo newAddress
+
+                    },
+
+                    returning = Returning.MINIMAL,
+                ) {
                     DeliveryAddress::id eq addressId
                 }
         } catch (e: Exception) {

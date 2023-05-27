@@ -84,49 +84,62 @@ fun HomePage(
         scaffoldState = scaffoldState,
 
         sheetContent = {
-            SectionHeader(
-                iconId = R.drawable.ic_cart,
-                title = R.string.cart_screen
-            )
+            BottomSheetWrapper {
+                SectionHeader(
+                    iconId = R.drawable.ic_cart,
+                    title = R.string.cart_screen
+                )
 
-            if (cart != null) {
-                LazyColumn(
-                    modifier = Modifier
-                        .height(cart.size.dp * 180)
-                        .fillMaxWidth()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(20.dp),
-                ) {
-                    items(
-                        cart,
+                if (cart != null) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .height(cart.size.dp * 145),
 
-                        key = {cartItem -> cartItem.product_id.id}
-                    ) { cartItem ->
-                        CartItemCard(
-                            cartItem = cartItem,
-                            quantity = cartItem.quantity,
-                            deleteCartItem = {
-                                cartItem.id?.let { cartItemId ->
-                                    profileViewModel.cartManager.deleteCartItem(cartItemId)
+                        verticalArrangement = Arrangement.spacedBy(20.dp),
+                    ) {
+                        items(
+                            cart,
+
+                            key = {cartItem -> cartItem.product_id.id}
+                        ) { cartItem ->
+                            CartItemCard(
+                                cartItem = cartItem,
+                                quantity = cartItem.quantity,
+                                deleteCartItem = {
+                                    cartItem.id?.let { cartItemId ->
+                                        profileViewModel.cartManager.deleteCartItem(cartItemId)
+                                    }
+                                },
+                            )
+                        }
+                    }
+
+                    Row() {
+                        Text(text = "${total?.quantity} " + stringResource(id = R.string.quantity))
+                        Text(text = "${total?.weight} " + stringResource(id = R.string.weight))
+                    }
+
+                    Text(text = "${total?.price} ₽")
+
+                    Button(
+                        onClick = {
+                            profileViewModel.getUserId()?.let {
+                                total?.price?.let { it1 ->
+                                    profileViewModel.orderManager.createNewOrder(
+                                        it,
+                                        cart = cart,
+                                        totalPrice = it1
+                                    )
                                 }
-                            },
+                            }
+                        },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.order_screen).uppercase(),
+                            style = buttonTextStyle
                         )
                     }
-                }
-                
-                Row() {
-                    Text(text = "${total?.quantity} шт.")
-                    Text(text = "${total?.weight} гр.")
-                }
-
-                Text(text = "${total?.price} ₽")
-
-
-
-                Button(onClick = {
-
-                }) {
-                    Text(text = stringResource(id = R.string.order_screen).uppercase())
                 }
             }
         },

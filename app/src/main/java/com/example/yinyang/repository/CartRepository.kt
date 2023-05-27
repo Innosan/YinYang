@@ -11,6 +11,7 @@ import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.postgrest.query.Returning
 
 
 class CartRepository(val client: SupabaseClient) {
@@ -46,7 +47,11 @@ class CartRepository(val client: SupabaseClient) {
         )
 
         try {
-            client.postgrest["cart_item"].insert(cartItem)
+            client.postgrest["cart_item"]
+                .insert(
+                    value = cartItem,
+                    returning = Returning.MINIMAL
+                )
         } catch (e: Exception) {
             println(e.message)
         }
@@ -55,8 +60,23 @@ class CartRepository(val client: SupabaseClient) {
     suspend fun deleteFromCart(cartItemId: Int) {
         try {
             client.postgrest["cart_item"]
-                .delete {
+                .delete(
+                    returning = Returning.MINIMAL
+                ) {
                     CartItem::id eq cartItemId
+                }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+    }
+
+    suspend fun deleteUserCart(userId: Int) {
+        try {
+            client.postgrest["cart_item"]
+                .delete(
+                    returning = Returning.MINIMAL
+                ) {
+                    CartItem::user_id eq userId
                 }
         } catch (e: Exception) {
             println(e.message)

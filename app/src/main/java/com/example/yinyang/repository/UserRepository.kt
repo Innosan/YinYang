@@ -7,6 +7,7 @@ import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.user.UserInfo
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Returning
 
 class UserRepository(private val client: SupabaseClient) {
     suspend fun getUserInfo() : MutableState<User?> {
@@ -35,10 +36,14 @@ class UserRepository(private val client: SupabaseClient) {
     ) {
         try {
             client.postgrest["user"]
-                .update({
-                    User::firstName setTo newName
-                    User::lastName setTo newLastname
-                }) {
+                .update(
+                    update = {
+                        User::firstName setTo newName
+                        User::lastName setTo newLastname
+                    },
+
+                    returning = Returning.MINIMAL
+                ) {
                     User::id eq userId
                 }
         } catch (e: Exception) {
@@ -47,7 +52,6 @@ class UserRepository(private val client: SupabaseClient) {
     }
 
     suspend fun getUserSession(): UserInfo {
-        println(client.gotrue.sessionStatus.value)
         return try {
             client.gotrue.retrieveUserForCurrentSession()
         } catch (e: Exception) {

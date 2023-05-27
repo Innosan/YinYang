@@ -48,4 +48,10 @@ object AppModule {
     fun provideCartRepository(client: SupabaseClient): CartRepository {
         return CartRepository(client)
     }
+
+    @Provides
+    @Singleton
+    fun provideOrderRepository(client: SupabaseClient): OrderRepository {
+        return OrderRepository(client)
+    }
 }

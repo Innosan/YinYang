@@ -38,10 +38,10 @@ fun Form(
             value = email,
             onValueChange = { email = it },
             label = {
-                Text(text = "E-Mail")
+                Text(text = stringResource(id = R.string.email_field_label))
             },
             placeholder = {
-                Text(text = "Type in your e-mail...")
+                Text(text = stringResource(id = R.string.email_field_placeholder))
             },
             leadingIcon = {
                 Icon(
@@ -57,10 +57,10 @@ fun Form(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             onValueChange = { password = it },
             label = {
-                Text(text = "Password")
+                Text(text = stringResource(id = R.string.password_field_label))
             },
             placeholder = {
-                Text(text = "Type in your password...")
+                Text(text = stringResource(id = R.string.password_field_placeholder))
             },
             visualTransformation =
             if (passwordVisible)

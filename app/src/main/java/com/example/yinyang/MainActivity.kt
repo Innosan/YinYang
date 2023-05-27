@@ -31,6 +31,7 @@ import com.example.yinyang.ui.screens.cart.Cart
 import com.example.yinyang.ui.screens.destinations.*
 import com.example.yinyang.ui.screens.favorite.Favorite
 import com.example.yinyang.ui.screens.home.HomePage
+import com.example.yinyang.ui.screens.order.Order
 import com.example.yinyang.ui.screens.profile.Profile
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.theme.YinYangTheme

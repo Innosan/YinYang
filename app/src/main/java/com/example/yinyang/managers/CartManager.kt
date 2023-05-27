@@ -18,6 +18,13 @@ class CartManager(
         }
     }
 
+    fun deleteUserCart(userId: Int) {
+        viewModelScope.launch {
+            cartRepository.deleteUserCart(userId)
+            updateCart()
+        }
+    }
+
     fun addToCart(userId: Int, productId: Int, quantity: Int) {
         viewModelScope.launch {
             cartRepository.addToCart(userId, productId, quantity)
