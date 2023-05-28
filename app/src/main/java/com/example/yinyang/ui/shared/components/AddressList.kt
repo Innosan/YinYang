@@ -84,7 +84,10 @@ fun AddressList(
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(10.dp)),
+                            .background(
+                                MaterialTheme.colorScheme.onSurfaceVariant,
+                                RoundedCornerShape(10.dp)
+                            ),
 
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -136,22 +139,17 @@ fun AddressList(
                                 )
                             },
                             confirmButton = {
-                                Button(onClick = {
+                                AlertDialogButton(buttonType = ButtonType.UPDATE) {
                                     userViewModel.addressManager.updateAddress(currentId.value, updatedAddress)
 
                                     // TODO: stop using viewmodel instance
 
                                     updateAddressDialogControl.value = false
-                                }) {
-                                    Text(text = stringResource(id = R.string.update_button))
                                 }
                             },
                             dismissButton = {
-                                Button(
-                                    onClick = {
-                                        updateAddressDialogControl.value = false
-                                    }) {
-                                    Text(text = stringResource(id = R.string.close_button))
+                                AlertDialogButton(buttonType = ButtonType.CLOSE) {
+                                    updateAddressDialogControl.value = false
                                 }
                             }
                         )
@@ -206,7 +204,7 @@ fun AddressList(
                 )
             },
             confirmButton = {
-                Button(onClick = {
+                AlertDialogButton(buttonType = ButtonType.ADD) {
                     if (addresses.value.size <= 2) {
                         userViewModel.profile.value.userInfo?.value?.id?.let {
                             userViewModel.addressManager.addAddress(it, newAddress)
@@ -216,16 +214,11 @@ fun AddressList(
                     }
 
                     newAddressDialogControl.value = false
-                }) {
-                    Text(text = stringResource(id = R.string.add_button))
                 }
             },
             dismissButton = {
-                Button(
-                    onClick = {
-                        newAddressDialogControl.value = false
-                    }) {
-                    Text(text = stringResource(id = R.string.close_button))
+                AlertDialogButton(buttonType = ButtonType.CLOSE) {
+                    newAddressDialogControl.value = false
                 }
             }
         )

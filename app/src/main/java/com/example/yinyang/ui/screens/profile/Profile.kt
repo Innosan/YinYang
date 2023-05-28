@@ -225,7 +225,7 @@ fun Profile(
                                 }
                             },
                             confirmButton = {
-                                Button(onClick = {
+                                AlertDialogButton(buttonType = ButtonType.UPDATE) {
                                     if (userInfo != null) {
                                         userInfo.id?.let {
                                             viewModel.updateUserInfo(it, updatedName, updatedLastname)
@@ -233,16 +233,11 @@ fun Profile(
 
                                         userInfoDialogControl.value = false
                                     }
-                                }) {
-                                    Text(text = stringResource(id = R.string.update_button))
                                 }
                             },
                             dismissButton = {
-                                Button(
-                                    onClick = {
-                                        userInfoDialogControl.value = false
-                                    }) {
-                                    Text(text = stringResource(id = R.string.close_button))
+                                AlertDialogButton(buttonType = ButtonType.CLOSE) {
+                                    userInfoDialogControl.value = false
                                 }
                             }
                         )
@@ -264,25 +259,17 @@ fun Profile(
                                 Text(text = stringResource(id = R.string.exit_note))
                             },
                             confirmButton = {
-                                Button(onClick = {
+                                AlertDialogButton(buttonType = ButtonType.CONFIRM) {
                                     coroutineScope.launch {
                                         userActionsHandler.performUserAction(UserAction.LOGOUT)
                                     }
 
                                     onLogout()
-                                }) {
-                                    Text(text = stringResource(id = R.string.yes_button))
                                 }
                             },
                             dismissButton = {
-                                Button(
-                                    onClick = {
-                                        logOutDialogControl.value = false
-                                    }) {
-                                    Text(
-                                        text = stringResource(id = R.string.no_button),
-                                        style = buttonTextStyle
-                                    )
+                                AlertDialogButton(buttonType = ButtonType.REJECT) {
+                                    logOutDialogControl.value = false
                                 }
                             }
                         )

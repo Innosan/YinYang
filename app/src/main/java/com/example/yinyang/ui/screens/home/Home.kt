@@ -170,7 +170,7 @@ fun HomePage(
             }
 
             /**
-             * DIY Section
+             * Menu Section
              */
             SectionContainer {
                 SectionHeader(iconId = R.drawable.ic_bar_menu, title = R.string.menu_section)

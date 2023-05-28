@@ -27,12 +27,6 @@ fun CartItemCard(
 
     val isInCart = remember { mutableStateOf(true) }
 
-    val onUnfavorite = {
-        isInCart.value = false
-
-        deleteCartItem()
-    }
-
     Column() {
         AnimatedVisibility(visible = isInCart.value) {
             Column() {
