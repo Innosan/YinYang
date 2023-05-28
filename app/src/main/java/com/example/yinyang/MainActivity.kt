@@ -157,6 +157,11 @@ class MainActivity : ComponentActivity() {
                                     profileViewModel = profileViewModel
                                 )
                             }
+                            composable(OrderDestination) {
+                                Order(
+                                    profileViewModel = profileViewModel
+                                )
+                            }
                             composable(CartDestination) {
                                 Cart(
                                     profileViewModel = profileViewModel

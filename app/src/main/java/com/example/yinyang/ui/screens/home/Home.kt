@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.cart.components.CartItemCard
+import com.example.yinyang.ui.screens.destinations.OrderDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
@@ -123,15 +124,7 @@ fun HomePage(
 
                     Button(
                         onClick = {
-                            profileViewModel.getUserId()?.let {
-                                total?.price?.let { it1 ->
-                                    profileViewModel.orderManager.createNewOrder(
-                                        it,
-                                        cart = cart,
-                                        totalPrice = it1
-                                    )
-                                }
-                            }
+                            navigator.navigate(OrderDestination)
                         },
                         modifier = Modifier.fillMaxWidth(),
                     ) {

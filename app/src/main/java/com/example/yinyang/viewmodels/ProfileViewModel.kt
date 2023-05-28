@@ -8,10 +8,7 @@ import com.example.yinyang.managers.AddressManager
 import com.example.yinyang.managers.CartManager
 import com.example.yinyang.managers.FavoriteManager
 import com.example.yinyang.managers.OrderManager
-import com.example.yinyang.models.CartItem
-import com.example.yinyang.models.DeliveryAddress
-import com.example.yinyang.models.Favorite
-import com.example.yinyang.models.User
+import com.example.yinyang.models.*
 import com.example.yinyang.repository.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.github.jan.supabase.gotrue.user.UserInfo
@@ -42,7 +39,15 @@ class ProfileViewModel @Inject constructor (
     val isRefreshing: StateFlow<Boolean>
         get() = _isRefreshing.asStateFlow()
 
-    private val _profile = mutableStateOf(Profile(null, null, null, null, null))
+    private val _profile = mutableStateOf(
+        Profile(
+            null,
+            null,
+            null,
+            null,
+            null,
+        )
+    )
     val profile: MutableState<Profile> = _profile
 
     val addressManager: AddressManager =

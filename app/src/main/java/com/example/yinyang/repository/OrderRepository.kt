@@ -1,5 +1,7 @@
 package com.example.yinyang.repository
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import com.example.yinyang.models.*
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
@@ -48,5 +50,24 @@ class OrderRepository(
         } catch (e: Exception) {
             println(e.message)
         }
+    }
+
+    suspend fun getOrder(
+        orderId: Int,
+        client: SupabaseClient
+    ) : MutableState<Order> {
+        val lastOrder = mutableStateOf(Order(1, null, 1, 1, null, null))
+
+        try {
+            lastOrder.value = client.postgrest["order"]
+                .select {
+                    Order::id eq orderId
+                }
+                .decodeSingle()
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return lastOrder
     }
 }
