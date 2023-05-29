@@ -4,9 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +29,8 @@ import com.ramcosta.composedestinations.annotation.Destination
 fun Order(
     profileViewModel: ProfileViewModel
 ) {
-    val cart = profileViewModel.profile.value.userCart?.value
+    val profile = profileViewModel.profile.value
+    val cart = profile.userCart?.value
 
     val switchOptions = listOf("Delivery", "Pick-up")
     var selectedOptionIndex by remember { mutableStateOf(0) }
@@ -91,6 +92,20 @@ fun Order(
                     )
                 }
             }
+        }
+
+        profile.userAddresses?.value?.forEachIndexed { index, deliveryAddress ->
+            AssistChip(
+                onClick = { /* Do something! */ },
+                label = { Text(deliveryAddress.address) },
+                leadingIcon = {
+                    Icon(
+                        Icons.Filled.Settings,
+                        contentDescription = "Localized description",
+                        Modifier.size(AssistChipDefaults.IconSize)
+                    )
+                }
+            )
         }
 
         Button(onClick = {

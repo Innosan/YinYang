@@ -7,7 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.sp
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.ButtonType
 
@@ -16,10 +18,16 @@ fun AlertDialogButton(
     buttonType: ButtonType,
     onButtonClick: () -> Unit,
 ) {
-    val buttonBackground =
-        if (buttonType.lowPriority)
-            MaterialTheme.colorScheme.primary.copy(.6f)
-        else MaterialTheme.colorScheme.primary
+    val buttonBackground: Color
+    val fontSize: Int
+
+    if (buttonType.lowPriority) {
+        buttonBackground = MaterialTheme.colorScheme.primary.copy(.6f)
+        fontSize = 14
+    } else {
+        buttonBackground = MaterialTheme.colorScheme.primary
+        fontSize = 20
+    }
 
     Button(
         onClick = {
@@ -33,7 +41,8 @@ fun AlertDialogButton(
     ) {
         Text(
             text = stringResource(id = buttonType.buttonText),
-            style = buttonTextStyle
+            style = buttonTextStyle,
+            fontSize = fontSize.sp,
         )
     }
 }

@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.yinyang.models.CartItem
-import com.example.yinyang.ui.shared.components.ProductImage
 
 @Composable
 fun OrderCard(
@@ -28,7 +27,19 @@ fun OrderCard(
             modifier = Modifier.fillMaxWidth(.95f),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
         ) {
-            ProductImage(product = product, height = 120, isTagsVisible = false)
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(product.image_url)
+                    .crossfade(true) //TODO: should change to better one
+                    .build(),
+                modifier = Modifier
+                    .fillMaxWidth(.45f)
+                    .height(80.dp)
+                    .clip(RoundedCornerShape(16.dp)),
+
+                contentScale = ContentScale.Crop,
+                contentDescription = "${product.title} image",
+            )
 
             Column() {
                 Text(

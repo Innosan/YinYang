@@ -17,8 +17,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
-import com.example.yinyang.ui.screens.destinations.CartDestination
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
+import com.example.yinyang.ui.screens.destinations.OrdersDestination
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.*
@@ -105,29 +105,31 @@ fun Profile(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(vertical = 28.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
                         ProfileNavigationButton(
                             title = R.string.orders_button,
                             icon = R.drawable.ic_orders,
-                            fraction = .45f,
-                            onNavigation = {
-                                if (userInfo != null) {
-                                    navigator.navigate(CartDestination())
-                                }
+                            width = 140,
+                            badgeNumber = 3 //TODO: change to orders size
+                        ) {
+                            if (userInfo != null) {
+                                navigator.navigate(OrdersDestination)
                             }
-                        )
+                        }
 
-                        ProfileNavigationButton(
-                            title = R.string.favorite_button,
-                            icon = R.drawable.ic_favorite,
-                            fraction = .85f,
-                            onNavigation = {
+                        profile.userFavorite?.value?.size?.let {
+                            ProfileNavigationButton(
+                                title = R.string.favorite_button,
+                                icon = R.drawable.ic_favorite,
+                                width = 180,
+                                badgeNumber = it
+                            ) {
                                 if (userInfo != null) {
                                     navigator.navigate(FavoriteDestination())
                                 }
                             }
-                        )
+                        }
                     }
 
                     if (userSession != null) {

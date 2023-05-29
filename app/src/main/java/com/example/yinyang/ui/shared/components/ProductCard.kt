@@ -91,13 +91,29 @@ fun ProductCard(
                 enabled = isNotInCart,
                 modifier = Modifier.fillMaxWidth(.70f)
             ) {
-                Text(
-                    text = "${product.price} ₽",
-                    style = buttonTextStyle,
-                    fontSize = 20.sp
-                )
-            }
+                Crossfade(targetState = isNotInCart) {
+                    val buttonText =
+                        if (!it) stringResource(id = R.string.in_cart_note)
+                        else "${product.price} ₽"
 
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        if (!it) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_cart),
+                                contentDescription = "In Cart"
+                            )
+                        }
+
+                        Text(
+                            text = buttonText,
+                            style = buttonTextStyle,
+                            fontSize = 20.sp
+                        )
+                    }
+                }
+            }
 
             val favButtonWidth: Float by animateFloatAsState(if (isNotInFavorite) 0.75f else 0.85f)
             val buttonContainerColor by animateColorAsState(

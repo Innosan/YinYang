@@ -63,6 +63,7 @@
     <string name="sign_in_note">Sign in your existing account!</string>
     <string name="max_addresses_note">You can add up to 3 addresses!</string>
     <string name="no_products_note">Sadly, there is now foodi for you ): Come back later!</string>
+    <string name="in_cart_note">In Cart!</string>
 
     <!-- SignIn/Up -->
     <string name="email_field_label">E-Mail</string>

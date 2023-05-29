@@ -51,6 +51,7 @@
     <string name="no_products_note">К сожалению, пока ничего нет. Возввращайтесь позднее.</string>
     <string name="weight">гр.</string>
     <string name="quantity">шт.</string>
+    <string name="in_cart_note">В корзине!</string>
     <string name="email_field_label">Почта</string>
     <string name="password_field_label">Пароль</string>
     <string name="email_field_placeholder">Введите свою почту…</string>

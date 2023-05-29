@@ -22,7 +22,8 @@ import com.example.yinyang.models.Product
 fun ProductImage(
     product: Product,
     height: Int,
-    isTagsVisible: Boolean
+    isTagsVisible: Boolean,
+    fraction: Float = 1f
 ) {
     Box(
         Modifier
@@ -36,7 +37,8 @@ fun ProductImage(
                 .crossfade(true) //TODO: should change to better one
                 .build(),
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(fraction)
+                .height(height.dp)
                 .clip(RoundedCornerShape(16.dp)),
 
             contentScale = ContentScale.Crop,

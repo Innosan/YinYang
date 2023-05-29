@@ -6,8 +6,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
@@ -16,8 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -27,11 +23,11 @@ import com.example.yinyang.models.navItems
 import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.NavGraphs
 import com.example.yinyang.ui.screens.appCurrentDestinationAsState
-import com.example.yinyang.ui.screens.cart.Cart
 import com.example.yinyang.ui.screens.destinations.*
 import com.example.yinyang.ui.screens.favorite.Favorite
 import com.example.yinyang.ui.screens.home.HomePage
 import com.example.yinyang.ui.screens.order.Order
+import com.example.yinyang.ui.screens.orders.Orders
 import com.example.yinyang.ui.screens.profile.Profile
 import com.example.yinyang.ui.screens.startAppDestination
 import com.example.yinyang.ui.theme.YinYangTheme
@@ -52,7 +48,6 @@ class MainActivity : ComponentActivity() {
     private val profileViewModel: ProfileViewModel by viewModels()
     private val productViewModel: ProductViewModel by viewModels()
 
-    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,10 +71,6 @@ class MainActivity : ComponentActivity() {
                 val scope = rememberCoroutineScope()
 
                 val selectedItem = remember { mutableStateOf(navItems[0]) }
-
-                /**
-                 * To explicitly change start route if user is authenticated
-                 */
 
                 ModalNavigationDrawer(
                     drawerState = drawerState,
@@ -162,8 +153,8 @@ class MainActivity : ComponentActivity() {
                                     profileViewModel = profileViewModel
                                 )
                             }
-                            composable(CartDestination) {
-                                Cart(
+                            composable(OrdersDestination) {
+                                Orders(
                                     profileViewModel = profileViewModel
                                 )
                             }

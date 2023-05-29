@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
-import com.example.yinyang.ui.screens.cart.components.CartItemCard
+import com.example.yinyang.ui.shared.components.CartItemCard
 import com.example.yinyang.ui.screens.destinations.OrderDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.*

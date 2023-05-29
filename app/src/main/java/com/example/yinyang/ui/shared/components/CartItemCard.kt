@@ -1,6 +1,6 @@
-package com.example.yinyang.ui.screens.cart.components
+package com.example.yinyang.ui.shared.components
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedButton
@@ -28,7 +28,14 @@ fun CartItemCard(
     val isInCart = remember { mutableStateOf(true) }
 
     Column() {
-        AnimatedVisibility(visible = isInCart.value) {
+        AnimatedVisibility(
+            visible = isInCart.value,
+            exit = slideOutVertically(
+                targetOffsetY = { 260 }
+            ) + fadeOut(
+                targetAlpha = 0f
+            )
+        ) {
             Column() {
                 Row(
                     modifier = Modifier.fillMaxWidth(.95f),
