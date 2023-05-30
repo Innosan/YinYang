@@ -16,7 +16,6 @@ data class Order(
 
 @Serializable
 data class OrderAdd(
-    val created_at: String?,
     val user_id: Int,
     val total_price: Int,
     val delivery_note: String?,

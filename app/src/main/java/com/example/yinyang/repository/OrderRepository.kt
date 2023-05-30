@@ -24,14 +24,15 @@ class OrderRepository(
         userId: Int,
         cart: List<CartItem>,
         totalPrice: Int,
+        deliveryAddress: String,
+        deliveryNote: String
     ) {
         try {
             val order = OrderAdd(
-                created_at = null,
                 user_id = userId,
                 total_price = totalPrice,
-                delivery_note = null,
-                delivery_address = null
+                delivery_note = deliveryNote,
+                delivery_address = deliveryAddress,
             )
 
             val result = client.postgrest["order"]

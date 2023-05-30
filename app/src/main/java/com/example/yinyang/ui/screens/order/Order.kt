@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +25,7 @@ import com.example.yinyang.utils.Total
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 
+@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
 @Destination
 @Composable
 fun Order(
@@ -33,7 +35,13 @@ fun Order(
     val cart = profile.userCart?.value
 
     val switchOptions = listOf("Delivery", "Pick-up")
+
     var selectedOptionIndex by remember { mutableStateOf(0) }
+    var selectedChipIndex by remember { mutableStateOf(0) }
+
+    var selectedAddress by remember { mutableStateOf("")}
+    var deliveryNote by remember { mutableStateOf("")}
+
 
     val total = cart?.fold(Total(0, 0, 0)) { acc, cartItem ->
         Total(
@@ -94,19 +102,45 @@ fun Order(
             }
         }
 
-        profile.userAddresses?.value?.forEachIndexed { index, deliveryAddress ->
-            AssistChip(
-                onClick = { /* Do something! */ },
-                label = { Text(deliveryAddress.address) },
-                leadingIcon = {
-                    Icon(
-                        Icons.Filled.Settings,
-                        contentDescription = "Localized description",
-                        Modifier.size(AssistChipDefaults.IconSize)
-                    )
-                }
-            )
+        FlowRow(
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            profile.userAddresses?.value?.forEachIndexed { index, deliveryAddress ->
+                FilterChip(
+                    onClick = {
+                        selectedChipIndex = index
+                        selectedAddress = deliveryAddress.address
+                    },
+                    label = { Text(deliveryAddress.address) },
+                    leadingIcon = {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_order_location),
+                            contentDescription = "Localized description",
+                            Modifier.size(AssistChipDefaults.IconSize)
+                        )
+                    },
+                    selected = index == selectedChipIndex
+                )
+            }
         }
+
+        OutlinedTextField(
+            value = deliveryNote,
+            onValueChange = { deliveryNote = it },
+            label = {
+                Text(text = stringResource(id = R.string.email_field_label))
+            },
+            placeholder = {
+                Text(text = stringResource(id = R.string.email_field_placeholder))
+            },
+            leadingIcon = {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_email),
+
+                    contentDescription = "E-Mail field"
+                )
+            }
+        )
 
         Button(onClick = {
             profileViewModel.getUserId()?.let {
@@ -115,7 +149,9 @@ fun Order(
                         profileViewModel.orderManager.createNewOrder(
                             it,
                             it1,
-                            it2
+                            it2,
+                            selectedAddress,
+                            deliveryNote
                         )
                     }
                 }

@@ -127,6 +127,7 @@ fun HomePage(
                             navigator.navigate(OrderDestination)
                         },
                         modifier = Modifier.fillMaxWidth(),
+                        enabled = total?.quantity != 0,
                     ) {
                         Text(
                             text = stringResource(id = R.string.order_screen).uppercase(),

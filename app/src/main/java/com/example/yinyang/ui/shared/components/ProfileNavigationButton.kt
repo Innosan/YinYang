@@ -12,6 +12,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,7 +32,8 @@ fun ProfileNavigationButton(
                 badgeNumber.toString(),
                 modifier = Modifier.semantics {
                     contentDescription = "$badgeNumber new notifications"
-                }
+                },
+                fontSize = 16.sp,
             )
         }
     }) {
