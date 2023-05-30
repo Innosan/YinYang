@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
@@ -32,6 +33,7 @@ import com.example.yinyang.ui.screens.home.components.FoodConstructor
 import com.example.yinyang.ui.shared.components.*
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.Total
+import com.example.yinyang.utils.getTotal
 import com.example.yinyang.utils.setHorizontalEnter
 import com.example.yinyang.utils.setHorizontalExit
 import com.example.yinyang.viewmodels.ProductViewModel
@@ -65,13 +67,7 @@ fun HomePage(
     val scrollState = rememberLazyListState()
     val scaffoldState = rememberBottomSheetScaffoldState()
 
-    val total = cart?.fold(Total(0, 0, 0)) { acc, cartItem ->
-        Total(
-            price = acc.price + (cartItem.product_id.price * cartItem.quantity),
-            weight = acc.weight + (cartItem.product_id.weight * cartItem.quantity),
-            quantity = acc.quantity + (cartItem.quantity)
-        )
-    }
+    val total = getTotal(cart)
 
     LaunchedEffect(scrollState) {
         snapshotFlow { scrollState.firstVisibleItemIndex }
@@ -115,12 +111,26 @@ fun HomePage(
                         }
                     }
 
-                    Row() {
-                        Text(text = "${total?.quantity} " + stringResource(id = R.string.quantity))
-                        Text(text = "${total?.weight} " + stringResource(id = R.string.weight))
+                    Row(
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    ) {
+                        Text(
+                            text = "${total?.quantity} " + stringResource(id = R.string.quantity),
+                            fontWeight = FontWeight.SemiBold,
+                            fontSize = 20.sp
+                        )
+                        Text(
+                            text = "${total?.weight} " + stringResource(id = R.string.weight),
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.onSurface.copy(.8f),
+                        )
                     }
 
-                    Text(text = "${total?.price} ₽")
+                    Text(
+                        text = "${total?.price} ₽",
+                        fontWeight = FontWeight.Black,
+                        fontSize = 24.sp
+                    )
 
                     Button(
                         onClick = {
@@ -130,7 +140,7 @@ fun HomePage(
                         enabled = total?.quantity != 0,
                     ) {
                         Text(
-                            text = stringResource(id = R.string.order_screen).uppercase(),
+                            text = stringResource(id = R.string.make_order_button).uppercase(),
                             style = buttonTextStyle
                         )
                     }

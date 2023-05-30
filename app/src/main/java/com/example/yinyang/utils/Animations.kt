@@ -20,8 +20,6 @@ fun setVerticalEnter(): EnterTransition {
         initialOffsetY = { -160 }
     ) + fadeIn(
         initialAlpha = 0f
-    ) + scaleIn(
-        initialScale = 0f
     )
 }
 
@@ -42,7 +40,5 @@ fun setVerticalExit(): ExitTransition {
         targetOffsetY = { -160 }
     ) + fadeOut(
         targetAlpha = 0f
-    ) + scaleOut(
-        targetScale = 0f
     )
 }

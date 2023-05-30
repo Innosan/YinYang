@@ -15,6 +15,8 @@
     <string name="favorite_button">Любимое</string>
     <string name="pizza_constructor_button">Пицца</string>
     <string name="wok_constructor_button">Вок</string>
+    <string name="delivery_note_field_label">Примечание к заказу</string>
+    <string name="delivery_note_field_placeholder">Предоставьте дополнительную информацию...</string>
     <string name="home_screen">Главная</string>
     <string name="profile_screen">Профиль</string>
     <string name="favorite_screen">Любимое</string>
@@ -56,4 +58,6 @@
     <string name="password_field_label">Пароль</string>
     <string name="email_field_placeholder">Введите свою почту…</string>
     <string name="password_field_placeholder">Введите свою пароль…</string>
+    <string name="delivery">Доставка</string>
+    <string name="pick_up">Самовывоз</string>
 </resources>

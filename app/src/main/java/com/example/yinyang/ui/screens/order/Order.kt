@@ -1,11 +1,12 @@
 package com.example.yinyang.ui.screens.order
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,37 +20,49 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.order.components.OrderCard
+import com.example.yinyang.ui.shared.components.ModalDatePicker
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.shared.components.SectionHeader
-import com.example.yinyang.utils.Total
+import com.example.yinyang.utils.getTotal
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
 
-@OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
+@RequiresApi(Build.VERSION_CODES.O)
+@OptIn(
+    ExperimentalLayoutApi::class,
+    ExperimentalMaterial3Api::class
+)
 @Destination
 @Composable
 fun Order(
     profileViewModel: ProfileViewModel
 ) {
+    val colorScheme = MaterialTheme.colorScheme
+
     val profile = profileViewModel.profile.value
     val cart = profile.userCart?.value
 
-    val switchOptions = listOf("Delivery", "Pick-up")
+    val switchOptions = listOf(R.string.delivery, R.string.pick_up)
 
     var selectedOptionIndex by remember { mutableStateOf(0) }
     var selectedChipIndex by remember { mutableStateOf(0) }
 
+    val selectedDate = remember {
+        mutableStateOf<LocalDate>(
+            Instant
+                .now()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate()
+        )
+    }
+
     var selectedAddress by remember { mutableStateOf("")}
     var deliveryNote by remember { mutableStateOf("")}
 
-
-    val total = cart?.fold(Total(0, 0, 0)) { acc, cartItem ->
-        Total(
-            price = acc.price + (cartItem.product_id.price * cartItem.quantity),
-            weight = acc.weight + (cartItem.product_id.weight * cartItem.quantity),
-            quantity = acc.quantity + (cartItem.quantity)
-        )
-    }
+    val total = getTotal(cart)
 
     ScreenContainer {
         SectionHeader(iconId = R.drawable.ic_favorite, title = R.string.order_screen)
@@ -68,8 +81,9 @@ fun Order(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(40.dp)
                 .background(
-                    MaterialTheme.colorScheme.onSurfaceVariant,
+                    colorScheme.onSurfaceVariant,
                     RoundedCornerShape(12.dp)
                 ),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -78,11 +92,12 @@ fun Order(
                 Box(
                     modifier = Modifier
                         .width(160.dp)
+                        .fillMaxHeight()
                         .clip(RoundedCornerShape(12.dp))
                         .clickable { selectedOptionIndex = index }
                         .background(
                             if (selectedOptionIndex == index)
-                                MaterialTheme.colorScheme.primary
+                                colorScheme.primary
                             else
                                 Color.Transparent,
 
@@ -92,72 +107,98 @@ fun Order(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = option,
-                        color = if (selectedOptionIndex == index) Color.White else Color.Black,
+                        text = stringResource(id = option),
+                        color = colorScheme.onSurface,
                         textAlign = TextAlign.Center,
-                        fontWeight = if (selectedOptionIndex == index) FontWeight.Bold else FontWeight.Normal,
-                        modifier = Modifier.padding(16.dp)
+                        fontWeight = if (selectedOptionIndex == index) FontWeight.ExtraBold else FontWeight.Normal,
                     )
                 }
             }
         }
 
-        FlowRow(
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            profile.userAddresses?.value?.forEachIndexed { index, deliveryAddress ->
-                FilterChip(
-                    onClick = {
-                        selectedChipIndex = index
-                        selectedAddress = deliveryAddress.address
-                    },
-                    label = { Text(deliveryAddress.address) },
-                    leadingIcon = {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_order_location),
-                            contentDescription = "Localized description",
-                            Modifier.size(AssistChipDefaults.IconSize)
-                        )
-                    },
-                    selected = index == selectedChipIndex
-                )
+        Column() {
+            AnimatedVisibility(
+                visible = selectedOptionIndex != 1,
+            ) {
+                Column() {
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                    ) {
+                        profile.userAddresses?.value?.forEachIndexed { index, deliveryAddress ->
+                            ElevatedFilterChip(
+                                onClick = {
+                                    selectedChipIndex = index
+                                    selectedAddress = deliveryAddress.address
+                                },
+
+                                label = { Text(deliveryAddress.address) },
+
+                                leadingIcon = {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_order_location),
+                                        contentDescription = "Localized description",
+                                        Modifier.size(FilterChipDefaults.IconSize)
+                                    )
+                                },
+                                selected = index == selectedChipIndex,
+                                colors = FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = colorScheme.primary,
+                                    selectedLeadingIconColor = colorScheme.onPrimary,
+                                    selectedLabelColor = colorScheme.onPrimary,
+
+                                    containerColor = colorScheme.onSurfaceVariant,
+                                    iconColor = colorScheme.onSurface
+                                )
+                            )
+                        }
+                    }
+
+                    OutlinedTextField(
+                        value = deliveryNote,
+                        onValueChange = { deliveryNote = it },
+                        label = {
+                            Text(text = stringResource(id = R.string.delivery_note_field_label))
+                        },
+                        placeholder = {
+                            Text(text = stringResource(id = R.string.delivery_note_field_placeholder))
+                        },
+                        leadingIcon = {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_delivery_note),
+
+                                contentDescription = "Delivery note field"
+                            )
+                        }
+                    )
+                }
             }
         }
 
-        OutlinedTextField(
-            value = deliveryNote,
-            onValueChange = { deliveryNote = it },
-            label = {
-                Text(text = stringResource(id = R.string.email_field_label))
-            },
-            placeholder = {
-                Text(text = stringResource(id = R.string.email_field_placeholder))
-            },
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_email),
+        ModalDatePicker(pickedDate = selectedDate)
+        Text(text = selectedDate.value.toString())
 
-                    contentDescription = "E-Mail field"
-                )
-            }
-        )
-
-        Button(onClick = {
-            profileViewModel.getUserId()?.let {
-                profileViewModel.profile.value.userCart?.value?.let { it1 ->
-                    total?.price?.let { it2 ->
-                        profileViewModel.orderManager.createNewOrder(
-                            it,
-                            it1,
-                            it2,
-                            selectedAddress,
-                            deliveryNote
-                        )
+        Button(
+            onClick = {
+                profileViewModel.getUserId()?.let {
+                    profileViewModel.profile.value.userCart?.value?.let { it1 ->
+                        total?.price?.let { it2 ->
+                            profileViewModel.orderManager.createNewOrder(
+                                it,
+                                it1,
+                                it2,
+                                selectedAddress,
+                                deliveryNote
+                            )
+                        }
                     }
                 }
-            }
-        }) {
-            Text(text = stringResource(id = R.string.order_screen))
+            },
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Text(
+                text = stringResource(id = R.string.make_order_button).uppercase(),
+                fontWeight = FontWeight.Black,
+            )
         }
     }
 }
