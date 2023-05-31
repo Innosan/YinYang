@@ -3,13 +3,14 @@ package com.example.yinyang.managers
 import com.example.yinyang.models.CartItem
 import com.example.yinyang.models.DeliveryAddress
 import com.example.yinyang.repository.OrderRepository
+import com.example.yinyang.viewmodels.ProfileViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class OrderManager(
     private val viewModelScope: CoroutineScope,
     private val orderRepository: OrderRepository,
-    private val cartManager: CartManager
+    private val cartManager: CartManager,
 ) {
     fun createNewOrder(
         userId: Int,

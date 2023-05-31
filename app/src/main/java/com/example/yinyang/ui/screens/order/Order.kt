@@ -18,14 +18,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
+import com.example.yinyang.ui.screens.destinations.OrdersDestination
+import com.example.yinyang.ui.screens.destinations.ProfileDestination
 import com.example.yinyang.ui.screens.order.components.OrderCard
 import com.example.yinyang.ui.shared.components.ModalDatePicker
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.shared.components.SectionHeader
+import com.example.yinyang.ui.shared.components.TotalBlock
+import com.example.yinyang.ui.shared.styles.buttonTextStyle
+import com.example.yinyang.utils.formatDate
 import com.example.yinyang.utils.getTotal
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -38,6 +45,7 @@ import java.time.ZoneId
 @Destination
 @Composable
 fun Order(
+    navigator: DestinationsNavigator,
     profileViewModel: ProfileViewModel
 ) {
     val colorScheme = MaterialTheme.colorScheme
@@ -62,14 +70,18 @@ fun Order(
     var selectedAddress by remember { mutableStateOf("")}
     var deliveryNote by remember { mutableStateOf("")}
 
+    val dateDialogController = remember { mutableStateOf(false) }
+
     val total = getTotal(cart)
 
-    ScreenContainer {
-        SectionHeader(iconId = R.drawable.ic_favorite, title = R.string.order_screen)
-
+    ScreenContainer(
+        contentSpacing = 24
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp),
         ) {
+            SectionHeader(iconId = R.drawable.ic_orders, title = R.string.order_screen)
+
             cart?.forEachIndexed { index, cartItem ->
                 OrderCard(
                     orderItem = cartItem,
@@ -116,11 +128,16 @@ fun Order(
             }
         }
 
-        Column() {
+        Column {
             AnimatedVisibility(
                 visible = selectedOptionIndex != 1,
             ) {
                 Column() {
+                    SectionHeader(
+                        iconId = R.drawable.ic_location,
+                        title = R.string.order_location_section
+                    )
+
                     FlowRow(
                         horizontalArrangement = Arrangement.spacedBy(16.dp),
                     ) {
@@ -174,8 +191,36 @@ fun Order(
             }
         }
 
-        ModalDatePicker(pickedDate = selectedDate)
-        Text(text = selectedDate.value.toString())
+        Column() {
+            AnimatedVisibility(visible = selectedOptionIndex != 0) {
+                Column() {
+                    SectionHeader(iconId = R.drawable.ic_pick_date, title = R.string.order_date_section)
+
+                    Button(
+                        onClick = {
+                            dateDialogController.value = true
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorScheme.onSurfaceVariant
+                        ),
+                        shape = RoundedCornerShape(12.dp),
+                    ) {
+                        Text(
+                            text = formatDate(selectedDate.value),
+                            style = buttonTextStyle,
+                            fontSize = 20.sp,
+                        )
+                    }
+
+                    ModalDatePicker(
+                        pickedDate = selectedDate,
+                        dialogController = dateDialogController
+                    )
+                }
+            }
+        }
+
+        TotalBlock(total = total)
 
         Button(
             onClick = {
@@ -192,12 +237,17 @@ fun Order(
                         }
                     }
                 }
+
+                navigator.navigate(OrdersDestination) {
+                    popUpTo(ProfileDestination.route)
+                }
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 text = stringResource(id = R.string.make_order_button).uppercase(),
                 fontWeight = FontWeight.Black,
+                style = buttonTextStyle
             )
         }
     }

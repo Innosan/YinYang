@@ -23,16 +23,6 @@ data class OrderAdd(
 )
 
 @Serializable
-data class OrderAddAa(
-    val id: Int,
-    val created_at: String?,
-    val user_id: Int,
-    val total_price: Int,
-    val delivery_note: String?,
-    val delivery_address: String?,
-)
-
-@Serializable
 data class OrderItemAdd(
     val quantity: Int,
 

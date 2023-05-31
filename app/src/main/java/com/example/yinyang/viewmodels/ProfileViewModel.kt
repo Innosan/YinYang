@@ -33,6 +33,7 @@ class ProfileViewModel @Inject constructor (
         val userAddresses: MutableState<List<DeliveryAddress>>?,
         val userFavorite: MutableState<List<Favorite>>?,
         val userCart: MutableState<List<CartItem>>?,
+        val userOrders: MutableState<List<Order>>?,
     )
 
     private val _isRefreshing = MutableStateFlow(false)
@@ -41,6 +42,7 @@ class ProfileViewModel @Inject constructor (
 
     private val _profile = mutableStateOf(
         Profile(
+            null,
             null,
             null,
             null,
@@ -91,6 +93,9 @@ class ProfileViewModel @Inject constructor (
                 val cartDeferred = async {
                     cartRepository.getCart(userInfoDeferred.await().value?.id)
                 }
+                val orderDeferred = async {
+                    orderRepository.getOrders(userInfoDeferred.await().value?.id)
+                }
 
                 _profile.value = Profile(
                     userInfoDeferred.await(),
@@ -98,6 +103,7 @@ class ProfileViewModel @Inject constructor (
                     deliveryAddressesDeferred.await(),
                     favoriteDeferred.await(),
                     cartDeferred.await(),
+                    orderDeferred.await(),
                 )
             } catch (e: Exception) {
                 println(e.message)

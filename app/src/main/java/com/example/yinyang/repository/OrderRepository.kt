@@ -53,22 +53,21 @@ class OrderRepository(
         }
     }
 
-    suspend fun getOrder(
-        orderId: Int,
-        client: SupabaseClient
-    ) : MutableState<Order> {
-        val lastOrder = mutableStateOf(Order(1, null, 1, 1, null, null))
+    suspend fun getOrders(
+        userId: Int?,
+    ) : MutableState<List<Order>> {
+        val orders = mutableStateOf(emptyList<Order>())
 
         try {
-            lastOrder.value = client.postgrest["order"]
+            orders.value = client.postgrest["order"]
                 .select {
-                    Order::id eq orderId
+                    Order::userId eq userId
                 }
-                .decodeSingle()
+                .decodeList()
         } catch (e: Exception) {
             println(e.message)
         }
 
-        return lastOrder
+        return orders
     }
 }

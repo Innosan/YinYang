@@ -12,6 +12,8 @@
     <string name="no_button">No</string>
     <string name="edit_profile_button">Edit profile</string>
     <string name="make_order_button">Make order</string>
+    <string name="select_date_button">Select date</string>
+    <string name="pick_order_date_button">Pick order date</string>
 
     <!-- Navigation buttons -->
     <string name="orders_button">Orders</string>
@@ -43,6 +45,7 @@
     <string name="favorite_screen">Favorite</string>
     <string name="cart_screen">Cart</string>
     <string name="order_screen">Order</string>
+    <string name="orders_screen">Orders</string>
     <string name="settings_screen">Settings</string>
     <string name="help_screen">Help</string>
     <string name="about_screen">About</string>
@@ -54,6 +57,8 @@
     <string name="addresses_section">Your addresses</string>
     <string name="diy_section">Do It Yourself</string>
     <string name="menu_section">Menu</string>
+    <string name="order_date_section">Order date</string>
+    <string name="order_location_section">Order location</string>
 
     <!-- Ratings -->
     <string name="newbie_rating">Newbie</string>
@@ -72,6 +77,10 @@
     <string name="max_addresses_note">You can add up to 3 addresses!</string>
     <string name="no_products_note">Sadly, there is now foodi for you ): Come back later!</string>
     <string name="in_cart_note">In Cart!</string>
+
+    <!-- Plain text -->
+    <string name="about_us_text">YinYang - Authentic asian cuisine, prepared by true sons of Korea.</string>
+
 
     <!-- Special -->
     <string name="weight">g</string>

@@ -11,12 +11,14 @@
     <string name="yes_button">Да</string>
     <string name="no_button">Нет</string>
     <string name="edit_profile_button">Изменить профиль</string>
+    <string name="select_date_button">Выбрать дату</string>
+    <string name="pick_order_date_button">Выбрать дату заказа</string>
     <string name="orders_button">Заказы</string>
     <string name="favorite_button">Любимое</string>
     <string name="pizza_constructor_button">Пицца</string>
     <string name="wok_constructor_button">Вок</string>
     <string name="delivery_note_field_label">Примечание к заказу</string>
-    <string name="delivery_note_field_placeholder">Предоставьте дополнительную информацию...</string>
+    <string name="delivery_note_field_placeholder">Предоставьте дополнительную информацию…</string>
     <string name="home_screen">Главная</string>
     <string name="profile_screen">Профиль</string>
     <string name="favorite_screen">Любимое</string>
@@ -35,6 +37,8 @@
     <string name="update_name_field_placeholder">Введите новое имя…</string>
     <string name="update_last_name_field_label">Фамилия</string>
     <string name="update_last_name_field_placeholder">"Введите новую фамилию…"</string>
+    <string name="order_date_section">Дата заказа</string>
+    <string name="order_location_section">Место заказа</string>
     <string name="newbie_rating">Новичок</string>
     <string name="often_uses_rating">Частый покупатель</string>
     <string name="master_rating">Мастер</string>
@@ -60,4 +64,5 @@
     <string name="password_field_placeholder">Введите свою пароль…</string>
     <string name="delivery">Доставка</string>
     <string name="pick_up">Самовывоз</string>
+    <string name="make_order_button">Сделать заказ</string>
 </resources>

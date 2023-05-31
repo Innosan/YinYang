@@ -107,14 +107,16 @@ fun Profile(
                             .padding(vertical = 28.dp),
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
-                        ProfileNavigationButton(
-                            title = R.string.orders_button,
-                            icon = R.drawable.ic_orders,
-                            width = 140,
-                            badgeNumber = 3 //TODO: change to orders size
-                        ) {
-                            if (userInfo != null) {
-                                navigator.navigate(OrdersDestination)
+                        profile.userOrders?.value?.size?.let {
+                            ProfileNavigationButton(
+                                title = R.string.orders_button,
+                                icon = R.drawable.ic_orders,
+                                width = 140,
+                                badgeNumber = it
+                            ) {
+                                if (userInfo != null) {
+                                    navigator.navigate(OrdersDestination)
+                                }
                             }
                         }
 
