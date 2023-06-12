@@ -93,7 +93,7 @@ fun AddressList(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            modifier = Modifier.padding(20.dp),
+                            modifier = Modifier.padding(20.dp).fillMaxWidth(.7f),
                             text = address.address,
                             fontWeight = FontWeight.Bold,
                             fontSize = 20.sp,

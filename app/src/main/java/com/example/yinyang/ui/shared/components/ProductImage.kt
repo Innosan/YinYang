@@ -55,14 +55,17 @@ fun ProductImage(
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                Text(
-                    text = "${product.count} шт.",
-                    fontWeight = FontWeight.Black,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    modifier = Modifier
-                        .background(Color(27, 27, 27, 200), RoundedCornerShape(10.dp))
-                        .padding(7.dp),
-                )
+                if (product.count != 0) {
+                    Text(
+                        text = "${product.count} шт.",
+                        fontWeight = FontWeight.Black,
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        modifier = Modifier
+                            .background(Color(27, 27, 27, 200), RoundedCornerShape(10.dp))
+                            .padding(7.dp),
+                    )
+                }
+
                 Text(
                     text = product.category_id.title,
                     fontWeight = FontWeight.Black,

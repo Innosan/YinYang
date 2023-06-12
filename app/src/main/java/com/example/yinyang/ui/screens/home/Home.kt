@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
@@ -71,7 +72,7 @@ fun HomePage(
         snapshotFlow { scrollState.firstVisibleItemIndex }
             .distinctUntilChanged()
             .collect { index ->
-                showButton = index >= 7
+                showButton = index >= 10
             }
     }
 
@@ -84,6 +85,20 @@ fun HomePage(
                     iconId = R.drawable.ic_cart,
                     title = R.string.cart_screen
                 )
+
+                if (total?.quantity == 0) {
+                    Text(
+                        modifier = Modifier
+                            .background(
+                                MaterialTheme.colorScheme.onSurfaceVariant,
+                                RoundedCornerShape(10.dp)
+                            )
+                            .padding(20.dp),
+
+                        text = stringResource(id = R.string.empty_cart_note),
+                        fontWeight = FontWeight.ExtraBold
+                    )
+                }
 
                 if (cart != null) {
                     LazyColumn(
@@ -109,19 +124,20 @@ fun HomePage(
                         }
                     }
 
-                    TotalBlock(total = total)
+                    if (total?.quantity != 0) {
+                        TotalBlock(total = total)
 
-                    Button(
-                        onClick = {
-                            navigator.navigate(OrderDestination)
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        enabled = total?.quantity != 0,
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.make_order_button).uppercase(),
-                            style = buttonTextStyle
-                        )
+                        Button(
+                            onClick = {
+                                navigator.navigate(OrderDestination)
+                            },
+                            modifier = Modifier.fillMaxWidth(),
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.make_order_button).uppercase(),
+                                style = buttonTextStyle
+                            )
+                        }
                     }
                 }
             }

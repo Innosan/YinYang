@@ -80,6 +80,7 @@
     <string name="news_info_note">News and chat</string>
     <string name="socials_note">Socials</string>
     <string name="contacts_note">Contacts</string>
+    <string name="empty_cart_note">This cart looks so lonely.\nYou can add something by clicking on a price tag!</string>
 
     <!-- Plain text -->
     <string name="about_us_text">YinYang - Authentic asian cuisine, prepared by true sons of Korea.</string>

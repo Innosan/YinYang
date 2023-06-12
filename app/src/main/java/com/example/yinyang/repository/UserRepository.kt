@@ -51,6 +51,13 @@ class UserRepository(private val client: SupabaseClient) {
         }
     }
 
+//    suspend fun updateUserRating(
+//        userId: Int,
+//        ordersCount: Int
+//    ) {
+//
+//    }
+
     suspend fun getUserSession(): UserInfo {
         return try {
             client.gotrue.retrieveUserForCurrentSession()

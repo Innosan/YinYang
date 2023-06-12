@@ -3,8 +3,11 @@ package com.example.yinyang.repository
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.yinyang.models.*
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Columns
 
 /**
  * Repository for handling orders and order items.
@@ -13,6 +16,8 @@ import io.github.jan.supabase.postgrest.postgrest
 class OrderRepository(
     val client: SupabaseClient,
 ) {
+    private val gson = Gson()
+    val ordersListType = object : TypeToken<List<Order>>() {}.type
 
     /**
      * Creates a new order for the given user with the specified cart items and total price.
@@ -60,11 +65,14 @@ class OrderRepository(
         val orders = mutableStateOf(emptyList<Order>())
 
         try {
-            orders.value = client.postgrest["order"]
-                .select {
-                    Order::userId eq userId
+            val result = client.postgrest["order"]
+                .select(Columns.raw("*, status_id(title)")) {
+                    Order::user_id eq userId
                 }
-                .decodeList()
+
+            orders.value = gson.fromJson(result.body.toString(), ordersListType)
+
+            println(result)
         } catch (e: Exception) {
             println(e.message)
         }

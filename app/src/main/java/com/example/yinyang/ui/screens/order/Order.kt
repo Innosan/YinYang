@@ -68,6 +68,8 @@ fun Order(
     }
 
     var selectedAddress by remember { mutableStateOf("")}
+    selectedAddress = profile.userAddresses?.value?.get(selectedChipIndex)?.address ?: ""
+    
     var deliveryNote by remember { mutableStateOf("")}
 
     val dateDialogController = remember { mutableStateOf(false) }
