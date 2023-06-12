@@ -35,6 +35,11 @@ fun Profile(
     viewModel: ProfileViewModel,
     onLogout: () -> Unit
 ) {
+    val profile = viewModel.profile.value
+    val userInfo = profile.userInfo?.value
+    val userSession = profile.userSession
+    val userAddresses = profile.userAddresses
+
     val refreshing by viewModel.isRefreshing.collectAsState()
     val pullRefreshState = rememberPullRefreshState(refreshing, { viewModel.refresh() })
 
@@ -42,11 +47,6 @@ fun Profile(
     val context = LocalContext.current
 
     val userActionsHandler = UserActionsHandler(context)
-
-    val profile = viewModel.profile.value
-    val userInfo = profile.userInfo?.value
-    val userSession = profile.userSession
-    val userAddresses = profile.userAddresses
 
     val profileLoaded = userInfo != null
 

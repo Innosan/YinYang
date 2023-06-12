@@ -62,7 +62,7 @@ class ProfileViewModel @Inject constructor (
         CartManager(viewModelScope, cartRepository, profile)
 
     val orderManager: OrderManager =
-        OrderManager(viewModelScope, orderRepository, cartManager)
+        OrderManager(viewModelScope, orderRepository, cartManager, profile)
 
     fun updateUserInfo(userId: Int, newName: String, newLastname: String) {
         viewModelScope.launch {

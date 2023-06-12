@@ -33,6 +33,7 @@ class OrderRepository(
                 total_price = totalPrice,
                 delivery_note = deliveryNote,
                 delivery_address = deliveryAddress,
+                status_id = 1,
             )
 
             val result = client.postgrest["order"]

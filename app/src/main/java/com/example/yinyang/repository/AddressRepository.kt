@@ -26,6 +26,19 @@ class AddressRepository(private val client: SupabaseClient) {
         return addresses
     }
 
+    suspend fun deleteAddress(addressId: Int) {
+        try {
+            client.postgrest["delivery_address"]
+                .delete(
+                    returning = Returning.MINIMAL
+                ) {
+                    DeliveryAddress::id eq addressId
+                }
+        } catch (e: Exception) {
+            println(e.message)
+        }
+    }
+
     suspend fun addAddress(userId: Int, addressMessage: String) {
         val newAddress = DeliveryAddressAdd(
             address = addressMessage,
@@ -38,19 +51,6 @@ class AddressRepository(private val client: SupabaseClient) {
                     value = newAddress,
                     returning = Returning.MINIMAL
                 )
-        } catch (e: Exception) {
-            println(e.message)
-        }
-    }
-
-    suspend fun deleteAddress(addressId: Int) {
-        try {
-            client.postgrest["delivery_address"]
-                .delete(
-                    returning = Returning.MINIMAL
-                ) {
-                    DeliveryAddress::id eq addressId
-                }
         } catch (e: Exception) {
             println(e.message)
         }

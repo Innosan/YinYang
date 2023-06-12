@@ -166,7 +166,7 @@ fun HomePage(
                 SectionHeader(iconId = R.drawable.ic_bar_menu, title = R.string.menu_section)
 
                 var selectedTabIndex by remember { mutableStateOf(0) }
-                val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы")
+                val filterWords: List<String> = listOf("Все", "Сеты", "Роллы", "Пицца", "Снеки", "Супы", "Салаты", "Суши")
 
                 val filteredProducts = products.filter {
                         product ->

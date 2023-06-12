@@ -65,4 +65,9 @@
     <string name="delivery">Доставка</string>
     <string name="pick_up">Самовывоз</string>
     <string name="make_order_button">Сделать заказ</string>
+    <string name="orders_screen">Заказы</string>
+    <string name="about_us_text">YinYang - настоящая азиатская кухня, приготовленная истинными сынами Кореи.</string>
+    <string name="news_info_note">Новости и чат</string>
+    <string name="socials_note">Социальные сети</string>
+    <string name="contacts_note">Контакты</string>
 </resources>

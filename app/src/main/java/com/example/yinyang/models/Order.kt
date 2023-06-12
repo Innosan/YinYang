@@ -12,6 +12,7 @@ data class Order(
     @SerialName("total_price") val totalPrice: Int,
     @SerialName("delivery_note") val deliveryNote: String?,
     @SerialName("delivery_address") val deliveryAddress: String?,
+    @SerialName("status_id") val statusId: Int,
 )
 
 @Serializable
@@ -20,6 +21,7 @@ data class OrderAdd(
     val total_price: Int,
     val delivery_note: String?,
     val delivery_address: String?,
+    val status_id: Int,
 )
 
 @Serializable

@@ -15,10 +15,6 @@ sealed class Screen(val destination: DirectionDestination, val screenTitle: Stri
         destination = SettingsDestination,
         screenTitle = "Настройки"
     )
-    object Help: Screen(
-        destination = HelpDestination,
-        screenTitle = "Помощь"
-    )
     object About: Screen(
         destination = AboutDestination,
         screenTitle = "О приложении"
