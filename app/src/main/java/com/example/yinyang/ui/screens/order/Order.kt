@@ -241,6 +241,7 @@ fun Order(
                 }
 
                 navigator.navigate(OrdersDestination) {
+                    launchSingleTop = true
                     popUpTo(ProfileDestination.route)
                 }
             },

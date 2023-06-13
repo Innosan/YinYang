@@ -18,6 +18,7 @@ class OrderRepository(
 ) {
     private val gson = Gson()
     val ordersListType = object : TypeToken<List<Order>>() {}.type
+    val orderItemsListType = object : TypeToken<List<OrderItem>>() {}.type
 
     /**
      * Creates a new order for the given user with the specified cart items and total price.
@@ -42,7 +43,7 @@ class OrderRepository(
             )
 
             val result = client.postgrest["order"]
-                .insert(order).decodeSingle<Order>()
+                .insert(order).decodeSingle<OrderSerialized>()
 
             val orderItems = cart.map { item ->
                 OrderItemAdd(
@@ -59,6 +60,24 @@ class OrderRepository(
         }
     }
 
+    suspend fun getOrderItems(
+        orderId: Int
+    ) : List<OrderItem> {
+
+        try {
+            val result = client.postgrest["order_item"]
+                .select(Columns.raw("*, product_id(*, category_id(title))")) {
+                    OrderItem::order_id eq orderId
+                }
+
+            return gson.fromJson(result.body.toString(), orderItemsListType)
+        } catch (e: Exception) {
+            println(e.message)
+        }
+
+        return emptyList()
+    }
+
     suspend fun getOrders(
         userId: Int?,
     ) : MutableState<List<Order>> {
@@ -71,8 +90,6 @@ class OrderRepository(
                 }
 
             orders.value = gson.fromJson(result.body.toString(), ordersListType)
-
-            println(result)
         } catch (e: Exception) {
             println(e.message)
         }

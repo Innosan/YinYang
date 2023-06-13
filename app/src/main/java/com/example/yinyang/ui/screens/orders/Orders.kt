@@ -14,14 +14,17 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
+import com.example.yinyang.ui.screens.destinations.OrderViewDestination
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
 @Destination
 @Composable
 fun Orders(
+    navigator: DestinationsNavigator,
     profileViewModel: ProfileViewModel
 ) {
     val orders = profileViewModel.profile.value.userOrders
@@ -38,7 +41,12 @@ fun Orders(
                 modifier = Modifier
                     .clip(RoundedCornerShape(14.dp))
                     .clickable {
-
+                        navigator.navigate(
+                            OrderViewDestination(
+                                orderId = order.id,
+                                orderStatus = order.status_id.title
+                            )
+                        )
                     }
                     .background(
                         MaterialTheme.colorScheme.onSurfaceVariant,

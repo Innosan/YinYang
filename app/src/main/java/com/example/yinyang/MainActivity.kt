@@ -159,6 +159,7 @@ class MainActivity : ComponentActivity() {
                             }
                             composable(OrdersDestination) {
                                 Orders(
+                                    navigator = destinationsNavigator,
                                     profileViewModel = profileViewModel
                                 )
                             }
