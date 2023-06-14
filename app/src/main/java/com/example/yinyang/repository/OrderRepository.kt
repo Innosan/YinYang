@@ -85,7 +85,7 @@ class OrderRepository(
 
         try {
             val result = client.postgrest["order"]
-                .select(Columns.raw("*, status_id(title)")) {
+                .select(Columns.raw("*, status_id(*)")) {
                     Order::user_id eq userId
                 }
 

@@ -65,6 +65,12 @@
     <string name="often_uses_rating">Often Uses</string>
     <string name="master_rating">Master</string>
 
+    <!-- Order statuses -->
+    <string name="new_status">Please, pay for it by button below!</string>
+    <string name="delivering_status">We\'re delivering your order!</string>
+    <string name="cooking_status">Your order is still cooking, we\'ll contact you!</string>
+    <string name="finished_status">It\'s finished!\nHope, you liked that!</string>
+
     <!-- Info -->
     <string name="exit_note">Are you sure you want to log out?</string>
     <string name="no_phone_note">No phone number provided</string>
@@ -92,5 +98,8 @@
     <!-- Order options -->
     <string name="delivery">Delivery</string>
     <string name="pick_up">Pick-Up</string>
+
+    <!-- Warning -->
+    <string name="error_warning">Something bad happened!</string>
 
 </resources>

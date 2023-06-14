@@ -7,8 +7,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.yinyang.R
+import com.example.yinyang.ui.screens.orders.components.OrderItemCard
 import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.viewmodels.OrderViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -17,16 +20,31 @@ import com.ramcosta.composedestinations.annotation.Destination
 @Composable
 fun OrderView(
     orderId: Int,
-    orderStatus: String
+    orderStatusTitle: String,
+    orderStatusId: Int,
+    orderTotal: Int,
 ) {
     val viewModel = viewModel<OrderViewModel>()
     val orderItems = viewModel.getOrderItems(orderId = orderId)
 
+    val statusMessage = when (orderStatusId) {
+        1 -> R.string.new_status
+        2 -> R.string.delivering_status
+        3 -> R.string.cooking_status
+        4 -> R.string.finished_status
+        
+        else -> {R.string.error_warning}
+    }
+
     ScreenContainer(
         contentSpacing = 20
     ) {
-        Text(text = orderId.toString())
-        Text(text = orderStatus.uppercase())
+        Text(text = "${stringResource(id = R.string.order_screen)} №$orderId")
+        Text(
+            text = orderStatusTitle.uppercase(),
+        )
+
+        Text(text = stringResource(id = statusMessage))
 
         LazyColumn(
             modifier = Modifier
@@ -39,8 +57,10 @@ fun OrderView(
 
                 key = {orderItem -> orderItem.product_id.id}
             ) { orderItem ->
-                Text(text = orderItem.product_id.id.toString())
+                OrderItemCard(orderItem = orderItem)
             }
         }
+
+        Text(text = "$orderTotal ₽")
     }
 }

@@ -28,7 +28,7 @@ import com.example.yinyang.ui.shared.components.ScreenContainer
 import com.example.yinyang.ui.shared.components.SectionHeader
 import com.example.yinyang.ui.shared.components.TotalBlock
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
-import com.example.yinyang.utils.formatDate
+import com.example.yinyang.utils.DateFormatter
 import com.example.yinyang.utils.getTotal
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -58,6 +58,7 @@ fun Order(
     var selectedOptionIndex by remember { mutableStateOf(0) }
     var selectedChipIndex by remember { mutableStateOf(0) }
 
+    val dateFormatter = DateFormatter()
     val selectedDate = remember {
         mutableStateOf<LocalDate>(
             Instant
@@ -208,7 +209,7 @@ fun Order(
                         shape = RoundedCornerShape(12.dp),
                     ) {
                         Text(
-                            text = formatDate(selectedDate.value),
+                            text = dateFormatter.formatDate(selectedDate.value),
                             style = buttonTextStyle,
                             fontSize = 20.sp,
                         )
