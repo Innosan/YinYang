@@ -9,8 +9,6 @@ fun setHorizontalEnter(): EnterTransition {
         initialOffsetX = { 160 }
     ) + fadeIn(
         initialAlpha = 0f
-    ) + scaleIn(
-        initialScale = 0f
     )
 }
 
@@ -29,8 +27,6 @@ fun setHorizontalExit(): ExitTransition {
         targetOffsetX = { 160 }
     ) + fadeOut(
         targetAlpha = 0f
-    ) + scaleOut(
-        targetScale = 0f
     )
 }
 

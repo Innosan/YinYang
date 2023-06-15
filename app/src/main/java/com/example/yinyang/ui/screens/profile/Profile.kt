@@ -265,7 +265,7 @@ fun Profile(
                             confirmButton = {
                                 AlertDialogButton(buttonType = ButtonType.CONFIRM) {
                                     coroutineScope.launch {
-                                        userActionsHandler.performUserAction(UserAction.LOGOUT)
+                                        userActionsHandler.performUserAction(UserAction.LOGOUT, navigator = null)
                                     }
 
                                     onLogout()

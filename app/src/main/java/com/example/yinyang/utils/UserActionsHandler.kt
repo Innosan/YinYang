@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import com.example.yinyang.models.User
 import com.example.yinyang.network.client
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 import io.github.jan.supabase.gotrue.gotrue
 import io.github.jan.supabase.gotrue.providers.builtin.Email
 import io.github.jan.supabase.gotrue.user.UserInfo
@@ -20,7 +21,7 @@ class UserActionsHandler(private val context: Context) {
      * @param userEmail The user's email address.
      * @param userPassword The user's password.
      */
-    private suspend fun signUp(userEmail: String, userPassword: String) {
+    private suspend fun signUp(userEmail: String, userPassword: String, navigator: DestinationsNavigator?) {
         client.gotrue.signUpWith(Email) {
             email = userEmail
             password = userPassword
@@ -28,6 +29,8 @@ class UserActionsHandler(private val context: Context) {
 
         val newUserInfo: UserInfo = client.gotrue.retrieveUserForCurrentSession()
         createUser(newUserInfo.id)
+
+        navigator?.navigate(Screen.Home.destination)
     }
 
     /**
@@ -52,7 +55,7 @@ class UserActionsHandler(private val context: Context) {
      * @param userEmail The user's email address.
      * @param userPassword The user's password.
      */
-    suspend fun performUserAction(userAction: UserAction, userEmail: String = "", userPassword: String = "") {
+    suspend fun performUserAction(userAction: UserAction, userEmail: String = "", userPassword: String = "", navigator: DestinationsNavigator?) {
         val successfulActionMessage = when (userAction) {
             UserAction.SIGNUP -> "Вы успешно зарегистрировались!"
             UserAction.LOGIN -> "Вы успешно вошли!"
@@ -62,7 +65,7 @@ class UserActionsHandler(private val context: Context) {
 
         try {
             when (userAction) {
-                UserAction.SIGNUP -> signUp(userEmail, userPassword)
+                UserAction.SIGNUP -> signUp(userEmail, userPassword, navigator)
                 UserAction.LOGIN -> logIn(userEmail, userPassword)
                 UserAction.LOGOUT -> logOut()
             }

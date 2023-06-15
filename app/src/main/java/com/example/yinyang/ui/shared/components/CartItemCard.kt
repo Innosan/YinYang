@@ -11,10 +11,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.yinyang.R
 import com.example.yinyang.models.CartItem
 
 @Composable
@@ -81,7 +83,7 @@ fun CartItemCard(
 
                     deleteCartItem()
                 }) {
-                    Text(text = "Delete from cart")
+                    Text(text = stringResource(id = R.string.remove_from_cart_button))
                 }
             }
         }

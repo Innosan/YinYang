@@ -21,6 +21,7 @@ import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.ButtonType
 import com.example.yinyang.viewmodels.ProfileViewModel
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun ProductCard(
     product: Product,

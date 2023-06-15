@@ -10,6 +10,7 @@ import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.favorite.components.FavoriteCard
@@ -60,7 +61,7 @@ fun Favorite(
             ,
         ) {
             Text(
-                text = "Go to Menu",
+                text = stringResource(id = R.string.go_to_menu_button),
                 style = buttonTextStyle
             )
         }

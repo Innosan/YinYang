@@ -53,7 +53,7 @@ fun SignIn(
 
             Form(
                 onFormSubmit = {email, password ->
-                    userActionsHandler.performUserAction(userAction = UserAction.LOGIN, email, password)
+                    userActionsHandler.performUserAction(userAction = UserAction.LOGIN, email, password, null)
                 },
 
                 formAction = R.string.sign_in_screen,

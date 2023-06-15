@@ -13,6 +13,7 @@
     <string name="edit_profile_button">Изменить профиль</string>
     <string name="select_date_button">Выбрать дату</string>
     <string name="pick_order_date_button">Выбрать дату заказа</string>
+    <string name="go_to_menu_button">Перейти в меню</string>
     <string name="orders_button">Заказы</string>
     <string name="favorite_button">Любимое</string>
     <string name="pizza_constructor_button">Пицца</string>
@@ -42,6 +43,10 @@
     <string name="newbie_rating">Новичок</string>
     <string name="often_uses_rating">Частый покупатель</string>
     <string name="master_rating">Мастер</string>
+    <string name="new_status">Пожалуйста, заплатите за заказ!</string>
+    <string name="delivering_status">Мы доставляем ваш заказ!</string>
+    <string name="cooking_status">Ваш заказ все ещё готовится, подождите немного!</string>
+    <string name="finished_status">Это завершенный заказ.\nКак и ваша карьера счастливого человека.</string>
     <string name="exit_note">Вы точно хотите выйти?</string>
     <string name="no_phone_note">Номер телефона не предоставлен</string>
     <string name="update_address_label">Адрес</string>
@@ -61,13 +66,16 @@
     <string name="email_field_label">Почта</string>
     <string name="password_field_label">Пароль</string>
     <string name="email_field_placeholder">Введите свою почту…</string>
-    <string name="password_field_placeholder">Введите свою пароль…</string>
+    <string name="password_field_placeholder">Введите свой пароль…</string>
     <string name="delivery">Доставка</string>
     <string name="pick_up">Самовывоз</string>
     <string name="make_order_button">Сделать заказ</string>
     <string name="orders_screen">Заказы</string>
+    <string name="empty_cart_note">Корзина выглядит такой печальной.\nДобавьте в неё что-нибудь!</string>
     <string name="about_us_text">YinYang - настоящая азиатская кухня, приготовленная истинными сынами Кореи.</string>
     <string name="news_info_note">Новости и чат</string>
     <string name="socials_note">Социальные сети</string>
     <string name="contacts_note">Контакты</string>
+    <string name="error_warning">Что-то произошло интересное!</string>
+    <string name="remove_from_cart_button">Убрать из корзины</string>
 </resources>

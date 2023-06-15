@@ -14,6 +14,8 @@
     <string name="make_order_button">Make order</string>
     <string name="select_date_button">Select date</string>
     <string name="pick_order_date_button">Pick order date</string>
+    <string name="go_to_menu_button">Go to menu</string>
+    <string name="remove_from_cart_button">Remove from cart</string>
 
     <!-- Navigation buttons -->
     <string name="orders_button">Orders</string>
