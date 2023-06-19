@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.orders.components.OrderItemCard
-import com.example.yinyang.ui.shared.components.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.ScreenContainer
 import com.example.yinyang.viewmodels.OrderViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 

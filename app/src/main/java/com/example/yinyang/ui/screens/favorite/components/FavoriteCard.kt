@@ -2,7 +2,10 @@ package com.example.yinyang.ui.screens.favorite.components
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -15,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.Product
-import com.example.yinyang.ui.shared.components.ProductImage
+import com.example.yinyang.ui.shared.components.product.ProductImage
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.viewmodels.ProfileViewModel
 
@@ -45,7 +48,7 @@ fun FavoriteCard(
         )
     }
 
-    Column() {
+    Column {
         AnimatedVisibility(
             visible = !isUnfavoriting,
         ) {

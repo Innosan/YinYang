@@ -20,6 +20,12 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.FavoriteDestination
 import com.example.yinyang.ui.screens.destinations.OrdersDestination
 import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.shared.components.containers.RefreshableScreenContainer
+import com.example.yinyang.ui.shared.components.containers.SectionHeader
+import com.example.yinyang.ui.shared.components.service.AlertDialogButton
+import com.example.yinyang.ui.shared.components.user.AddressList
+import com.example.yinyang.ui.shared.components.user.ProfileNavigationButton
+import com.example.yinyang.ui.shared.components.user.UserInfoField
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.*
 import com.example.yinyang.viewmodels.ProfileViewModel
@@ -76,7 +82,7 @@ fun Profile(
                                 fontWeight = FontWeight.Black,
                                 fontSize = 24.sp,
                             )
-                            //Text(text = userInfo.id.toString())
+
                             Row(
                                 modifier = Modifier
                                     .background(
@@ -190,7 +196,7 @@ fun Profile(
                                 Text(text = stringResource(id = R.string.update_user_note))
                             },
                             text = {
-                                Column() {
+                                Column {
                                     OutlinedTextField(
                                         value = updatedName,
                                         onValueChange = { updatedName = it },

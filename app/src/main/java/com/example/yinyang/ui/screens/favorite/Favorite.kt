@@ -14,8 +14,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.favorite.components.FavoriteCard
-import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.components.SectionHeader
+import com.example.yinyang.ui.shared.components.containers.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.SectionHeader
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.viewmodels.ProfileViewModel

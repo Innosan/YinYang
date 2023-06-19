@@ -8,7 +8,7 @@ import com.example.yinyang.network.client
 import com.example.yinyang.repository.OrderRepository
 import kotlinx.coroutines.launch
 
-class OrderViewModel() : ViewModel() {
+class OrderViewModel : ViewModel() {
     private val repository = OrderRepository(client)
     private val orderItems = mutableStateOf(emptyList<OrderItem>())
 

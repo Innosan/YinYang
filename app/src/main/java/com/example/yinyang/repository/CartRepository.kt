@@ -4,15 +4,12 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import com.example.yinyang.models.CartItem
 import com.example.yinyang.models.CartItemAdd
-import com.example.yinyang.models.Favorite
-import com.example.yinyang.models.FavoriteAdd
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
 import io.github.jan.supabase.postgrest.query.Returning
-
 
 class CartRepository(val client: SupabaseClient) {
     suspend fun getCart(userId: Int?): MutableState<List<CartItem>> {

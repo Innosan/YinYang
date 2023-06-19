@@ -39,7 +39,7 @@ fun OrderItemCard(
             contentDescription = "${product.title} image",
         )
 
-        Column() {
+        Column {
             Text(
                 text = product.title,
                 fontWeight = FontWeight.Bold,

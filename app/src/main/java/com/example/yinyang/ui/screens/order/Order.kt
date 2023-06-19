@@ -23,10 +23,10 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.OrdersDestination
 import com.example.yinyang.ui.screens.destinations.ProfileDestination
 import com.example.yinyang.ui.screens.order.components.OrderCard
-import com.example.yinyang.ui.shared.components.ModalDatePicker
-import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.components.SectionHeader
-import com.example.yinyang.ui.shared.components.TotalBlock
+import com.example.yinyang.ui.shared.components.containers.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.SectionHeader
+import com.example.yinyang.ui.shared.components.service.ModalDatePicker
+import com.example.yinyang.ui.shared.components.user.TotalBlock
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.DateFormatter
 import com.example.yinyang.utils.getTotal
@@ -135,7 +135,7 @@ fun Order(
             AnimatedVisibility(
                 visible = selectedOptionIndex != 1,
             ) {
-                Column() {
+                Column {
                     SectionHeader(
                         iconId = R.drawable.ic_location,
                         title = R.string.order_location_section
@@ -194,9 +194,9 @@ fun Order(
             }
         }
 
-        Column() {
+        Column {
             AnimatedVisibility(visible = selectedOptionIndex != 0) {
-                Column() {
+                Column {
                     SectionHeader(iconId = R.drawable.ic_pick_date, title = R.string.order_date_section)
 
                     Button(

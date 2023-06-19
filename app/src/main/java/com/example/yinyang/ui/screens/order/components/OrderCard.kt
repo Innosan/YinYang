@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -22,7 +22,7 @@ fun OrderCard(
 ) {
     val product = orderItem.product_id
 
-    Column() {
+    Column {
         Row(
             modifier = Modifier.fillMaxWidth(.95f),
             horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -41,7 +41,7 @@ fun OrderCard(
                 contentDescription = "${product.title} image",
             )
 
-            Column() {
+            Column {
                 Text(
                     text = product.title,
                     fontWeight = FontWeight.Bold,

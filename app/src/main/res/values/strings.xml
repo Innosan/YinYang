@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YinYang</string>
+    <string name="app_name">Yin Yang</string>
 
     <!-- Buttons -->
     <string name="confirm_button">Confirm</string>
@@ -16,6 +16,8 @@
     <string name="pick_order_date_button">Pick order date</string>
     <string name="go_to_menu_button">Go to menu</string>
     <string name="remove_from_cart_button">Remove from cart</string>
+    <string name="sign_in_button">Sign in now</string>
+    <string name="sign_up_button">Sign up</string>
 
     <!-- Navigation buttons -->
     <string name="orders_button">Orders</string>
@@ -88,6 +90,8 @@
     <string name="news_info_note">News and chat</string>
     <string name="socials_note">Socials</string>
     <string name="contacts_note">Contacts</string>
+    <string name="go_to_sign_up_note">Doesn\'t have an account?</string>
+    <string name="go_to_sign_in_note">Already have an account?</string>
     <string name="empty_cart_note">This cart looks so lonely.\nYou can add something by clicking on a price tag!</string>
 
     <!-- Plain text -->

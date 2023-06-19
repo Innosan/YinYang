@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
@@ -18,9 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.OrderViewDestination
-import com.example.yinyang.ui.shared.components.ScreenContainer
-import com.example.yinyang.ui.shared.components.SectionHeader
-import com.example.yinyang.ui.shared.styles.buttonTextStyle
+import com.example.yinyang.ui.shared.components.containers.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.SectionHeader
 import com.example.yinyang.utils.DateFormatter
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
@@ -74,7 +72,7 @@ fun Orders(
 
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Column() {
+                Column {
                     Text(
                         text = stringResource(id = R.string.order_screen) + " №" + order.id,
                         fontWeight = FontWeight.Black,
@@ -88,7 +86,7 @@ fun Orders(
                     )
                 }
 
-                Column() {
+                Column {
                     Text(
                         text = order.status_id.title.uppercase(),
                         fontWeight = FontWeight.ExtraBold,

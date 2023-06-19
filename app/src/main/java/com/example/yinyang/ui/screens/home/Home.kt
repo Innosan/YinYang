@@ -1,6 +1,6 @@
 package com.example.yinyang.ui.screens.home
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -11,9 +11,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -27,10 +24,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
-import com.example.yinyang.ui.shared.components.CartItemCard
 import com.example.yinyang.ui.screens.destinations.OrderDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
-import com.example.yinyang.ui.shared.components.*
+import com.example.yinyang.ui.shared.components.containers.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.SectionContainer
+import com.example.yinyang.ui.shared.components.containers.SectionHeader
+import com.example.yinyang.ui.shared.components.product.CartItemCard
+import com.example.yinyang.ui.shared.components.product.FilterList
+import com.example.yinyang.ui.shared.components.product.ProductCard
+import com.example.yinyang.ui.shared.components.service.BottomSheetWrapper
+import com.example.yinyang.ui.shared.components.user.TotalBlock
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.getTotal
 import com.example.yinyang.utils.setHorizontalEnter

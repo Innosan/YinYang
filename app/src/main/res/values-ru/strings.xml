@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">YinYang</string>
+    <string name="app_name">Yin Yang</string>
 
     <string name="confirm_button">Подтвердить</string>
     <string name="add_button">Добавить</string>
@@ -78,4 +78,8 @@
     <string name="contacts_note">Контакты</string>
     <string name="error_warning">Что-то произошло интересное!</string>
     <string name="remove_from_cart_button">Убрать из корзины</string>
+    <string name="sign_in_button">Войти</string>
+    <string name="sign_up_button">Зарегистрироваться</string>
+    <string name="go_to_sign_up_note">Еще нет аккаунта?</string>
+    <string name="go_to_sign_in_note">Уже есть аккаунт?</string>
 </resources>

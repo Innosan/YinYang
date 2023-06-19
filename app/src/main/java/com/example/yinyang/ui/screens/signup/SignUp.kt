@@ -1,21 +1,22 @@
 package com.example.yinyang.ui.screens.signup
 
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.example.yinyang.R
-import com.example.yinyang.network.client
-import com.example.yinyang.ui.shared.components.Form
-import com.example.yinyang.ui.shared.components.ScreenContainer
+import com.example.yinyang.ui.shared.components.containers.BackgroundScreenContainer
+import com.example.yinyang.ui.shared.components.misc.Socials
+import com.example.yinyang.ui.shared.components.service.Form
+import com.example.yinyang.ui.shared.components.service.NavigateToSignInUpButton
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.utils.UserAction
 import com.example.yinyang.utils.UserActionsHandler
+import com.example.yinyang.utils.socials
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import io.github.jan.supabase.gotrue.SessionStatus
-import io.github.jan.supabase.gotrue.gotrue
 
 @Destination
 @Composable
@@ -26,21 +27,32 @@ fun SignUp(
 
     val userActionsHandler = UserActionsHandler(context)
 
-    ScreenContainer {
-        Text(text = stringResource(id = R.string.sign_up_note))
-
+    BackgroundScreenContainer(background = R.drawable.bg_sign_in_up) {
         Form(
             onFormSubmit = {email, password ->
-                userActionsHandler.performUserAction(userAction = UserAction.SIGNUP, email, password, navigator)
+                userActionsHandler.performUserAction(
+                    userAction = UserAction.SIGNUP,
+                    email,
+                    password,
+                    navigator
+                )
             },
 
-            formAction = R.string.sign_up_screen,
+            formAction = R.string.sign_up_button,
         )
 
-        Button(onClick = {
-            navigator.navigate(Screen.SignIn.destination)
-        }) {
-            Text(text = stringResource(id = R.string.sign_in_screen))
+        Spacer(modifier = Modifier.size(20.dp))
+
+        NavigateToSignInUpButton(
+            buttonLabel = R.string.go_to_sign_in_note,
+            buttonText = R.string.sign_in_button,
+            backgroundShape = RoundedCornerShape(10.dp)
+        ) {
+            navigator.navigate(Screen.SignUp.destination)
         }
+
+        Spacer(modifier = Modifier.size(20.dp))
+
+        Socials(socialsArray = socials)
     }
 }
