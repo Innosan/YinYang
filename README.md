@@ -3,9 +3,11 @@
 **Written to it's fullest in Kotlin using Jetpack Compose.**
 
 ## 🔧 UI
-![Cart](https://drive.google.com/file/d/1UXRGN8JeVrtLOHsXX0bqPlgFWIoFKhWw/view?usp=drive_link)
-![Home](https://drive.google.com/file/d/1SJZzY73Wpdmzriw8O3npBNJXiO3yf6H9/view?usp=drive_link)
-![Profile](https://drive.google.com/file/d/1vWwPNVFSFd3GjwGfEduFvRBLjYVz3gHG/view?usp=drive_link)
+<p float="left">
+  <img src="https://drive.google.com/uc?export=view&id=1SJZzY73Wpdmzriw8O3npBNJXiO3yf6H9" width="200" heigth="400" alt="Home" />
+  <img src="https://drive.google.com/uc?export=view&id=1vWwPNVFSFd3GjwGfEduFvRBLjYVz3gHG" width="200" heigth="400" alt="Profile" />
+  <img src="https://drive.google.com/uc?export=view&id=1UXRGN8JeVrtLOHsXX0bqPlgFWIoFKhWw" width="200" heigth="400" alt="Cart" />
+</p>
 
 ## 🔧 Features 
  
