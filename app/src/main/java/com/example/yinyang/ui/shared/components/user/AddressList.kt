@@ -173,7 +173,8 @@ fun AddressList(
             Text(
                 text = stringResource(id = R.string.add_button).uppercase(),
                 fontFamily = OverpassFamily,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
         }
     }

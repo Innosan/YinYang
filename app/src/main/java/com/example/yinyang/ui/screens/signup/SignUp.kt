@@ -14,7 +14,7 @@ import com.example.yinyang.ui.shared.components.service.NavigateToSignInUpButton
 import com.example.yinyang.utils.Screen
 import com.example.yinyang.utils.UserAction
 import com.example.yinyang.utils.UserActionsHandler
-import com.example.yinyang.utils.socials
+import com.example.yinyang.utils.oauthSocials
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
@@ -48,11 +48,11 @@ fun SignUp(
             buttonText = R.string.sign_in_button,
             backgroundShape = RoundedCornerShape(10.dp)
         ) {
-            navigator.navigate(Screen.SignUp.destination)
+            navigator.navigate(Screen.SignIn.destination)
         }
 
         Spacer(modifier = Modifier.size(20.dp))
 
-        Socials(socialsArray = socials)
+        Socials(R.string.sign_up_with_note, socialsArray = oauthSocials, contentPadding = 12)
     }
 }

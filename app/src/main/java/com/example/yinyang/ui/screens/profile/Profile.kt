@@ -253,8 +253,34 @@ fun Profile(
                         )
                     }
 
-                    Button(onClick = { logOutDialogControl.value = true }) {
-                        Text(text = stringResource(id = R.string.logout_button))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Button(
+                            onClick = {
+
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth(.45f),
+                            shape = RoundedCornerShape(10.dp)
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.delete_acc_button),
+                                style = buttonTextStyle,
+                            )
+                        }
+
+                        Button(
+                            onClick = { logOutDialogControl.value = true },
+                            modifier = Modifier.fillMaxWidth(.85f),
+                            shape = RoundedCornerShape(10.dp),
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.logout_button),
+                                style = buttonTextStyle
+                            )
+                        }
                     }
 
                     if (logOutDialogControl.value) {

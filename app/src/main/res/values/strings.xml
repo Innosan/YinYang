@@ -18,6 +18,7 @@
     <string name="remove_from_cart_button">Remove from cart</string>
     <string name="sign_in_button">Sign in now</string>
     <string name="sign_up_button">Sign up</string>
+    <string name="delete_acc_button">Delete account</string>
 
     <!-- Navigation buttons -->
     <string name="orders_button">Orders</string>
@@ -63,6 +64,7 @@
     <string name="menu_section">Menu</string>
     <string name="order_date_section">Order date</string>
     <string name="order_location_section">Order location</string>
+    <string name="contacts_section">Contacts</string>
 
     <!-- Ratings -->
     <string name="newbie_rating">Newbie</string>
@@ -92,6 +94,9 @@
     <string name="contacts_note">Contacts</string>
     <string name="go_to_sign_up_note">Doesn\'t have an account?</string>
     <string name="go_to_sign_in_note">Already have an account?</string>
+    <string name="sign_up_with_note">Sign up with</string>
+    <string name="about_social_note">News and chat</string>
+    <string name="help_note">If you need some help, you can contact us anytime!</string>
     <string name="empty_cart_note">This cart looks so lonely.\nYou can add something by clicking on a price tag!</string>
 
     <!-- Plain text -->
@@ -100,6 +105,11 @@
     <!-- Special -->
     <string name="weight">g</string>
     <string name="quantity">it.</string>
+
+    <!-- Contacts -->
+    <string name="phone" translatable="false">+7 (456) 345–43–21</string>
+    <string name="address" translatable="false">ст. Каневская, улица Пушкина, дом 34</string>
+    <string name="email" translatable="false">yin@yang.com</string>
 
     <!-- Order options -->
     <string name="delivery">Delivery</string>

@@ -82,4 +82,9 @@
     <string name="sign_up_button">Зарегистрироваться</string>
     <string name="go_to_sign_up_note">Еще нет аккаунта?</string>
     <string name="go_to_sign_in_note">Уже есть аккаунт?</string>
+    <string name="delete_acc_button">Удалить аккаунт</string>
+    <string name="contacts_section">Контакты</string>
+    <string name="sign_up_with_note">Войти через</string>
+    <string name="about_social_note">Новости и чат</string>
+    <string name="help_note">Если вам нужна помощь, можете обращаться в любой момент!</string>
 </resources>
