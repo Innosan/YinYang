@@ -87,4 +87,6 @@
     <string name="sign_up_with_note">Войти через</string>
     <string name="about_social_note">Новости и чат</string>
     <string name="help_note">Если вам нужна помощь, можете обращаться в любой момент!</string>
+    <string name="pay_button">Перейти к оплате</string>
+    <string name="order_error_warning">Что-то не так? Позвоните!</string>
 </resources>

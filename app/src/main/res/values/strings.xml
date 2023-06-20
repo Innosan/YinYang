@@ -19,6 +19,7 @@
     <string name="sign_in_button">Sign in now</string>
     <string name="sign_up_button">Sign up</string>
     <string name="delete_acc_button">Delete account</string>
+    <string name="pay_button">Proceed to payment</string>
 
     <!-- Navigation buttons -->
     <string name="orders_button">Orders</string>
@@ -117,5 +118,6 @@
 
     <!-- Warning -->
     <string name="error_warning">Something bad happened!</string>
+    <string name="order_error_warning">Something bad happened? Call us!</string>
 
 </resources>

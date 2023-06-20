@@ -47,8 +47,6 @@ fun Orders(
                 val time = order.created_at?.let { dateFormatter.getLocalDateTime(it).time }
             }
 
-            println(order)
-
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
