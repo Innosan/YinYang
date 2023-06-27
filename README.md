@@ -26,6 +26,10 @@
 - Place orders and track delivery status 
 - View order history
 
+## 🔧 Architecture
+
+<img src="https://drive.google.com/uc?export=view&id=1aXPBi_cQHbtCcbb6z-qQ3j_GX9ibfyTF" width="600" heigth="200" alt="Architecture" />
+
 ## Getting Started 
  
 To run the app, you'll need to have Android Studio installed on your machine. Follow these steps to get started: 
