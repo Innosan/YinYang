@@ -2,7 +2,6 @@ package com.example.yinyang.utils
 
 import androidx.compose.animation.*
 
-
 fun setHorizontalEnter(): EnterTransition {
 
     return slideInHorizontally(

@@ -6,8 +6,13 @@ import com.example.yinyang.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.functions.functions
 import io.github.jan.supabase.postgrest.postgrest
 import io.github.jan.supabase.postgrest.query.Columns
+import io.ktor.client.call.*
+import io.ktor.http.*
+import kotlinx.serialization.json.buildJsonObject
+import kotlinx.serialization.json.put
 
 /**
  * Repository for handling orders and order items.
@@ -77,6 +82,37 @@ class OrderRepository(
 
         return emptyList()
     }
+
+//    suspend fun getPaymentToken(
+//        orderId: Int,
+//        orderTotalPrice: Int
+//    ) : Payment {
+//        val paymentInfo = client.functions.invoke(
+//            function = "get-payment-token",
+//            body = buildJsonObject {
+//                put("url", "https://api.yookassa.ru/v3/payments")
+//                put("paymentData", buildJsonObject {
+//                    put("amount", buildJsonObject {
+//                        put("value", orderTotalPrice)
+//                        put("currency", "RUB")
+//                    })
+//                    put("confirmation", buildJsonObject {
+//                        put("type", "embedded")
+//                    })
+//                    put("capture", "true")
+//                    put("description", "Заказ $orderId")
+//                })
+//                put("storeId", "322536")
+//                put("storeKey", "test_YcF4ERtODInjpJyNhCryOfR7AKTwT8gpgh1BHjX-2aw")
+//                put("idempotenceKey", "$orderId-rwerewadsrRKNqweqqweqw121eqel324qwe4342")
+//            },
+//            headers = Headers.build {
+//                append(HttpHeaders.ContentType, "application/json")
+//            }
+//        )
+//
+//        return paymentInfo.body()
+//    }
 
     suspend fun getOrders(
         userId: Int?,

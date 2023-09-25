@@ -1,6 +1,7 @@
 package com.example.yinyang.network
 
 import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.functions.Functions
 import io.github.jan.supabase.gotrue.GoTrue
 import io.github.jan.supabase.postgrest.Postgrest
 
@@ -13,6 +14,10 @@ val client = createSupabaseClient(
     }
 
     install(GoTrue) {
+        // settings
+    }
+
+    install(Functions) {
         // settings
     }
 }
