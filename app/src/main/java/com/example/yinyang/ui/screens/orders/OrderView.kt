@@ -26,6 +26,7 @@ import com.example.yinyang.R
 import com.example.yinyang.models.Payment
 import com.example.yinyang.network.client
 import com.example.yinyang.ui.screens.orders.components.OrderItemCard
+import com.example.yinyang.ui.shared.components.containers.BackgroundedText
 import com.example.yinyang.ui.shared.components.containers.ScreenContainer
 import com.example.yinyang.ui.shared.components.service.PaymentWebView
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
@@ -92,12 +93,7 @@ fun OrderView(
             )
         }
 
-        Text(
-            text = stringResource(id = statusMessage.message),
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(10.dp))
-                .padding(10.dp)
-        )
+        BackgroundedText(textId = statusMessage.message)
 
         LazyColumn(
             modifier = Modifier

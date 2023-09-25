@@ -89,4 +89,16 @@
     <string name="help_note">Если вам нужна помощь, можете обращаться в любой момент!</string>
     <string name="pay_button">Перейти к оплате</string>
     <string name="order_error_warning">Что-то не так? Позвоните!</string>
+    <string name="help_main_note">Здесь находится основная информация о том, как пользоваться приложением, если вы подзабыли!</string>
+    <string name="help_nav_note">По приложнению можно передвигаться, используя меню навигации слева! Открывается по свайпу.</string>
+    <string name="help_main_menu_note">Разделено на 3 секции: ‘сделай-сам’, меню ресторана и корзина.</string>
+    <string name="help_profile_note">Из профиля можно попасть в заказы и любимые товары. Здесь отображается главная информация о вас!  По свайпу вниз можно обновить страницу.</string>
+    <string name="help_options_title">Доступные действия</string>
+    <string name="sort_option">Сортировка</string>
+    <string name="fav_option">Любимое</string>
+    <string name="cart_option">Корзина</string>
+    <string name="config_option">Конструктор</string>
+    <string name="orders_option">Заказы</string>
+    <string name="addresses_option">Адреса</string>
+    <string name="profile_option">Профиль</string>
 </resources>

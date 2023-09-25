@@ -33,7 +33,6 @@ fun About() {
             socialsArray = aboutSocials,
         )
 
-
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {

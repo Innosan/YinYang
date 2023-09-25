@@ -27,4 +27,8 @@ sealed class Screen(val destination: DirectionDestination, val screenTitle: Stri
         destination = SignUpDestination,
         screenTitle = "Регистрация"
     )
+    object Help: Screen(
+        destination = HelpDestination,
+        screenTitle = "Помощь"
+    )
 }

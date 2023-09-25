@@ -26,6 +26,7 @@ import com.example.yinyang.R
 import com.example.yinyang.models.constructorItems
 import com.example.yinyang.ui.screens.destinations.OrderDestination
 import com.example.yinyang.ui.screens.home.components.FoodConstructor
+import com.example.yinyang.ui.shared.components.containers.BackgroundedText
 import com.example.yinyang.ui.shared.components.containers.ScreenContainer
 import com.example.yinyang.ui.shared.components.containers.SectionContainer
 import com.example.yinyang.ui.shared.components.containers.SectionHeader
@@ -90,17 +91,7 @@ fun HomePage(
                 )
 
                 if (total?.quantity == 0) {
-                    Text(
-                        modifier = Modifier
-                            .background(
-                                MaterialTheme.colorScheme.onSurfaceVariant,
-                                RoundedCornerShape(10.dp)
-                            )
-                            .padding(20.dp),
-
-                        text = stringResource(id = R.string.empty_cart_note),
-                        fontWeight = FontWeight.ExtraBold
-                    )
+                    BackgroundedText(textId = R.string.empty_cart_note)
                 }
 
                 if (cart != null) {

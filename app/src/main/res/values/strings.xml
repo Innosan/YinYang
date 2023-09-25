@@ -120,4 +120,20 @@
     <string name="error_warning">Something bad happened!</string>
     <string name="order_error_warning">Something bad happened? Call us!</string>
 
+    <!-- Help -->
+    <string name="help_main_note">Here is some common information on how to use the app, in case you\'ve forgotten!</string>
+    <string name="help_nav_note">You can navigate through the application\nusing the navigation menu on the left!\nOpens by swiping.</string>
+    <string name="help_main_menu_note">Main menu divided into 3 sections:\nDIY, the restaurant menu and the shopping cart.</string>
+    <string name="help_profile_note">From your profile, you can access your orders\nand your favorite products.Here you can see\nthe main information about you!\nSwipe down to refresh the page.</string>
+    <string name="help_options_title">Available options</string>
+
+    <!-- Help options -->
+    <string name="sort_option">Sort</string>
+    <string name="fav_option">Favorite</string>
+    <string name="cart_option">Cart</string>
+    <string name="config_option">Configures</string>
+    <string name="orders_option">Orders</string>
+    <string name="addresses_option">Addresses</string>
+    <string name="profile_option">Profile</string>
+
 </resources>
