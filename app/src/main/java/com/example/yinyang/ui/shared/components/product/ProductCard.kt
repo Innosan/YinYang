@@ -20,6 +20,7 @@ import com.example.yinyang.models.Product
 import com.example.yinyang.ui.shared.components.service.AlertDialogButton
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.ButtonType
+import com.example.yinyang.utils.QuantityChangeType
 import com.example.yinyang.viewmodels.ProfileViewModel
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -168,6 +169,15 @@ fun ProductCard(
             if (addToCartController.value) {
                 var quantity by remember { mutableStateOf(1) }
 
+                fun changeQuantity(type: QuantityChangeType) {
+                    if (type == QuantityChangeType.ADD && quantity < 3) {
+                        quantity++
+                    }
+                    else if (type == QuantityChangeType.REMOVE && quantity > 1) {
+                        quantity--
+                    }
+                }
+
                 AlertDialog(
                     onDismissRequest = {
                         addToCartController.value = false
@@ -186,7 +196,7 @@ fun ProductCard(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            IconButton(onClick = { quantity-- }) {
+                            IconButton(onClick = { changeQuantity(QuantityChangeType.REMOVE) }) {
                                 Icon(
                                     modifier = Modifier.scale(-1f),
                                     painter = painterResource(id = R.drawable.ic_arrow),
@@ -216,7 +226,7 @@ fun ProductCard(
                                 )
                             }
 
-                            IconButton(onClick = { quantity++ }) {
+                            IconButton(onClick = { changeQuantity(QuantityChangeType.ADD) }) {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_arrow),
                                     contentDescription = "Increase"

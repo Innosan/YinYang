@@ -129,7 +129,9 @@
 
     <!-- Help options -->
     <string name="sort_option">Sort</string>
+    <string name="sort_option_description">You can sort out menu by some option, like show only sushi! Just click on option to sort!</string>
     <string name="fav_option">Favorite</string>
+    <string name="fav_option_description">You can add any product to your favorite list, where you can quickly add this product to basket!</string>
     <string name="cart_option">Cart</string>
     <string name="config_option">Configures</string>
     <string name="orders_option">Orders</string>
