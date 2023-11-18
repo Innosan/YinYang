@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.yinyang.R
 import com.example.yinyang.models.Product
+import com.example.yinyang.ui.shared.components.containers.BackgroundedText
 import com.example.yinyang.ui.shared.components.service.AlertDialogButton
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
 import com.example.yinyang.utils.ButtonType
@@ -60,6 +61,7 @@ fun ProductCard(
     ) {
         ProductImage(product = product, height = 160, isTagsVisible = true)
 
+        // Product info
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(10.dp)
@@ -76,15 +78,18 @@ fun ProductCard(
             )
         }
 
+        // Description
         Text(
             text = product.description,
             color = MaterialTheme.colorScheme.onSurface.copy(.7f),
         )
 
+        // Product bottom bar
         Row(
             Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
+            // Cart button
             Button(
                 onClick =
                 {
@@ -94,7 +99,7 @@ fun ProductCard(
                 enabled = isNotInCart,
                 modifier = Modifier.fillMaxWidth(.70f)
             ) {
-                Crossfade(targetState = isNotInCart) {
+                Crossfade(targetState = isNotInCart, label = "Add to cart") {
                     val buttonText =
                         if (!it) stringResource(id = R.string.in_cart_note)
                         else "${product.price} ₽"
@@ -118,14 +123,17 @@ fun ProductCard(
                 }
             }
 
-            val favButtonWidth: Float by animateFloatAsState(if (isNotInFavorite) 0.75f else 0.85f)
+            val favButtonWidth: Float by animateFloatAsState(if (isNotInFavorite) 0.75f else 0.85f,
+                label = "Add to favorite"
+            )
             val buttonContainerColor by animateColorAsState(
                 if (isNotInFavorite)
                     MaterialTheme.colorScheme.primary.copy(0.7f)
                 else
-                    MaterialTheme.colorScheme.primary
+                    MaterialTheme.colorScheme.primary, label = "Add to favorite btn color"
             )
 
+            // Favorite button
             Button(
                 onClick =
                 {
@@ -153,7 +161,7 @@ fun ProductCard(
                     containerColor = buttonContainerColor
                 ),
             ) {
-                Crossfade(targetState = isNotInFavorite) { targetIsNotInFavorite ->
+                Crossfade(targetState = isNotInFavorite, label = "Adding to cart") { targetIsNotInFavorite ->
                     val icon =
                         if (targetIsNotInFavorite) R.drawable.ic_favorite
                         else R.drawable.ic_unfavorite
@@ -167,17 +175,24 @@ fun ProductCard(
             }
 
             if (addToCartController.value) {
-                var quantity by remember { mutableStateOf(1) }
+                var quantity by remember {
+                    mutableStateOf(1)
+                }
 
-                fun changeQuantity(type: QuantityChangeType) {
-                    if (type == QuantityChangeType.ADD && quantity < 3) {
+                fun changeQuantity(
+                    type: QuantityChangeType,
+                    minQuantity: Int = 1,
+                    maxQuantity: Int = 3
+                ) {
+                    if (type == QuantityChangeType.ADD && quantity < maxQuantity) {
                         quantity++
                     }
-                    else if (type == QuantityChangeType.REMOVE && quantity > 1) {
+                    else if (type == QuantityChangeType.REMOVE && quantity > minQuantity) {
                         quantity--
                     }
                 }
 
+                // Quantity change dialog
                 AlertDialog(
                     onDismissRequest = {
                         addToCartController.value = false
@@ -189,48 +204,51 @@ fun ProductCard(
                     },
                     textContentColor = MaterialTheme.colorScheme.onBackground,
                     text = {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth(.5f),
-
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            IconButton(onClick = { changeQuantity(QuantityChangeType.REMOVE) }) {
-                                Icon(
-                                    modifier = Modifier.scale(-1f),
-                                    painter = painterResource(id = R.drawable.ic_arrow),
-                                    contentDescription = "Decrease"
-                                )
-                            }
-
-                            /**
-                             * On release change togetherWith to with
-                             */
-                            AnimatedContent(
-                                targetState = quantity,
-                                transitionSpec = {
-                                    if (targetState > initialState) {
-                                        slideInVertically { -it } togetherWith
-                                                slideOutVertically { it }
-                                    } else {
-                                        slideInVertically { it } togetherWith
-                                                slideOutVertically { -it }
-                                    }
-                                }
+                        Column {
+                            BackgroundedText(textId = R.string.quantity_limits_note)
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(.5f),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
                             ) {
-                                Text(
-                                    text = quantity.toString(),
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Black
-                                )
-                            }
+                                IconButton(onClick = { changeQuantity(QuantityChangeType.REMOVE) }) {
+                                    Icon(
+                                        modifier = Modifier.scale(-1f),
+                                        painter = painterResource(id = R.drawable.ic_arrow),
+                                        contentDescription = "Decrease"
+                                    )
+                                }
 
-                            IconButton(onClick = { changeQuantity(QuantityChangeType.ADD) }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.ic_arrow),
-                                    contentDescription = "Increase"
-                                )
+                                /**
+                                 * TODO: On release change togetherWith to with
+                                 */
+                                AnimatedContent(
+                                    targetState = quantity,
+                                    transitionSpec = {
+                                        if (targetState > initialState) {
+                                            slideInVertically { -it } togetherWith
+                                                    slideOutVertically { it }
+                                        } else {
+                                            slideInVertically { it } togetherWith
+                                                    slideOutVertically { -it }
+                                        }
+                                    },
+                                    label = "Quantity change"
+                                ) {
+                                    Text(
+                                        text = it.toString(),
+                                        fontSize = 20.sp,
+                                        fontWeight = FontWeight.Black
+                                    )
+                                }
+
+                                IconButton(onClick = { changeQuantity(QuantityChangeType.ADD) }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.ic_arrow),
+                                        contentDescription = "Increase"
+                                    )
+                                }
                             }
                         }
                     },

@@ -19,7 +19,7 @@ import com.example.yinyang.R
 import com.example.yinyang.ui.screens.destinations.OrderViewDestination
 import com.example.yinyang.ui.shared.components.containers.ScreenContainer
 import com.example.yinyang.ui.shared.components.containers.SectionHeader
-import com.example.yinyang.utils.DateFormatter
+import com.example.yinyang.utils.DateTimeFormatter
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
@@ -34,7 +34,7 @@ fun Orders(
 ) {
     val orders = profileViewModel.profile.value.userOrders
 
-    val dateFormatter = DateFormatter()
+    val dateTimeFormatter = DateTimeFormatter()
 
     ScreenContainer(
         contentSpacing = 20
@@ -43,8 +43,8 @@ fun Orders(
 
         orders?.value?.forEachIndexed { index, order ->
             val orderDateTime = object {
-                val date = order.created_at?.let { dateFormatter.getLocalDateTime(it).date }
-                val time = order.created_at?.let { dateFormatter.getLocalDateTime(it).time }
+                val date = order.created_at?.let { dateTimeFormatter.getLocalDateTime(it).date }
+                val time = order.created_at?.let { dateTimeFormatter.getLocalDateTime(it).time }
             }
 
             Row(
@@ -97,7 +97,7 @@ fun Orders(
                     )
                     Text(text = orderDateTime.date.toString())
                     Text(
-                        text = orderDateTime.time?.let { dateFormatter.formatTime(it) }.toString()
+                        text = orderDateTime.time?.let { dateTimeFormatter.formatTime(it) }.toString()
                     )
                 }
             }

@@ -81,6 +81,7 @@
     <!-- Info -->
     <string name="exit_note">Are you sure you want to log out?</string>
     <string name="no_phone_note">No phone number provided</string>
+    <string name="quantity_limits_note">You can add up to 3 items!</string>
     <string name="update_address_note">Update address</string>
     <string name="add_address_note">Add new address</string>
     <string name="update_user_note">Update your name and last name</string>

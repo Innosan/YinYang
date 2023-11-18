@@ -25,17 +25,15 @@ import com.example.yinyang.ui.screens.destinations.ProfileDestination
 import com.example.yinyang.ui.screens.order.components.OrderCard
 import com.example.yinyang.ui.shared.components.containers.ScreenContainer
 import com.example.yinyang.ui.shared.components.containers.SectionHeader
-import com.example.yinyang.ui.shared.components.service.ModalDatePicker
+import com.example.yinyang.ui.shared.components.service.ModalTimePicker
 import com.example.yinyang.ui.shared.components.user.TotalBlock
 import com.example.yinyang.ui.shared.styles.buttonTextStyle
-import com.example.yinyang.utils.DateFormatter
+import com.example.yinyang.utils.DateTimeFormatter
 import com.example.yinyang.utils.getTotal
 import com.example.yinyang.viewmodels.ProfileViewModel
 import com.ramcosta.composedestinations.annotation.Destination
 import com.ramcosta.composedestinations.navigation.DestinationsNavigator
-import java.time.Instant
-import java.time.LocalDate
-import java.time.ZoneId
+import java.time.LocalTime
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(
@@ -58,13 +56,10 @@ fun Order(
     var selectedOptionIndex by remember { mutableStateOf(0) }
     var selectedChipIndex by remember { mutableStateOf(0) }
 
-    val dateFormatter = DateFormatter()
-    val selectedDate = remember {
-        mutableStateOf<LocalDate>(
-            Instant
-                .now()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
+    val timeFormatter = DateTimeFormatter()
+    val selectedTime = remember {
+        mutableStateOf(
+            LocalTime.now()
         )
     }
 
@@ -85,7 +80,7 @@ fun Order(
         ) {
             SectionHeader(iconId = R.drawable.ic_orders, title = R.string.order_screen)
 
-            cart?.forEachIndexed { index, cartItem ->
+            cart?.forEachIndexed { _, cartItem ->
                 OrderCard(
                     orderItem = cartItem,
                     quantity = cartItem.quantity
@@ -209,15 +204,15 @@ fun Order(
                         shape = RoundedCornerShape(12.dp),
                     ) {
                         Text(
-                            text = dateFormatter.formatDate(selectedDate.value),
+                            text = timeFormatter.formatTime(selectedTime.value),
                             style = buttonTextStyle,
                             fontSize = 20.sp,
                         )
                     }
 
-                    ModalDatePicker(
-                        pickedDate = selectedDate,
-                        dialogController = dateDialogController
+                    ModalTimePicker(
+                        dateDialogController,
+                        selectedTime
                     )
                 }
             }

@@ -10,7 +10,7 @@ import java.time.format.TextStyle
 import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
-class DateFormatter {
+class DateTimeFormatter {
     private val formatter = DateTimeFormatter.ofPattern("EEEE, d MMMM", Locale.getDefault())
 
     fun formatDate(date: LocalDate): String {
@@ -30,6 +30,10 @@ class DateFormatter {
     }
 
     fun formatTime(time: LocalTime): String {
+        return "${time.hour}:${time.minute}"
+    }
+
+    fun formatTime(time: java.time.LocalTime): String {
         return "${time.hour}:${time.minute}"
     }
 }

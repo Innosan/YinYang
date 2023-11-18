@@ -1,6 +1,6 @@
 package com.example.yinyang.utils
 
-public enum class QuantityChangeType() {
+enum class QuantityChangeType() {
     ADD,
     REMOVE
 }
